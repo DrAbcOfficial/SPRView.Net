@@ -1,0 +1,98 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="using:SPRView.Net.ViewModel"
+        x:Class="SPRView.Net.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
+        SizeToContent="WidthAndHeight"
+        CanResize="False"
+        mc:Ignorable="d" d:DesignWidth="450" d:DesignHeight="450">
+  <StackPanel>
+    <DockPanel VerticalAlignment="Top" HorizontalAlignment="Left">
+      <Menu DockPanel.Dock="Top">
+        <MenuItem Header="{Binding Lang.TaskBar_File}">
+          <MenuItem Header="{Binding Lang.TaskBar_File_Open}" Command="{Binding Command.OpenFile}"/>
+          <MenuItem Header="{Binding Lang.TaskBar_File_SaveFrame}" Command="{Binding Command.SaveFrame}" IsEnabled="{Binding CanSave}"/>
+          <MenuItem Header="{Binding Lang.TaskBar_File_SaveGIF}" Command="{Binding Command.SaveGIF}" IsEnabled="{Binding CanSave}"/>
+          <MenuItem Header="{Binding Lang.TaskBar_File_Export}" Command="{Binding Command.Export}" IsEnabled="{Binding CanSave}"/>
+          <Separator/>
+          <MenuItem Header="{Binding Lang.TaskBar_File_Exit}" Command="{Binding Command.Exit}"/>
+        </MenuItem>
+        <MenuItem Header="{Binding Lang.TaskBar_View}">
+          <CheckBox IsEnabled="{Binding CanSave}" IsChecked="{Binding CanShowInfo}" Content="{Binding Lang.TaskBar_View_Information}"/>
+          <CheckBox IsEnabled="{Binding CanSave}" IsChecked="{Binding CanShowPallet}" Content="{Binding Lang.TaskBar_View_Pallet}"/>
+        </MenuItem>
+        <MenuItem Header="{Binding Lang.TaskBar_Help}">
+          <MenuItem Header="{Binding Lang.TaskBar_Help_About}" />
+        </MenuItem>
+      </Menu>
+      <TextBlock/>
+    </DockPanel>
+    <Grid>
+      <Grid.RowDefinitions>
+        <RowDefinition Height="*" />
+      </Grid.RowDefinitions>
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="2*" />
+        <ColumnDefinition Width="2*" />
+      </Grid.ColumnDefinitions>
+      <StackPanel Grid.Row="0" Grid.Column="0">
+        <Image Source="{Binding SPR}" Width="{Binding SprViewerSize.Width}" Height="{Binding SprViewerSize.Height}" VerticalAlignment="Center" HorizontalAlignment="Center" MinHeight="300"/>
+      </StackPanel>
+      <StackPanel Grid.Row="0" Grid.Column="1" IsVisible="{Binding CanShowSideBar}">
+        <Grid IsVisible="{Binding CanShowInfo}">
+          <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+          </Grid.RowDefinitions>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+          </Grid.ColumnDefinitions>
+
+          <TextBlock Text="{Binding Lang.SpriteInfo_Frames}" Grid.Row="0" Grid.Column="0" />
+          <TextBlock Text="{Binding SprInfo.Frame}" Grid.Row="0" Grid.Column="1" />
+          <TextBlock Text="{Binding Lang.SpriteInfo_Format}" Grid.Row="0" Grid.Column="2" />
+          <TextBlock Text="{Binding SprInfo.Format}" Grid.Row="0" Grid.Column="3" />
+          <TextBlock Text="{Binding Lang.SpriteInfo_Width}" Grid.Row="1" Grid.Column="0" />
+          <TextBlock Text="{Binding SprInfo.Width}" Grid.Row="1" Grid.Column="1" />
+          <TextBlock Text="{Binding Lang.SpriteInfo_Sync}" Grid.Row="1" Grid.Column="2" />
+          <TextBlock Text="{Binding SprInfo.Sync}" Grid.Row="1" Grid.Column="3" />
+          <TextBlock Text="{Binding Lang.SpriteInfo_Height}" Grid.Row="2" Grid.Column="0" />
+          <TextBlock Text="{Binding SprInfo.Height}" Grid.Row="2" Grid.Column="1" />
+          <TextBlock Text="{Binding Lang.SpriteInfo_BoundRadius}" Grid.Row="2" Grid.Column="2" />
+          <TextBlock Text="{Binding SprInfo.BoundRadius}" Grid.Row="2" Grid.Column="3" />
+          <TextBlock Text="{Binding Lang.SpriteInfo_Type}" Grid.Row="3" Grid.Column="0" />
+          <TextBlock Text="{Binding SprInfo.Type}" Grid.Row="3" Grid.Column="1" />
+          <TextBlock Text="{Binding Lang.SpriteInfo_BeamLength}" Grid.Row="3" Grid.Column="2" />
+          <TextBlock Text="{Binding SprInfo.BeamLength}" Grid.Row="3" Grid.Column="3" />
+        </Grid>
+        <Separator/>
+        <StackPanel IsVisible="{Binding CanShowPallet}">
+          <ColorView Palette="{Binding ColorPallet}" ColorModel="Rgba" IsAlphaVisible="False" IsAlphaEnabled="False" IsColorModelVisible="False" IsColorSpectrumVisible="False">
+          </ColorView>
+        </StackPanel>
+      </StackPanel>
+    </Grid>
+    <Separator IsVisible="{Binding CanSave}"/>
+    <DockPanel VerticalAlignment="Bottom" HorizontalAlignment="Left">
+      <Label Content="{Binding Lang.Dock_Frame}"/>
+      <Button Content="◀️" IsEnabled="{Binding CanSave}" Command="{Binding Command.FrameStep}" CommandParameter="-1"/>
+      <TextBox Text="{Binding NowFrame}" IsEnabled="{Binding CanSave}" TextChanged="OnFrameTextBoxChanged" AcceptsReturn="False" AcceptsTab="False" TextWrapping="NoWrap"/>
+      <Button Content="▶️" IsEnabled="{Binding CanSave}" Command="{Binding Command.FrameStep}" CommandParameter="1"/>
+
+      <Button Content="⏯️" IsEnabled="{Binding CanSave}" Command="{Binding Command.ToggleAnimationTimer}"/>
+      <CheckBox Content="🔁" IsEnabled="{Binding CanSave}" IsChecked="{Binding IsLoopPlay}"/>
+
+      <Button Content="◀️" IsEnabled="{Binding CanSave}" Command="{Binding Command.ScaleStep}" CommandParameter="-25"/>
+      <TextBox Text="{Binding NowScale}" IsEnabled="{Binding CanSave}" TextChanged="OnSizeTextBoxChanged" AcceptsReturn="False" AcceptsTab="False" TextWrapping="NoWrap"/>
+      <Label Content="%"/>
+      <Button Content="▶️" IsEnabled="{Binding CanSave}" Command="{Binding Command.ScaleStep}" CommandParameter="25"/>
+    </DockPanel>
+  </StackPanel>
+</Window>
