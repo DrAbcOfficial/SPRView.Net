@@ -73,7 +73,9 @@ public class CommandViewModel : INotifyPropertyChanged
             DefaultExtension = "bmp",
             FileTypeChoices = [FilePickerFileTypes.ImageAll],
             ShowOverwritePrompt = true
-        }) ?? throw new FileNotFoundException("Can not save frame file");
+        });
+        if (file == null)
+            return;
         await using var stream = await file.OpenWriteAsync();
         bitmap.Save(stream);
     }
@@ -93,7 +95,9 @@ public class CommandViewModel : INotifyPropertyChanged
             DefaultExtension = "gif",
             FileTypeChoices = [gifstype],
             ShowOverwritePrompt = true
-        }) ?? throw new FileNotFoundException("Can not save gif file");
+        });
+        if (file == null)
+            return;
         List<Bitmap> bitmaps = [];
         foreach (var frame in sprite.Frames)
         {
