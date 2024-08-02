@@ -1,14 +1,14 @@
 {
-  "TaskBar_File": "文件",
+  "TaskBar_File": "_文件",
   "TaskBar_File_Open": "打开(.spr)",
   "TaskBar_File_SaveFrame": "另存为图像",
   "TaskBar_File_SaveGIF": "另存为GIF",
   "TaskBar_File_Export": "导出所有帧",
   "TaskBar_File_Exit": "退出",
-  "TaskBar_View": "浏览",
+  "TaskBar_View": "_浏览",
   "TaskBar_View_Information": "信息",
   "TaskBar_View_Pallet": "调色板",
-  "TaskBar_Help": "帮助",
+  "TaskBar_Help": "_帮助",
   "TaskBar_Help_About": "关于",
 
   "Dock_Frame": "帧:",
@@ -23,5 +23,10 @@
   "SpriteInfo_BoundRadius": "绑定范围:",
   "SpriteInfo_BeamLength": "射线长度:",
   "SpriteInfo_OriginX": "原点X:",
-  "SpriteInfo_OriginY": "原点Y:"
+  "SpriteInfo_OriginY": "原点Y:",
+
+  "FileManager_OpenSprite": "打开精灵图",
+  "FileManager_SaveImage": "另存为图片",
+  "FileManager_SaveGIF": "另存为GIF",
+  "FileManager_SaveSequence": "导出序列"
 }

@@ -245,4 +245,9 @@ public class LangViewModel : INotifyPropertyChanged
             OnPropertyChanged(nameof(SpriteInfo_OriginY));
         }
     }
+
+    public string FileManager_OpenSprite { get; set; } = "Open Sprite";
+    public string FileManager_SaveImage { get; set; } = "Save Image";
+    public string FileManager_SaveGIF { get; set; } = "Save GIF";
+    public string FileManager_SaveSequence { get; set; } = "Save Sequence";
 }

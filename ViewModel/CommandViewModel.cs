@@ -47,7 +47,7 @@ public class CommandViewModel : INotifyPropertyChanged
         };
         var files = await mainWindow.StorageProvider.OpenFilePickerAsync(new FilePickerOpenOptions
         {
-            Title = "Open Sprite File",
+            Title = App.GetViewModel().Lang?.FileManager_OpenSprite,
             AllowMultiple = false,
             FileTypeFilter = [Sprites]
         });
@@ -67,7 +67,7 @@ public class CommandViewModel : INotifyPropertyChanged
         var mainWindow = App.GetMainWindow();
         var file = await mainWindow.StorageProvider.SaveFilePickerAsync(new FilePickerSaveOptions
         {
-            Title = "Save BMP File",
+            Title = App.GetViewModel().Lang?.FileManager_SaveImage,
             DefaultExtension = "bmp",
             FileTypeChoices = [FilePickerFileTypes.ImageAll],
             ShowOverwritePrompt = true
@@ -89,7 +89,7 @@ public class CommandViewModel : INotifyPropertyChanged
         };
         var file = await mainWindow.StorageProvider.SaveFilePickerAsync(new FilePickerSaveOptions
         {
-            Title = "Save GIF File",
+            Title = App.GetViewModel().Lang?.FileManager_SaveGIF,
             DefaultExtension = "gif",
             FileTypeChoices = [gifstype],
             ShowOverwritePrompt = true
@@ -116,7 +116,7 @@ public class CommandViewModel : INotifyPropertyChanged
         var mainWindow = App.GetMainWindow();
         var directories = await mainWindow.StorageProvider.OpenFolderPickerAsync(new FolderPickerOpenOptions
         {
-            Title = "Save Sequence",
+            Title = App.GetViewModel().Lang?.FileManager_SaveSequence,
             AllowMultiple = false
         });
         if (directories.Count > 0)
@@ -129,7 +129,7 @@ public class CommandViewModel : INotifyPropertyChanged
                 sprite.Frames[i].GetBitmap().Save(sw.BaseStream);
                 sequence += $"./{i}.bmp\n";
             }
-            using StreamWriter text = new(Path.Combine(directory, $"sequence.txt"));
+            using StreamWriter text = new(Path.Combine(directory, $"sequence.qc"));
             text.Write(sequence);
         }
     }

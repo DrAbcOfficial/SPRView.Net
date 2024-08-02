@@ -1,14 +1,14 @@
 {
-  "TaskBar_File": "File",
+  "TaskBar_File": "_File",
   "TaskBar_File_Open": "Open(.spr)",
   "TaskBar_File_SaveFrame": "Save as Image",
   "TaskBar_File_SaveGIF": "Save as GIF",
   "TaskBar_File_Export": "Export All Frame",
   "TaskBar_File_Exit": "Quit",
-  "TaskBar_View": "View",
+  "TaskBar_View": "_View",
   "TaskBar_View_Information": "Information",
   "TaskBar_View_Pallet": "Pallet",
-  "TaskBar_Help": "Help",
+  "TaskBar_Help": "_Help",
   "TaskBar_Help_About": "About",
 
   "Dock_Frame": "Frame:",
@@ -23,5 +23,10 @@
   "SpriteInfo_BoundRadius": "Bound Radius:",
   "SpriteInfo_BeamLength": "Beam Length:",
   "SpriteInfo_OriginX": "Origin X:",
-  "SpriteInfo_OriginY": "Origin Y:"
+  "SpriteInfo_OriginY": "Origin Y:",
+
+  "FileManager_OpenSprite": "Open Sprite",
+  "FileManager_SaveImage": "Save Image",
+  "FileManager_SaveGIF": "Save GIF",
+  "FileManager_SaveSequence": "Save Sequence"
 }
