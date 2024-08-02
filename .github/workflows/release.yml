@@ -11,7 +11,7 @@ jobs:
 
     strategy:
       matrix:
-        os: [ubuntu, windows, macos]
+        os: [ubuntu, windows]
         arch: [x64]
 
     runs-on: ${{ matrix.os }}-latest 
@@ -47,11 +47,11 @@ jobs:
       uses: ncipollo/release-action@v1
       with:
           artifacts: ./SPRView.Net-${{ matrix.os }}-${{ matrix.arch }}.tar.gz
-          bodyFile: "readme.md"
+          bodyFile: "README.md"
 
     - name: Create Release Win
       if: matrix.os == 'windows'
       uses: ncipollo/release-action@v1
       with:
           artifacts: SPRView.Net-${{ matrix.os }}-${{ matrix.arch }}.zip
-          bodyFile: "readme.md"
+          bodyFile: "README.md"
