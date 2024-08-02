@@ -26,6 +26,7 @@ public class LangViewModel : INotifyPropertyChanged
 
     public ObservableProperty Dock_Frame { get; }
 
+    public ObservableProperty SpriteInfo { get; }
     public ObservableProperty SpriteInfo_Frames { get; }
     public ObservableProperty SpriteInfo_Width { get; }
     public ObservableProperty SpriteInfo_Height { get; }
@@ -34,6 +35,8 @@ public class LangViewModel : INotifyPropertyChanged
     public ObservableProperty SpriteInfo_Sync { get; }
     public ObservableProperty SpriteInfo_BoundRadius { get; }
     public ObservableProperty SpriteInfo_BeamLength { get; }
+    public ObservableProperty SpriteInfo_OriginX { get; }
+    public ObservableProperty SpriteInfo_OriginY { get; }
     public LangViewModel()
     {
         TaskBar_File = new ObservableProperty(nameof(TaskBar_File), "File");
@@ -50,6 +53,7 @@ public class LangViewModel : INotifyPropertyChanged
 
         Dock_Frame = new ObservableProperty(nameof(Dock_Frame), "Frame: ");
 
+        SpriteInfo = new ObservableProperty(nameof(SpriteInfo), "Spr Info: ");
         SpriteInfo_Frames = new ObservableProperty(nameof(SpriteInfo_Frames), "Frames: ");
         SpriteInfo_Width = new ObservableProperty(nameof(SpriteInfo_Width), "Width: ");
         SpriteInfo_Height = new ObservableProperty(nameof(SpriteInfo_Height), "Height: ");
@@ -58,5 +62,7 @@ public class LangViewModel : INotifyPropertyChanged
         SpriteInfo_Sync = new ObservableProperty(nameof(SpriteInfo_Sync), "Sync: ");
         SpriteInfo_BoundRadius = new ObservableProperty(nameof(SpriteInfo_BoundRadius), "BoundRadius: ");
         SpriteInfo_BeamLength = new ObservableProperty(nameof(SpriteInfo_BeamLength), "BeamLength: ");
+        SpriteInfo_OriginX = new ObservableProperty(nameof(SpriteInfo_OriginX), "OriginX: ");
+        SpriteInfo_OriginY = new ObservableProperty(nameof(SpriteInfo_OriginY), "OriginY: ");
     }
 }

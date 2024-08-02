@@ -97,7 +97,36 @@ public class SpriteInfoViewModel : INotifyPropertyChanged
                 return spr.BoundRadius.ToString();
         }
     }
+    public string OriginX
+    {
+        get
+        {
+            var now = App.GetViewModel().m_iNowFrame;
+            var spr = App.GetAppStorage().NowSprite;
+            if (spr == null)
+                return "0";
+            else
+                return spr.Frames[now].OriginX.ToString();
+        }
+    }
+    public string OriginY
+    {
+        get
+        {
+            var now = App.GetViewModel().m_iNowFrame;
+            var spr = App.GetAppStorage().NowSprite;
+            if (spr == null)
+                return "0";
+            else
+                return spr.Frames[now].OriginY.ToString();
+        }
+    }
 
+    public void UpdateOriginXY()
+    {
+        OnPropertyChanged(nameof(OriginX));
+        OnPropertyChanged(nameof(OriginY));
+    }
     public void UpdateAll()
     {
         OnPropertyChanged(nameof(Frame));

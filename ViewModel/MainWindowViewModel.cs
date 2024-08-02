@@ -57,6 +57,7 @@ public class MainWindowViewModel : INotifyPropertyChanged
             m_pSpr = value;
             OnPropertyChanged(nameof(SPR));
             OnPropertyChanged(nameof(CanSave));
+            OnPropertyChanged(nameof(ColorPallet));
             SprInfo?.UpdateAll();
         }
     }
@@ -77,7 +78,7 @@ public class MainWindowViewModel : INotifyPropertyChanged
         get => m_pSpr != null;
     }
 
-    private int m_iNowFrame = 0;
+    public int m_iNowFrame = 0;
     public string NowFrame
     {
         get => m_iNowFrame.ToString();
@@ -88,6 +89,7 @@ public class MainWindowViewModel : INotifyPropertyChanged
             m_iNowFrame = Math.Clamp(m_iNowFrame, 0, spr.Frames.Count-1);
             SPR = spr.Frames[m_iNowFrame].GetBitmap();
             OnPropertyChanged(nameof(NowFrame));
+            SprInfo?.UpdateOriginXY();
         }
     }
 
