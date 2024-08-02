@@ -1,8 +1,9 @@
-<Window xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:vm="using:SPRView.Net.ViewModel"
+<Window
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="using:SPRView.Net.ViewModel"
         x:Class="SPRView.Net.MainWindow"
         x:DataType="vm:MainWindowViewModel"
         SizeToContent="WidthAndHeight"
@@ -48,8 +49,22 @@
           </MenuItem>
         </MenuItem>
         <MenuItem Header="{CompiledBinding Lang.TaskBar_View}">
-          <CheckBox IsEnabled="{CompiledBinding CanSave}" IsChecked="{CompiledBinding CanShowInfo}" Content="{CompiledBinding Lang.TaskBar_View_Information}"/>
-          <CheckBox IsEnabled="{CompiledBinding CanSave}" IsChecked="{CompiledBinding CanShowPallet}" Content="{CompiledBinding Lang.TaskBar_View_Pallet}"/>
+          <MenuItem>
+            <MenuItem.Icon>
+              <Label Content="ℹ️"/>
+            </MenuItem.Icon>
+            <MenuItem.Header>
+              <CheckBox IsEnabled="{CompiledBinding CanSave}" IsChecked="{CompiledBinding CanShowInfo}" Content="{CompiledBinding Lang.TaskBar_View_Information}"/>
+            </MenuItem.Header>
+          </MenuItem>
+          <MenuItem>
+            <MenuItem.Icon>
+              <Label Content="🎨"/>
+            </MenuItem.Icon>
+            <MenuItem.Header>
+              <CheckBox IsEnabled="{CompiledBinding CanSave}" IsChecked="{CompiledBinding CanShowPallet}" Content="{CompiledBinding Lang.TaskBar_View_Pallet}"/>
+            </MenuItem.Header>
+          </MenuItem>
           <MenuItem Header="{CompiledBinding Lang.TaskBar_View_Language}">
             <MenuItem.Icon>
               <Label Content="🌏"/>
@@ -67,7 +82,8 @@
           </MenuItem>
         </MenuItem>
         <MenuItem Header="{CompiledBinding Lang.TaskBar_Help}">
-          <MenuItem Header="{CompiledBinding Lang.TaskBar_Help_About}" Command="{CompiledBinding Command.About}"><MenuItem.Icon>
+          <MenuItem Header="{CompiledBinding Lang.TaskBar_Help_About}" Command="{CompiledBinding Command.About}">
+            <MenuItem.Icon>
               <Label Content="🛌"/>
             </MenuItem.Icon>
           </MenuItem>
@@ -83,9 +99,13 @@
         <ColumnDefinition Width="2*" />
         <ColumnDefinition Width="2*" />
       </Grid.ColumnDefinitions>
-      <Panel Grid.Row="0" Grid.Column="0">
-        <Image Source="{CompiledBinding SPR}" Width="{CompiledBinding SprViewerSize.Width}" Height="{CompiledBinding SprViewerSize.Height}" VerticalAlignment="Center" HorizontalAlignment="Center" MinHeight="300"/>
-        <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Left">
+      <Grid Grid.Row="0" Grid.Column="0" VerticalAlignment="Stretch">
+        <Grid.RowDefinitions>
+          <RowDefinition Height="*" />
+          <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Image Source="{CompiledBinding SPR}" Width="{CompiledBinding SprViewerSize.Width}" Height="{CompiledBinding SprViewerSize.Height}" VerticalAlignment="Center" HorizontalAlignment="Center" MinHeight="300" Grid.Row="0"/>
+        <StackPanel VerticalAlignment="Bottom" Grid.Row="1">
           <Separator IsVisible="{CompiledBinding CanSave}"/>
           <DockPanel>
             <Label Content="{CompiledBinding Lang.Dock_Frame}"/>
@@ -102,7 +122,7 @@
             <Button Content="▶️" IsEnabled="{CompiledBinding CanSave}" Command="{CompiledBinding Command.ScaleStep}" CommandParameter="25"/>
           </DockPanel>
         </StackPanel>
-      </Panel>
+      </Grid>
       <StackPanel Grid.Row="0" Grid.Column="1" IsVisible="{CompiledBinding CanShowSideBar}">
         <StackPanel IsVisible="{CompiledBinding CanShowInfo}">
           <Label Content="{CompiledBinding Lang.SpriteInfo}"/>
@@ -144,8 +164,7 @@
         </StackPanel>
         <Separator/>
         <StackPanel IsVisible="{CompiledBinding CanShowPallet}">
-          <ColorView Palette="{CompiledBinding ColorPallet}" ColorModel="Rgba" IsAlphaVisible="False" IsAlphaEnabled="False" IsColorModelVisible="False" IsColorSpectrumVisible="False">
-          </ColorView>
+          <ColorView Palette="{CompiledBinding ColorPallet}" ColorModel="Rgba" IsAlphaVisible="False" IsAlphaEnabled="False" IsColorModelVisible="False" IsColorSpectrumVisible="False"></ColorView>
         </StackPanel>
       </StackPanel>
     </Grid>
