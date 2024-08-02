@@ -9,12 +9,17 @@
         CanResize="False"
         TransparencyLevelHint="AcrylicBlur"
         ExtendClientAreaToDecorationsHint="True"
-         Background="#20FFFFFF"
+        Background="#20FFFFFF"
         mc:Ignorable="d" d:DesignWidth="450" d:DesignHeight="450">
   
   <StackPanel>
     <DockPanel VerticalAlignment="Top" HorizontalAlignment="Left">
       <Menu DockPanel.Dock="Top">
+        <MenuItem>
+          <MenuItem.Header>
+            <Image Source="/Assets/icon.ico" Height="16" Width="16"/>
+          </MenuItem.Header>
+        </MenuItem>
         <MenuItem Header="{CompiledBinding Lang.TaskBar_File}">
           <MenuItem Header="{CompiledBinding Lang.TaskBar_File_Open}" Command="{CompiledBinding Command.OpenFile}">
             <MenuItem.Icon>

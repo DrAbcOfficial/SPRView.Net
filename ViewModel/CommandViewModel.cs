@@ -1,11 +1,9 @@
-﻿using Avalonia.Media.Imaging;
-using Avalonia.Platform.Storage;
+﻿using Avalonia.Platform.Storage;
 using Avalonia.Threading;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Formats.Gif;
 using SixLabors.ImageSharp.PixelFormats;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 
@@ -98,26 +96,19 @@ public class CommandViewModel : INotifyPropertyChanged
         });
         if (file == null)
             return;
-        List<Bitmap> bitmaps = [];
+        using var gif = new Image<Rgba32>((int)sprite.MaxFrameWidth, (int)sprite.MaxFrameHeight);
         foreach (var frame in sprite.Frames)
         {
-            bitmaps.Add(frame.GetBitmap());
+            using var memoryStream = new MemoryStream();
+            frame.GetBitmap().Save(memoryStream);
+            memoryStream.Seek(0, SeekOrigin.Begin);
+            var image = Image.Load<Rgba32>(memoryStream);
+            gif.Frames.AddFrame(image.Frames[0]);
         }
-        using var gif = new Image<Rgba32>((int)sprite.MaxFrameWidth, (int)sprite.MaxFrameHeight);
-        {
-            foreach (var bitmap in bitmaps)
-            {
-                using var memoryStream = new MemoryStream();
-                bitmap.Save(memoryStream);
-                memoryStream.Seek(0, SeekOrigin.Begin);
-                var image = Image.Load<Rgba32>(memoryStream);
-                gif.Frames.AddFrame(image.Frames[0]);
-            }
-            await using var stream = await file.OpenWriteAsync();
-            GifMetadata gifMetadata = gif.Metadata.GetGifMetadata();
-            gifMetadata.RepeatCount = 0;
-            gif.Save(stream, new GifEncoder());
-        }
+        await using var stream = await file.OpenWriteAsync();
+        GifMetadata gifMetadata = gif.Metadata.GetGifMetadata();
+        gifMetadata.RepeatCount = 0;
+        gif.Save(stream, new GifEncoder());
     }
     public async void Export()
     {
