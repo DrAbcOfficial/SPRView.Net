@@ -43,24 +43,13 @@ jobs:
       run: tar -czvf ./SPRView.Net-${{ matrix.os }}-${{ matrix.arch }}.tar.gz ./bin/Release/net8.0/publish/${{ matrix.os }}-${{ matrix.arch }}
 
     - name: Create Release Unix
-      if: matrix.os != 'windows' && startsWith(github.ref, 'refs/tags/')
-      uses: Xotl/cool-github-releases@v1
+      if: matrix.os != 'windows'
+      uses: ncipollo/release-action@v1
       with:
-          mode: update
-          isPrerelease: true
-          tag_name: ${{ github.ref }}
-          release_name: SPRView.Net-${{ github.ref }}
-          body_mrkdwn: ${{ github.ref }}
-          assets: ./SPRView.Net-${{ matrix.os }}-${{ matrix.arch }}.tar.gz
-          github_token: ${{ github.token }}
+          artifacts: ./SPRView.Net-${{ matrix.os }}-${{ matrix.arch }}.tar.gz
 
     - name: Create Release Win
-      if: matrix.os == 'windows' && startsWith(github.ref, 'refs/tags/')
-      uses: Xotl/cool-github-releases@v1
+      if: matrix.os == 'windows'
+      uses: ncipollo/release-action@v1
       with:
-          mode: update
-          isPrerelease: true
-          tag_name: ${{ github.ref }}
-          release_name: SPRView.Net-${{ github.ref }}
-          body_mrkdwn: ${{ github.ref }}
-          assets: ./SPRView.Net-${{ matrix.os }}-${{ matrix.arch }}.zip
+          artifacts: SPRView.Net-${{ matrix.os }}-${{ matrix.arch }}.zip
