@@ -47,9 +47,11 @@ jobs:
       uses: ncipollo/release-action@v1
       with:
           artifacts: ./SPRView.Net-${{ matrix.os }}-${{ matrix.arch }}.tar.gz
+          bodyFile: "readme.md"
 
     - name: Create Release Win
       if: matrix.os == 'windows'
       uses: ncipollo/release-action@v1
       with:
           artifacts: SPRView.Net-${{ matrix.os }}-${{ matrix.arch }}.zip
+          bodyFile: "readme.md"
