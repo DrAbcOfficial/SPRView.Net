@@ -14,13 +14,21 @@ public class MainWindowViewModel : INotifyPropertyChanged
 {
     public void LoadLangFile()
     {
-        using var asset = AssetLoader.Open(new Uri($"avares://SPRView.Net/Assets/Lang/{CultureInfo.CurrentCulture.TwoLetterISOLanguageName}.json"));
+        Stream asset;
+        try
+        {
+            asset = AssetLoader.Open(new Uri($"avares://SPRView.Net/Assets/Lang/{CultureInfo.CurrentCulture.TwoLetterISOLanguageName}.json"));
+        }
+        catch (Exception)
+        {
+            asset = AssetLoader.Open(new Uri($"avares://SPRView.Net/Assets/Lang/en.json"));
+        }
         using var reader = new StreamReader(asset);
         string json = reader.ReadToEnd();
         LangViewModel? person = JsonSerializer.Deserialize<LangViewModel>(json);
         if (person != null)
             Lang = person;
-
+        asset.Dispose();
     }
     public event PropertyChangedEventHandler? PropertyChanged;
 
