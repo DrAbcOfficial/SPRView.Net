@@ -53,12 +53,8 @@ public class CommandViewModel : INotifyPropertyChanged
         });
         if (files.Count >= 1)
         {
-            var storage = App.GetAppStorage();
-            var newSprite = new Lib.CSprite(files[0].TryGetLocalPath());
-            storage.NowSprite = newSprite;
-            var viewModel = App.GetViewModel();
-            viewModel.SPR = newSprite.GetBitmap(0);
-            viewModel.SprViewerSize = viewModel.SPR.Size;
+            await using Stream file = await files[0].OpenReadAsync();
+            App.LoadFile(file);
         }
     }
     public async void SaveFrame()
