@@ -1,13 +1,27 @@
 ﻿using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Media.Imaging;
+using Avalonia.Platform;
 using System;
 using System.ComponentModel;
+using System.Globalization;
+using System.IO;
 using System.Runtime.CompilerServices;
+using System.Text.Json;
 namespace SPRView.Net.ViewModel;
 
 public class MainWindowViewModel : INotifyPropertyChanged
 {
+    public void LoadLangFile()
+    {
+        using var asset = AssetLoader.Open(new Uri($"avares://SPRView.Net/Assets/Lang/{CultureInfo.CurrentCulture.TwoLetterISOLanguageName}.json"));
+        using var reader = new StreamReader(asset);
+        string json = reader.ReadToEnd();
+        LangViewModel? person = JsonSerializer.Deserialize<LangViewModel>(json);
+        if (person != null)
+            Lang = person;
+
+    }
     public event PropertyChangedEventHandler? PropertyChanged;
 
     protected void OnPropertyChanged([CallerMemberName] string? propertyName = null)
@@ -86,7 +100,7 @@ public class MainWindowViewModel : INotifyPropertyChanged
         {
             m_iNowFrame = int.TryParse(value, out int result) ? result : 0;
             var spr = App.GetAppStorage().NowSprite ?? throw new System.Exception("Spr is null!");
-            m_iNowFrame = Math.Clamp(m_iNowFrame, 0, spr.Frames.Count-1);
+            m_iNowFrame = Math.Clamp(m_iNowFrame, 0, spr.Frames.Count - 1);
             SPR = spr.Frames[m_iNowFrame].GetBitmap();
             OnPropertyChanged(nameof(NowFrame));
             SprInfo?.UpdateOriginXY();
@@ -152,7 +166,7 @@ public class MainWindowViewModel : INotifyPropertyChanged
     }
     public bool CanShowSideBar
     {
-        get 
+        get
         {
             return m_bCanShowInfo || m_bCanShowPallet;
         }

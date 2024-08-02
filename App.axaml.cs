@@ -40,6 +40,7 @@ public partial class App : Application
                 Command = new CommandViewModel(),
                 SprInfo = new SpriteInfoViewModel()
             };
+            m_pViewModel.LoadLangFile();
             m_pMainWindow.DataContext = m_pViewModel;
             desktop.MainWindow = m_pMainWindow;
         }

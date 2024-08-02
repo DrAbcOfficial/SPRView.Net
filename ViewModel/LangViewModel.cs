@@ -10,59 +10,239 @@ public class LangViewModel : INotifyPropertyChanged
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
     }
 
-    public ObservableProperty TaskBar_File { get; }
-    public ObservableProperty TaskBar_File_Open { get; }
-    public ObservableProperty TaskBar_File_SaveFrame { get; }
-    public ObservableProperty TaskBar_File_SaveGIF { get; }
-    public ObservableProperty TaskBar_File_Export { get; }
-    public ObservableProperty TaskBar_File_Exit { get; }
-
-    public ObservableProperty TaskBar_View { get; }
-    public ObservableProperty TaskBar_View_Information { get; }
-    public ObservableProperty TaskBar_View_Pallet { get; }
-
-    public ObservableProperty TaskBar_Help { get; }
-    public ObservableProperty TaskBar_Help_About { get; }
-
-    public ObservableProperty Dock_Frame { get; }
-
-    public ObservableProperty SpriteInfo { get; }
-    public ObservableProperty SpriteInfo_Frames { get; }
-    public ObservableProperty SpriteInfo_Width { get; }
-    public ObservableProperty SpriteInfo_Height { get; }
-    public ObservableProperty SpriteInfo_Type { get; }
-    public ObservableProperty SpriteInfo_Format { get; }
-    public ObservableProperty SpriteInfo_Sync { get; }
-    public ObservableProperty SpriteInfo_BoundRadius { get; }
-    public ObservableProperty SpriteInfo_BeamLength { get; }
-    public ObservableProperty SpriteInfo_OriginX { get; }
-    public ObservableProperty SpriteInfo_OriginY { get; }
-    public LangViewModel()
+    private string m_TaskBar_File = "File";
+    public string TaskBar_File
     {
-        TaskBar_File = new ObservableProperty(nameof(TaskBar_File), "File");
-        TaskBar_File_Open = new ObservableProperty(nameof(TaskBar_File_Open), "Open");
-        TaskBar_File_SaveFrame = new ObservableProperty(nameof(TaskBar_File_SaveFrame), "Save Frame");
-        TaskBar_File_SaveGIF = new ObservableProperty(nameof(TaskBar_File_SaveGIF), "Save GIF");
-        TaskBar_File_Export = new ObservableProperty(nameof(TaskBar_File_Export), "Export");
-        TaskBar_File_Exit = new ObservableProperty(nameof(TaskBar_File_Exit), "Exit");
-        TaskBar_View = new ObservableProperty(nameof(TaskBar_View), "View");
-        TaskBar_View_Information = new ObservableProperty(nameof(TaskBar_View_Information), "Sprite Information");
-        TaskBar_View_Pallet = new ObservableProperty(nameof(TaskBar_View_Pallet), "Sprite Pallet");
-        TaskBar_Help = new ObservableProperty(nameof(TaskBar_Help), "Help");
-        TaskBar_Help_About = new ObservableProperty(nameof(TaskBar_Help_About), "About");
+        get => m_TaskBar_File;
+        set
+        {
+            m_TaskBar_File = value;
+            OnPropertyChanged(nameof(TaskBar_File));
+        }
+    }
+    private string m_TaskBar_File_Open = "Open";
+    public string TaskBar_File_Open
+    {
+        get => m_TaskBar_File_Open;
+        set
+        {
+            m_TaskBar_File_Open = value;
+            OnPropertyChanged(nameof(TaskBar_File_Open));
+        }
+    }
+    private string m_TaskBar_File_SaveFrame = "Save Frame";
+    public string TaskBar_File_SaveFrame
+    {
+        get => m_TaskBar_File_SaveFrame;
+        set
+        {
+            m_TaskBar_File_SaveFrame = value;
+            OnPropertyChanged(nameof(TaskBar_File_SaveFrame));
+        }
+    }
+    private string m_TaskBar_File_SaveGIF = "Save GIF";
+    public string TaskBar_File_SaveGIF
+    {
+        get => m_TaskBar_File_SaveGIF;
+        set
+        {
+            m_TaskBar_File_SaveGIF = value;
+            OnPropertyChanged(nameof(TaskBar_File_SaveGIF));
+        }
+    }
+    private string m_TaskBar_File_Export = "Export";
+    public string TaskBar_File_Export
+    {
+        get => m_TaskBar_File_Export;
+        set
+        {
+            m_TaskBar_File_Export = value;
+            OnPropertyChanged(nameof(TaskBar_File_Export));
+        }
+    }
+    private string m_TaskBar_File_Exit = "Exit";
+    public string TaskBar_File_Exit
+    {
+        get => m_TaskBar_File_Exit;
+        set
+        {
+            m_TaskBar_File_Exit = value;
+            OnPropertyChanged(nameof(TaskBar_File_Exit));
+        }
+    }
 
-        Dock_Frame = new ObservableProperty(nameof(Dock_Frame), "Frame: ");
+    private string m_TaskBar_View = "View";
+    public string TaskBar_View
+    {
+        get => m_TaskBar_View;
+        set
+        {
+            m_TaskBar_View = value;
+            OnPropertyChanged(nameof(TaskBar_View));
+        }
+    }
+    
+    private string m_TaskBar_View_Information = "Information";
+    public string TaskBar_View_Information
+    {
+        get => m_TaskBar_View_Information;
+        set
+        {
+            m_TaskBar_View_Information = value;
+            OnPropertyChanged(nameof(TaskBar_View_Information));
+        }
+    }
+    private string m_TaskBar_View_Pallet = "Pallet";
+    public string TaskBar_View_Pallet
+    {
+        get => m_TaskBar_View_Pallet;
+        set
+        {
+            m_TaskBar_View_Pallet = value;
+            OnPropertyChanged(nameof(TaskBar_View_Pallet));
+        }
+    }
 
-        SpriteInfo = new ObservableProperty(nameof(SpriteInfo), "Spr Info: ");
-        SpriteInfo_Frames = new ObservableProperty(nameof(SpriteInfo_Frames), "Frames: ");
-        SpriteInfo_Width = new ObservableProperty(nameof(SpriteInfo_Width), "Width: ");
-        SpriteInfo_Height = new ObservableProperty(nameof(SpriteInfo_Height), "Height: ");
-        SpriteInfo_Type = new ObservableProperty(nameof(SpriteInfo_Type), "Type: ");
-        SpriteInfo_Format = new ObservableProperty(nameof(SpriteInfo_Format), "Format: ");
-        SpriteInfo_Sync = new ObservableProperty(nameof(SpriteInfo_Sync), "Sync: ");
-        SpriteInfo_BoundRadius = new ObservableProperty(nameof(SpriteInfo_BoundRadius), "BoundRadius: ");
-        SpriteInfo_BeamLength = new ObservableProperty(nameof(SpriteInfo_BeamLength), "BeamLength: ");
-        SpriteInfo_OriginX = new ObservableProperty(nameof(SpriteInfo_OriginX), "OriginX: ");
-        SpriteInfo_OriginY = new ObservableProperty(nameof(SpriteInfo_OriginY), "OriginY: ");
+    private string m_TaskBar_Help = "Help";
+    public string TaskBar_Help
+    {
+        get => m_TaskBar_Help;
+        set
+        {
+            m_TaskBar_Help = value;
+            OnPropertyChanged(nameof(TaskBar_Help));
+        }
+    }
+    private string m_TaskBar_Help_About = "About";
+    public string TaskBar_Help_About
+    {
+        get => m_TaskBar_Help_About;
+        set
+        {
+            m_TaskBar_Help_About = value;
+            OnPropertyChanged(nameof(TaskBar_Help_About));
+        }
+    }
+
+    private string m_Dock_Frame = "Frame:";
+    public string Dock_Frame
+    {
+        get => m_Dock_Frame;
+        set
+        {
+            m_Dock_Frame = value;
+            OnPropertyChanged(nameof(Dock_Frame));
+        }
+    }
+
+    private string m_SpriteInfo = "Sprite Info:";
+    public string SpriteInfo
+    {
+        get => m_SpriteInfo;
+        set
+        {
+            m_SpriteInfo = value;
+            OnPropertyChanged(nameof(SpriteInfo));
+        }
+    }
+    private string m_SpriteInfo_Frames = "Frames:";
+    public string SpriteInfo_Frames
+    {
+        get => m_SpriteInfo_Frames;
+        set
+        {
+            m_SpriteInfo_Frames = value;
+            OnPropertyChanged(nameof(SpriteInfo_Frames));
+        }
+    }
+    private string m_SpriteInfo_Width = "Width:";
+    public string SpriteInfo_Width
+    {
+        get => m_SpriteInfo_Width;
+        set
+        {
+            m_SpriteInfo_Width = value;
+            OnPropertyChanged(nameof(SpriteInfo_Width));
+        }
+    }
+    private string m_SpriteInfo_Height = "Height:";
+    public string SpriteInfo_Height
+    {
+        get => m_SpriteInfo_Height;
+        set
+        {
+            m_SpriteInfo_Height = value;
+            OnPropertyChanged(nameof(SpriteInfo_Height));
+        }
+    }
+    private string m_SpriteInfo_Type = "Type:";
+    public string SpriteInfo_Type
+    {
+        get => m_SpriteInfo_Type;
+        set
+        {
+            m_SpriteInfo_Type = value;
+            OnPropertyChanged(nameof(SpriteInfo_Type));
+        }
+    }
+    private string m_SpriteInfo_Format = "Format:";
+    public string SpriteInfo_Format
+    {
+        get => m_SpriteInfo_Format;
+        set
+        {
+            m_SpriteInfo_Format = value;
+            OnPropertyChanged(nameof(SpriteInfo_Format));
+        }
+    }
+    private string m_SpriteInfo_Sync = "Sync:";
+    public string SpriteInfo_Sync
+    {
+        get => m_SpriteInfo_Sync;
+        set
+        {
+            m_SpriteInfo_Sync = value;
+            OnPropertyChanged(nameof(SpriteInfo_Sync));
+        }
+    }
+    private string m_SpriteInfo_BoundRadius = "BoundRadius:";
+    public string SpriteInfo_BoundRadius
+    {
+        get => m_SpriteInfo_BoundRadius;
+        set
+        {
+            m_SpriteInfo_BoundRadius = value;
+            OnPropertyChanged(nameof(SpriteInfo_BoundRadius));
+        }
+    }
+    private string m_SpriteInfo_BeamLength = "BeamLength:";
+    public string SpriteInfo_BeamLength
+    {
+        get => m_SpriteInfo_BeamLength;
+        set
+        {
+            m_SpriteInfo_BeamLength = value;
+            OnPropertyChanged(nameof(SpriteInfo_BeamLength));
+        }
+    }
+    private string m_SpriteInfo_OriginX = "OriginX:";
+    public string SpriteInfo_OriginX
+    {
+        get => m_SpriteInfo_OriginX;
+        set
+        {
+            m_SpriteInfo_OriginX = value;
+            OnPropertyChanged(nameof(SpriteInfo_OriginX));
+        }
+    }
+    private string m_SpriteInfo_OriginY = "OriginY:";
+    public string SpriteInfo_OriginY
+    {
+        get => m_SpriteInfo_OriginY;
+        set
+        {
+            m_SpriteInfo_OriginY = value;
+            OnPropertyChanged(nameof(SpriteInfo_OriginY));
+        }
     }
 }
