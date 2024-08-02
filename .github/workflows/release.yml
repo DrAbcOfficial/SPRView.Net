@@ -19,7 +19,8 @@ jobs:
     steps:
     - name: Skip Invalid Arch
       if: (matrix.os == 'macos' && (matrix.arch == 'x86' || matrix.arch == 'arm')) || (matrix.os == 'ubuntu' && matrix.arch == 'x86') || (matrix.os == 'windows' && matrix.arch == 'arm')
-      run: echo "Cancelling workflow..." && exit 1
+      run: echo "Cancelling workflow..." && exit 0
+      
     - name: Checkout
       uses: actions/checkout@v4
       with:
