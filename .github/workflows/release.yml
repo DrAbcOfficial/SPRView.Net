@@ -31,18 +31,36 @@ jobs:
     - name: Publish
       run: dotnet publish -p:PublishProfile=${{ matrix.os }}-${{ matrix.arch }}
 
+    - name: Zipping All
+      if: matrix.os == 'windows'
+      uses: vimtor/action-zip@v1
+      with:
+          files: bin/Release/net8.0/publish/${{ matrix.os }}-${{ matrix.arch }}
+          dest: SPRView.Net-${{ matrix.os }}-${{ matrix.arch }}.zip
+
+    - name: Tarball All
+      if: matrix.os != 'windows'
+      run: tar -czvf ./SPRView.Net-${{ matrix.os }}-${{ matrix.arch }}.tar.gz ./bin/Release/net8.0/publish/${{ matrix.os }}-${{ matrix.arch }}
+
     - name: Create Release Unix
-      uses: fnkr/github-action-ghr@v1
       if: matrix.os != 'windows' && startsWith(github.ref, 'refs/tags/')
-      env:
-          GHR_COMPRESS: xz
-          GHR_PATH: bin/Release/net8.0/publish/${{ matrix.os }}-${{ matrix.arch }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          
+      uses: Xotl/cool-github-releases@v1
+      with:
+          mode: update
+          isPrerelease: true
+          tag_name: ${{ github.ref }}
+          release_name: SPRView.Net-${{ github.ref }}
+          body_mrkdwn: ${{ github.ref }}
+          assets: ./SPRView.Net-${{ matrix.os }}-${{ matrix.arch }}.tar.gz
+          github_token: ${{ github.token }}
+
     - name: Create Release Win
-      uses: fnkr/github-action-ghr@v1
       if: matrix.os == 'windows' && startsWith(github.ref, 'refs/tags/')
-      env:
-          GHR_COMPRESS: zip
-          GHR_PATH: bin/Release/net8.0/publish/${{ matrix.os }}-${{ matrix.arch }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      uses: Xotl/cool-github-releases@v1
+      with:
+          mode: update
+          isPrerelease: true
+          tag_name: ${{ github.ref }}
+          release_name: SPRView.Net-${{ github.ref }}
+          body_mrkdwn: ${{ github.ref }}
+          assets: ./SPRView.Net-${{ matrix.os }}-${{ matrix.arch }}.zip
