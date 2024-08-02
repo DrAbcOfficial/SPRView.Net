@@ -133,6 +133,11 @@ public class CommandViewModel : INotifyPropertyChanged
     {
         App.GetMainWindow().Close();
     }
+    public async void About()
+    {
+        var about = new AboutWindow();
+        await about.ShowDialog(App.GetMainWindow());
+    }
 
     public void FrameStep(string arg)
     {
@@ -158,5 +163,10 @@ public class CommandViewModel : INotifyPropertyChanged
         }
         else
             animation_timer.Stop();
+    }
+
+    public void ChangeLang(string lang)
+    {
+        App.GetViewModel().LoadLangFile(lang);
     }
 }

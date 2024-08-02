@@ -1,0 +1,42 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        x:Class="SPRView.Net.AboutWindow"
+        SizeToContent="WidthAndHeight"
+        CanResize="False"
+        TransparencyLevelHint="AcrylicBlur"
+        ExtendClientAreaToDecorationsHint="True"
+        Background="#20FFFFFF"
+        mc:Ignorable="d" d:DesignWidth="450" d:DesignHeight="450">
+  <Panel Width="400" Height="250">
+    <DockPanel>
+      <Label> ✨ SPRView.Net   - Dr.Abc</Label>
+    </DockPanel>
+    <Border Margin="10,30,10,10" Background="#20FFFFFF" BorderThickness="2" BorderBrush="Gray">
+      <Grid>
+        <Grid.RowDefinitions>
+          <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="*" />
+          <ColumnDefinition Width="2*" />
+        </Grid.ColumnDefinitions>
+        <Panel Grid.Row="0" Grid.Column="0">
+          <Image Source="avares://SPRView.Net/Assets/icon.ico" Width="90" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,30,0,0"/>
+        </Panel>
+        <StackPanel Grid.Row="0" Grid.Column="1">
+          <Label FontSize="25" Margin="0,20,0,0">✨SPRView.Net</Label>
+          <Separator/>
+          <Label>- Dr.Abc❤</Label>
+          <HyperlinkButton NavigateUri="https://github.com/DrAbcOfficial/SPRView.Net">- Source Code</HyperlinkButton>
+          <Label>🙏🏻:</Label>
+          <HyperlinkButton NavigateUri="https://avaloniaui.net/">· Avalonia</HyperlinkButton>
+          <HyperlinkButton NavigateUri="https://github.com/SixLabors/ImageSharp">
+            · ImageSharp
+          </HyperlinkButton>
+        </StackPanel>
+      </Grid>
+    </Border>
+  </Panel>
+</Window>

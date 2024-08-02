@@ -11,7 +11,6 @@
         ExtendClientAreaToDecorationsHint="True"
         Background="#20FFFFFF"
         mc:Ignorable="d" d:DesignWidth="450" d:DesignHeight="450">
-  
   <StackPanel>
     <DockPanel VerticalAlignment="Top" HorizontalAlignment="Left">
       <Menu DockPanel.Dock="Top">
@@ -51,10 +50,24 @@
         <MenuItem Header="{CompiledBinding Lang.TaskBar_View}">
           <CheckBox IsEnabled="{CompiledBinding CanSave}" IsChecked="{CompiledBinding CanShowInfo}" Content="{CompiledBinding Lang.TaskBar_View_Information}"/>
           <CheckBox IsEnabled="{CompiledBinding CanSave}" IsChecked="{CompiledBinding CanShowPallet}" Content="{CompiledBinding Lang.TaskBar_View_Pallet}"/>
+          <MenuItem Header="{CompiledBinding Lang.TaskBar_View_Language}">
+            <MenuItem.Icon>
+              <Label Content="🌏"/>
+            </MenuItem.Icon>
+            <MenuItem Header="中文" Command="{CompiledBinding Command.ChangeLang}" CommandParameter="zh">
+              <MenuItem.Icon>
+                <Label Content="🇨🇳"/>
+              </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem Header="English" Command="{CompiledBinding Command.ChangeLang}" CommandParameter="en">
+              <MenuItem.Icon>
+                <Label Content="🇬🇧"/>
+              </MenuItem.Icon>
+            </MenuItem>
+          </MenuItem>
         </MenuItem>
         <MenuItem Header="{CompiledBinding Lang.TaskBar_Help}">
-          <MenuItem Header="{CompiledBinding Lang.TaskBar_Help_About}">
-            <MenuItem.Icon>
+          <MenuItem Header="{CompiledBinding Lang.TaskBar_Help_About}" Command="{CompiledBinding Command.About}"><MenuItem.Icon>
               <Label Content="🛌"/>
             </MenuItem.Icon>
           </MenuItem>

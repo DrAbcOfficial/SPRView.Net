@@ -81,7 +81,6 @@ public class LangViewModel : INotifyPropertyChanged
             OnPropertyChanged(nameof(TaskBar_View));
         }
     }
-    
     private string m_TaskBar_View_Information = "Information";
     public string TaskBar_View_Information
     {
@@ -100,6 +99,16 @@ public class LangViewModel : INotifyPropertyChanged
         {
             m_TaskBar_View_Pallet = value;
             OnPropertyChanged(nameof(TaskBar_View_Pallet));
+        }
+    }
+    private string m_TaskBar_View_Language = "Language";
+    public string TaskBar_View_Language
+    {
+        get => m_TaskBar_View_Language;
+        set
+        {
+            m_TaskBar_View_Language = value;
+            OnPropertyChanged(nameof(TaskBar_View_Language));
         }
     }
 

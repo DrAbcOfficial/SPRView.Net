@@ -12,6 +12,29 @@ namespace SPRView.Net.ViewModel;
 
 public class MainWindowViewModel : INotifyPropertyChanged
 {
+    private void LoadLangFileInternal(Stream file)
+    {
+        using var reader = new StreamReader(file);
+        string json = reader.ReadToEnd();
+        LangViewModel? person = JsonSerializer.Deserialize<LangViewModel>(json);
+        if (person != null)
+            Lang = person;
+        file.Dispose();
+        OnPropertyChanged(nameof(Lang));
+    }
+    public void LoadLangFile(string lang)
+    {
+        Stream asset;
+        try
+        {
+            asset = AssetLoader.Open(new Uri($"avares://SPRView.Net/Assets/Lang/{lang}.json"));
+        }
+        catch (Exception)
+        {
+            asset = AssetLoader.Open(new Uri($"avares://SPRView.Net/Assets/Lang/en.json"));
+        }
+        LoadLangFileInternal(asset);
+    }
     public void LoadLangFile()
     {
         Stream asset;
@@ -23,12 +46,7 @@ public class MainWindowViewModel : INotifyPropertyChanged
         {
             asset = AssetLoader.Open(new Uri($"avares://SPRView.Net/Assets/Lang/en.json"));
         }
-        using var reader = new StreamReader(asset);
-        string json = reader.ReadToEnd();
-        LangViewModel? person = JsonSerializer.Deserialize<LangViewModel>(json);
-        if (person != null)
-            Lang = person;
-        asset.Dispose();
+        LoadLangFileInternal(asset);
     }
     public event PropertyChangedEventHandler? PropertyChanged;
 
