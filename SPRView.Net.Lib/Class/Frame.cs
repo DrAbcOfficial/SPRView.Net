@@ -21,13 +21,14 @@ public class CFrame : IFrame
         OriginX = originX;
         OriginY = originY;
         Group = group;
-        Parent = parent;
+        m_pParent = parent;
 
         m_pBitmap = new Image<Rgba32>(Size.Width, Size.Height);
         for (int y = 0; y < m_pBitmap.Height; y++)
             for (int x = 0; x < m_pBitmap.Width; x++)
                 m_pBitmap[x, y] = pallet[data[y * m_pBitmap.Width + x]];
     }
+
     public Image GetImage()
     {
         if (m_pBitmap == null)

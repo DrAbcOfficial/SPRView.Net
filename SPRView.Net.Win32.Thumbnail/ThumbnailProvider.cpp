@@ -84,7 +84,7 @@ IFACEMETHODIMP SprThumbnailProvider::Initialize(IStream* pStream, DWORD grfMode)
 
 
 std::wstring ExecuteAndCaptureOutput(const std::wstring& command, const std::wstring& params) {
-    SECURITY_ATTRIBUTES sa;
+    SECURITY_ATTRIBUTES sa{};
     sa.nLength = sizeof(SECURITY_ATTRIBUTES);
     sa.bInheritHandle = TRUE;
     sa.lpSecurityDescriptor = NULL;
@@ -109,7 +109,7 @@ std::wstring ExecuteAndCaptureOutput(const std::wstring& command, const std::wst
         return L"";
     }
     CloseHandle(hWrite);
-    wchar_t buffer[4096];
+    wchar_t buffer[4096]{};
     DWORD bytesRead;
     std::wstring result;
     while (ReadFile(hRead, buffer, sizeof(buffer) - 1, &bytesRead, NULL) && bytesRead > 0) {
@@ -123,10 +123,10 @@ std::wstring ExecuteAndCaptureOutput(const std::wstring& command, const std::wst
 }
 std::vector<BYTE> Base64Decode(const std::wstring& base64) {
     DWORD decodedLength = 0;
-    if (!CryptStringToBinaryW(base64.c_str(), base64.length(), CRYPT_STRING_BASE64, NULL, &decodedLength, NULL, NULL))
+    if (!CryptStringToBinaryW(base64.c_str(), (DWORD)base64.length(), CRYPT_STRING_BASE64, NULL, &decodedLength, NULL, NULL))
         throw std::runtime_error("Failed to calculate decoded length.");
     std::vector<BYTE> decodedData(decodedLength);
-    if (!CryptStringToBinaryW(base64.c_str(), base64.length(), CRYPT_STRING_BASE64, decodedData.data(), &decodedLength, NULL, NULL))
+    if (!CryptStringToBinaryW(base64.c_str(), (DWORD)base64.length(), CRYPT_STRING_BASE64, decodedData.data(), &decodedLength, NULL, NULL))
         throw std::runtime_error("Failed to decode base64 string.");
     return decodedData;
 }

@@ -1,6 +1,7 @@
 ﻿using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
 using SPRView.Net.Lib.Interface;
+using System.Diagnostics.CodeAnalysis;
 namespace SPRView.Net.Lib;
 public class CSprite : ISprite
 {
@@ -17,6 +18,7 @@ public class CSprite : ISprite
     private List<CFrame> m_aryFrames { get; set; } = [];
     public List<CFrame> Frames { get => m_aryFrames; set { m_aryFrames = value; } }
 
+#pragma warning disable CS8618
     private void Init(Stream stream)
     {
         using BinaryReader br = new(stream);
@@ -63,6 +65,7 @@ public class CSprite : ISprite
         using FileStream fs = new(path, FileMode.Open);
         Init(fs);
     }
+#pragma warning restore CS8618
 
     public static ISprite Create(Stream stream)
     {

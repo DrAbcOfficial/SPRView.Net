@@ -12,9 +12,11 @@ public class CStorage
     {
         private ISpriteColorPalette? Original;
         public int ColorCount { get => 16; }
-        public int ShadeCount { get => Original.Size / 16; }
+        public int ShadeCount { get => Original == null ? 0 : Original.Size / 16; }
         public Color GetColor(int colorIndex, int shadeIndex)
         {
+            if (Original == null)
+                return Color.FromUInt32(0);
             Rgba32 rgba = Original.AtIndex(colorIndex + shadeIndex * 16);
             return Color.FromArgb(rgba.A, rgba.R, rgba.G, rgba.B);
         }
@@ -29,11 +31,12 @@ public class CStorage
     }
     private readonly ColorPaletteView m_pColorPalletView = new();
     private CSprite? m_pNowSprite;
-    public CSprite? NowSprite {
+    public CSprite? NowSprite
+    {
         get => m_pNowSprite;
         set
         {
-            if(value != null)
+            if (value != null)
             {
                 m_pNowSprite = value;
                 m_pColorPalletView.SetOrigin(m_pNowSprite.Pallete);

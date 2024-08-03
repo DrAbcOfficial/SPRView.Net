@@ -11,6 +11,7 @@ namespace SPRView.Net;
 
 public partial class App : Application
 {
+#pragma warning disable CS8618
     private static MainWindow m_pMainWindow;
     public static MainWindow GetMainWindow()
     {
@@ -21,6 +22,7 @@ public partial class App : Application
     {
         return m_pViewModel;
     }
+#pragma warning restore CS8618
     private static readonly CStorage m_pStorage = new();
     public static CStorage GetAppStorage()
     {

@@ -6,7 +6,6 @@
     <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
-    <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
     <ApplicationIcon>Assets/icon.ico</ApplicationIcon>
   </PropertyGroup>
 
@@ -23,12 +22,9 @@
     <PackageReference Include="Avalonia.Themes.Fluent" Version="11.1.1" />
     <PackageReference Include="Avalonia.Fonts.Inter" Version="11.1.1" />
     <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
-    <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="11.1.1" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SPRView.Net.CLI\SPRView.Net.CLI.csproj" />
     <ProjectReference Include="..\SPRView.Net.Lib\SPRView.Net.Lib.csproj" />
-    <ProjectReference Include="..\SPRView.Net.Win32.Thumbnail\SPRView.Net.Win32.Thumbnail.vcxproj" />
   </ItemGroup>
 </Project>
