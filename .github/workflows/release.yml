@@ -32,7 +32,7 @@ jobs:
         dotnet-version: 8.0.x
 
     - name: Publish
-      run: dotnet publish -p:PublishProfile=${{ matrix.os }}-${{ matrix.arch }}
+      run: cd SPRView.Net && dotnet publish -p:PublishProfile=${{ matrix.os }}-${{ matrix.arch }}
 
     - name: Zipping All
       if: matrix.os == 'windows'

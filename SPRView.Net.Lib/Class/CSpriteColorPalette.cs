@@ -1,17 +1,21 @@
-﻿using Avalonia.Controls;
-using Avalonia.Media;
-using System;
+﻿using Avalonia.Media;
+using SPRView.Net.Lib.Interface;
 namespace SPRView.Net.Lib;
 
-public class ColorPallet : IColorPalette
+public class CSpriteColorPalette(int size) : ISpriteColorPalette
 {
-    private Color[] _color;
-    private int shadeSize;
-    public ColorPallet(int size)
+    public static ISpriteColorPalette Create(int size)
     {
-        _color = new Color[size];
-        shadeSize = size / 16;
+        return new CSpriteColorPalette(size);
     }
+    public Color AtIndex(int index)
+    {
+        return this[index];
+    }
+
+    private Color[] _color = new Color[size];
+    private int shadeSize = size / 16;
+
     public int ColorCount { get => 16; }
     public int ShadeCount { get => shadeSize; }
     public int Length { get => _color.Length; }

@@ -1,47 +1,21 @@
 ﻿using Avalonia.Media.Imaging;
 using Avalonia.Media;
-using System.Collections.Generic;
-using System.IO;
-using System;
+using SPRView.Net.Lib.Interface;
 namespace SPRView.Net.Lib;
-public class CSprite
+public class CSprite : ISprite
 {
-    public enum SpriteType
-    {
-        ParallelUpright = 0,
-        FacingUpright = 1,
-        Parallel = 2,
-        Oriented = 3,
-        ParallelOriented = 4
-    }
-
-    public enum SpriteFormat
-    {
-        Normal = 0,
-        Additive = 1,
-        IndexAlpha = 2,
-        AlphaTest = 3
-    }
-
-    public enum SpriteSynchron
-    {
-        Sync = 0,
-        Random = 1
-    }
-
-    public SpriteType Type { get; set; }
-    public SpriteFormat Format { get; set; }
+    public ISprite.SpriteType Type { get; set; }
+    public ISprite.SpriteFormat Format { get; set; }
     public float BoundRadius { get; set; }
     public uint MaxFrameWidth { get; set; }
     public uint MaxFrameHeight { get; set; }
     public uint NumberOfFrames { get; set; }
     public float BeamLength { get; set; }
-
-    public SpriteSynchron Synchronization { get; set; }
-
-
-    public ColorPallet Pallete { get; set; }
-    public List<CFrame> Frames { get; private set; } = [];
+    public ISprite.SpriteSynchron Synchronization { get; set; }
+    public ISpriteColorPalette Pallete { get => m_pPallete; set { m_pPallete = (CSpriteColorPalette)value; } }
+    private CSpriteColorPalette m_pPallete { get; set; }
+    private List<CFrame> m_aryFrames { get; set; } = [];
+    public List<CFrame> Frames { get => m_aryFrames; set { m_aryFrames = value; } }
 
     private void Init(Stream stream)
     {
@@ -52,20 +26,20 @@ public class CSprite
         int version = br.ReadInt32();
         if (version != 2)
             throw new InvalidDataException("File not a supported goldsrc sprite version");
-        Type = (SpriteType)br.ReadInt32();
-        Format = (SpriteFormat)br.ReadInt32();
+        Type = (ISprite.SpriteType)br.ReadInt32();
+        Format = (ISprite.SpriteFormat)br.ReadInt32();
         BoundRadius = br.ReadSingle();
         MaxFrameWidth = (uint)br.ReadInt32();
         MaxFrameHeight = (uint)br.ReadInt32();
         NumberOfFrames = (uint)br.ReadInt32();
         BeamLength = br.ReadSingle();
-        Synchronization = (SpriteSynchron)br.ReadInt32();
+        Synchronization = (ISprite.SpriteSynchron)br.ReadInt32();
 
         short palletSize = br.ReadInt16();
-        Pallete = new ColorPallet(palletSize);
+        m_pPallete = new CSpriteColorPalette(palletSize);
         for (int i = 0; i < palletSize; i++)
         {
-            Pallete[i] = Color.FromArgb(255, br.ReadByte(), br.ReadByte(), br.ReadByte());
+            m_pPallete[i] = Color.FromArgb(255, br.ReadByte(), br.ReadByte(), br.ReadByte());
         }
         for (int i = 0; i < NumberOfFrames; i++)
         {
@@ -75,7 +49,7 @@ public class CSprite
             int width = br.ReadInt32();
             int height = br.ReadInt32();
             byte[] data = br.ReadBytes(width * height);
-            Frames.Add(new CFrame(data, Pallete, width, height, originX, originY, group, this));
+            m_aryFrames.Add(new CFrame(data, m_pPallete, width, height, originX, originY, group, this));
         }
     }
     public CSprite(Stream stream)
@@ -90,12 +64,30 @@ public class CSprite
         Init(fs);
     }
 
+    public static ISprite Create(Stream stream)
+    {
+        return new CSprite(stream);
+    } 
+    public static ISprite Create(string? path)
+    {
+        return new CSprite(path);
+    }
+
+    public IFrame GetFrame(int index)
+    {
+        return m_aryFrames[index];
+    }
+    public int GetFrames()
+    {
+        return m_aryFrames.Count;
+    }
+
     public Bitmap GetBitmap(int frame)
     {
-        if(frame < 0 || frame >= Frames.Count)
+        if(frame < 0 || frame >= m_aryFrames.Count)
         {
             throw new IndexOutOfRangeException("Frame index out of bound");
         }
-        return Frames[frame].GetBitmap();
+        return m_aryFrames[frame].GetBitmap();
     }
 }
