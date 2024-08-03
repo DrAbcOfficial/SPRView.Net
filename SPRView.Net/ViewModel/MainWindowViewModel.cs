@@ -1,7 +1,10 @@
 ﻿using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Media;
 using Avalonia.Media.Imaging;
 using Avalonia.Platform;
+using SixLabors.ImageSharp.PixelFormats;
+using SPRView.Net.Lib.Interface;
 using System;
 using System.ComponentModel;
 using System.Globalization;
@@ -125,9 +128,13 @@ public class MainWindowViewModel : INotifyPropertyChanged
         set
         {
             m_iNowFrame = int.TryParse(value, out int result) ? result : 0;
-            var spr = App.GetAppStorage().NowSprite ?? throw new System.Exception("Spr is null!");
+            var spr = App.GetAppStorage().NowSprite ?? throw new Exception("Spr is null!");
             m_iNowFrame = Math.Clamp(m_iNowFrame, 0, spr.Frames.Count - 1);
-            SPR = spr.Frames[m_iNowFrame].GetBitmap();
+            using var memoryStream = new MemoryStream();
+            SixLabors.ImageSharp.Image img = spr.GetImage(m_iNowFrame);
+            img.Save(memoryStream, new SixLabors.ImageSharp.Formats.Png.PngEncoder());
+            memoryStream.Seek(0, SeekOrigin.Begin);
+            SPR = new Bitmap(memoryStream);
             OnPropertyChanged(nameof(NowFrame));
             SprInfo?.UpdateOriginXY();
         }
@@ -184,10 +191,10 @@ public class MainWindowViewModel : INotifyPropertyChanged
     {
         get
         {
-            var spr = App.GetAppStorage().NowSprite;
-            if (spr == null)
+            var pal = App.GetAppStorage().NowPalette;
+            if (!pal.IsValid())
                 return null;
-            return spr.Pallete;
+            return pal;
         }
     }
     public bool CanShowSideBar

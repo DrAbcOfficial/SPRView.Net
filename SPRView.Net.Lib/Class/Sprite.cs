@@ -1,5 +1,5 @@
-﻿using Avalonia.Media.Imaging;
-using Avalonia.Media;
+﻿using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.PixelFormats;
 using SPRView.Net.Lib.Interface;
 namespace SPRView.Net.Lib;
 public class CSprite : ISprite
@@ -39,7 +39,7 @@ public class CSprite : ISprite
         m_pPallete = new CSpriteColorPalette(palletSize);
         for (int i = 0; i < palletSize; i++)
         {
-            m_pPallete[i] = Color.FromArgb(255, br.ReadByte(), br.ReadByte(), br.ReadByte());
+            m_pPallete[i] = new Rgba32(br.ReadByte(), br.ReadByte(), br.ReadByte(), 255);
         }
         for (int i = 0; i < NumberOfFrames; i++)
         {
@@ -82,12 +82,12 @@ public class CSprite : ISprite
         return m_aryFrames.Count;
     }
 
-    public Bitmap GetBitmap(int frame)
+    public Image GetImage(int frame)
     {
         if(frame < 0 || frame >= m_aryFrames.Count)
         {
             throw new IndexOutOfRangeException("Frame index out of bound");
         }
-        return m_aryFrames[frame].GetBitmap();
+        return m_aryFrames[frame].GetImage();
     }
 }

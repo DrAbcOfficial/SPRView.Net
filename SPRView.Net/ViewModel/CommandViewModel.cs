@@ -95,11 +95,8 @@ public class CommandViewModel : INotifyPropertyChanged
         using var gif = new Image<Rgba32>((int)sprite.MaxFrameWidth, (int)sprite.MaxFrameHeight);
         foreach (var frame in sprite.Frames)
         {
-            using var memoryStream = new MemoryStream();
-            frame.GetBitmap().Save(memoryStream);
-            memoryStream.Seek(0, SeekOrigin.Begin);
-            var image = Image.Load<Rgba32>(memoryStream);
-            gif.Frames.AddFrame(image.Frames[0]);
+            var img = frame.GetImage();
+            gif.Frames.AddFrame(img.Frames[0]);
         }
         await using var stream = await file.OpenWriteAsync();
         GifMetadata gifMetadata = gif.Metadata.GetGifMetadata();
@@ -122,7 +119,8 @@ public class CommandViewModel : INotifyPropertyChanged
             for (int i = 0; i < sprite.Frames.Count; i++)
             {
                 using StreamWriter sw = new(Path.Combine(directory, $"{i}.bmp"));
-                sprite.Frames[i].GetBitmap().Save(sw.BaseStream);
+                var img = sprite.Frames[i].GetImage();
+                img.SaveAsBmp(sw.BaseStream);
                 sequence += $"./{i}.bmp\n";
             }
             using StreamWriter text = new(Path.Combine(directory, $"sequence.qc"));

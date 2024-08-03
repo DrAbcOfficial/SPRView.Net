@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "SPRView.Net.CLI": {
+      "commandName": "Project",
+      "commandLineArgs": "thumbnail \"D:\\SteamLibrary\\steamapps\\common\\Sven Co-op\\svencoop\\sprites\\640wrhudsc.spr\""
+    }
+  }
+}

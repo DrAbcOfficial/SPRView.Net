@@ -1,7 +1,6 @@
 ﻿using System.ComponentModel;
 namespace SPRView.Net.ViewModel;
 
-
 public class LangViewModel : INotifyPropertyChanged
 {
     public event PropertyChangedEventHandler? PropertyChanged;

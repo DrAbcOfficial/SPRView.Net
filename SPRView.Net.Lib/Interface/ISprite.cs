@@ -1,4 +1,5 @@
-﻿using Avalonia.Media.Imaging;
+﻿using SixLabors.ImageSharp;
+
 namespace SPRView.Net.Lib.Interface;
 
 public interface ISprite
@@ -39,5 +40,5 @@ public interface ISprite
     abstract public int GetFrames();
     abstract public static ISprite Create(Stream stream);
     abstract public static ISprite Create(string? path);
-    abstract public Bitmap GetBitmap(int frame);
+    abstract public Image GetImage(int frame);
 }

@@ -1,6 +1,8 @@
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
+using Avalonia.Media.Imaging;
+using SixLabors.ImageSharp;
 using SPRView.Net.Storage;
 using SPRView.Net.ViewModel;
 using System.IO;
@@ -19,7 +21,7 @@ public partial class App : Application
     {
         return m_pViewModel;
     }
-    private static CStorage m_pStorage = new();
+    private static readonly CStorage m_pStorage = new();
     public static CStorage GetAppStorage()
     {
         return m_pStorage;
@@ -53,7 +55,11 @@ public partial class App : Application
     {
         var newSprite = new Lib.CSprite(file);
         m_pStorage.NowSprite = newSprite;
-        m_pViewModel.SPR = newSprite.GetBitmap(0);
+        using var memoryStream = new MemoryStream();
+        Image img = newSprite.GetImage(0);
+        img.SaveAsPng(memoryStream);
+        memoryStream.Seek(0, SeekOrigin.Begin);
+        m_pViewModel.SPR = new Bitmap(memoryStream);
         m_pViewModel.SprViewerSize = m_pViewModel.SPR.Size;
     }
 

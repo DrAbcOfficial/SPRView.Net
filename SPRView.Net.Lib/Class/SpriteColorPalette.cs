@@ -1,4 +1,4 @@
-﻿using Avalonia.Media;
+﻿using SixLabors.ImageSharp.PixelFormats;
 using SPRView.Net.Lib.Interface;
 namespace SPRView.Net.Lib;
 
@@ -8,22 +8,15 @@ public class CSpriteColorPalette(int size) : ISpriteColorPalette
     {
         return new CSpriteColorPalette(size);
     }
-    public Color AtIndex(int index)
+    public Rgba32 AtIndex(int index)
     {
         return this[index];
     }
-
-    private Color[] _color = new Color[size];
-    private int shadeSize = size / 16;
-
-    public int ColorCount { get => 16; }
-    public int ShadeCount { get => shadeSize; }
+    private Rgba32[] _color = new Rgba32[size];
+    private int _size = size;
+    public int Size { get => _size; }
     public int Length { get => _color.Length; }
-    public Color GetColor(int colorIndex, int shadeIndex)
-    {
-        return _color[colorIndex + shadeIndex * 16];
-    }
-    public Color this[int index]
+    public Rgba32 this[int index]
     {
         get
         {
