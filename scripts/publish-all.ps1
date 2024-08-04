@@ -22,7 +22,7 @@ New-Item ".\build" -ItemType "directory"
 foreach($proj in $sharpproj){
     Set-Location $proj
     &"dotnet" "publish" $callparam
-    Move-Item -Path @(".\build\*") -Destination "..\build\" -Recurse -Exclude "*.pdb" -Force
+    Copy-Item -Path @("build\*") -Destination "..\build\" -Recurse -Exclude "*.pdb" -Force
     Set-Location ".."
 }
 
@@ -39,7 +39,7 @@ switch ($os)
                 &"$($vsLocation)\Common7\Tools\vsdevcmd.bat" "-arch=x64"
                 &"$($vsLocation)\Msbuild\Current\Bin\MSBuild.exe" "$(Split-Path -Parent $MyInvocation.MyCommand.Definition)/../SPRView.Net.Win32.Thumbnail/SPRView.Net.Win32.Thumbnail.vcxproj" /p:Configuration="Release" /p:Platform="x64"
             }
-            Move-Item -Path @(".\x64\Release\*") -Destination "..\build\" -Recurse -Exclude "*.pdb" -Force
+            Copy-Item -Path @(".\x64\Release\*") -Destination "..\build\" -Recurse -Exclude "*.pdb" -Force
             Set-Location ".."
         }
     }
