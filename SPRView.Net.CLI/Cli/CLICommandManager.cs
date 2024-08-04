@@ -6,6 +6,7 @@ public class CLICommandManager
         .AddCommand<ThumbnailCommand>()
         .AddCommand<SaveImageCommand>()
         .AddCommand<InformationCommand>()
+        .AddCommand<PreviewCommand>()
         .Build()
         .RunAsync(args);
 }
