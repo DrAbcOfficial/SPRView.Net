@@ -20,7 +20,7 @@ if (Test-Path -Path ".\build" -PathType Container) {
 }
 New-Item ".\build" -ItemType "directory"
 foreach($proj in $sharpproj){
-    Set-Location $proj
+    Set-Location @("$proj\")
     &"dotnet" "publish" $callparam
     Copy-Item -Path @("build\*") -Destination "..\build\" -Recurse -Exclude "*.pdb" -Force
     Set-Location ".."
@@ -31,7 +31,7 @@ switch ($os)
     "windows" {
         $sharpproj = "SPRView.Net.Win32.Thumbnail"
         foreach($proj in $sharpproj){
-            Set-Location $proj
+            Set-Location @("$proj\")
             $ProgramFiles = [Environment]::GetEnvironmentVariable("ProgramFiles(x86)")
             $vsLocation= &@("$ProgramFiles\Microsoft Visual Studio\Installer\vswhere.exe") "-latest" "-products" "*" "-requires" "Microsoft.VisualStudio.Component.VC.Tools.x86.x64" "-property" "installationPath"
             Write-Output $vsLocation
