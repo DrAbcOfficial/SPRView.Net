@@ -137,6 +137,80 @@ public class CommandViewModel : INotifyPropertyChanged
             text.Write(sequence);
         }
     }
+    public async void SavePalette()
+    {
+        var mainWindow = App.GetMainWindow();
+        FilePickerFileType types = new("Palette files")
+        {
+            Patterns = ["*.pal", "*.gpl"],
+            AppleUniformTypeIdentifiers = ["microsoft.pal", "gimp.gpl"],
+            MimeTypes = ["palette/*"]
+        };
+        var file = await mainWindow.StorageProvider.SaveFilePickerAsync(new FilePickerSaveOptions
+        {
+            Title = App.GetViewModel().Lang?.FileManager_SaveGIF,
+            DefaultExtension = "pal",
+            FileTypeChoices = [types],
+            ShowOverwritePrompt = true
+        });
+        if (file == null)
+            return;
+        var palette = App.GetAppStorage().NowPalette ?? throw new ArgumentNullException("Storage palette is null!");
+        var orgpalette = palette.GetOrigin() ?? throw new ArgumentNullException("Storage original palette is null!");
+        await using var fs = await file.OpenWriteAsync();
+        string? ext = Path.GetExtension(file.TryGetLocalPath())?.ToLower();
+        string? name = Path.GetFileName(file.TryGetLocalPath());
+        if (ext == null || name == null)
+            return;
+        switch (ext)
+        {
+            case ".pal":
+                {
+                    using BinaryWriter bw = new(fs);
+                    //0x00 Magic
+                    bw.Write((uint)0X52494646);
+                    //0x04 FileSize
+                    bw.Write((uint)0x0);
+                    //0x08 RIFF
+                    bw.Write((uint)0X50414C20);
+                    //0x0B Block Header
+                    bw.Write((uint)0X64617461);
+                    //0x10 Block Size
+                    bw.Write((uint)0x0);
+                    //0x14 Palette Size
+                    bw.Write((ushort)orgpalette.Length);
+                    //0x16 Palette Version
+                    bw.Write((ushort)0X300);
+                    //0x18 Data
+                    for (int i = 0; i < orgpalette.Length; i++)
+                    {
+                        bw.Write(orgpalette.AtIndex(i).R);
+                        bw.Write(orgpalette.AtIndex(i).G);
+                        bw.Write(orgpalette.AtIndex(i).B);
+                        bw.Write((byte)0x00);
+                    }
+                    long fileSize = bw.BaseStream.Length;
+                    bw.Seek(0x04, SeekOrigin.Begin);
+                    bw.Write((uint)fileSize - 8);
+                    bw.Seek(0x10, SeekOrigin.Begin);
+                    bw.Write((uint)fileSize - 20);
+                    break;
+                }
+            case ".gpl":
+                {
+                    using StreamWriter sw = new(fs);
+                    sw.WriteLine("GIMP Palette");
+                    sw.WriteLine($"Name: {name}");
+                    sw.WriteLine("Columns: 16");
+                    for(int i = 0; i < orgpalette.Length; i++)
+                    {
+                        Rgba32 rgba = orgpalette.AtIndex(i);
+                        sw.WriteLine($"{rgba.R} {rgba.G} {rgba.B} Index {i}");
+                    }
+                    break;
+                }
+        }        
+    }
     public void Exit()
     {
         App.GetMainWindow().Close();

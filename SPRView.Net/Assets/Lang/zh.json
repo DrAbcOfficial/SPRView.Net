@@ -4,6 +4,7 @@
   "TaskBar_File_SaveFrame": "另存为图像",
   "TaskBar_File_SaveGIF": "另存为动图",
   "TaskBar_File_Export": "导出所有帧",
+  "TaskBar_File_SavePalette": "保存色板(.pal)",
   "TaskBar_File_Exit": "退出",
   "TaskBar_View": "_浏览",
   "TaskBar_View_Information": "信息",
@@ -29,5 +30,6 @@
   "FileManager_OpenSprite": "打开精灵图",
   "FileManager_SaveImage": "另存为图片",
   "FileManager_SaveGIF": "另存为动图",
-  "FileManager_SaveSequence": "导出序列"
+  "FileManager_SaveSequence": "导出序列",
+  "FileManager_SavePalette": "导出调色板"
 }

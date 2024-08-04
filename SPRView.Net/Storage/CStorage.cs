@@ -20,6 +20,10 @@ public class CStorage
             Rgba32 rgba = Original.AtIndex(colorIndex + shadeIndex * 16);
             return Color.FromArgb(rgba.A, rgba.R, rgba.G, rgba.B);
         }
+        public ISpriteColorPalette? GetOrigin()
+        {
+            return Original;
+        }
         public void SetOrigin(ISpriteColorPalette orgPalette)
         {
             Original = orgPalette;

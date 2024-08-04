@@ -49,6 +49,16 @@ public class LangViewModel : INotifyPropertyChanged
             OnPropertyChanged(nameof(TaskBar_File_SaveGIF));
         }
     }
+    private string m_TaskBar_File_SavePalette = "Save Palette";
+    public string TaskBar_File_SavePalette
+    {
+        get => m_TaskBar_File_SavePalette;
+        set
+        {
+            m_TaskBar_File_SavePalette = value;
+            OnPropertyChanged(nameof(TaskBar_File_SavePalette));
+        }
+    }
     private string m_TaskBar_File_Export = "Export";
     public string TaskBar_File_Export
     {
@@ -258,4 +268,5 @@ public class LangViewModel : INotifyPropertyChanged
     public string FileManager_SaveImage { get; set; } = "Save Image";
     public string FileManager_SaveGIF { get; set; } = "Save GIF";
     public string FileManager_SaveSequence { get; set; } = "Save Sequence";
+    public string FileManager_SavePalette { get; set; } = "Save Palette";
 }

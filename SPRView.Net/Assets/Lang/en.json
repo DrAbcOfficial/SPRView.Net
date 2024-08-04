@@ -4,6 +4,7 @@
   "TaskBar_File_SaveFrame": "Save as Image",
   "TaskBar_File_SaveGIF": "Save as Animate Image",
   "TaskBar_File_Export": "Export All Frame",
+  "TaskBar_File_SavePalette": "Export Palette(.pal)",
   "TaskBar_File_Exit": "Quit",
   "TaskBar_View": "_View",
   "TaskBar_View_Information": "Information",
@@ -29,5 +30,6 @@
   "FileManager_OpenSprite": "Open Sprite",
   "FileManager_SaveImage": "Save Image",
   "FileManager_SaveGIF": "Save Animate",
-  "FileManager_SaveSequence": "Save Sequence"
+  "FileManager_SaveSequence": "Save Sequence",
+  "FileManager_SavePalette": "Save Palette"
 }

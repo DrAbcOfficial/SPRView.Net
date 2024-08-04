@@ -41,6 +41,11 @@
               <Label Content="⏏"/>
             </MenuItem.Icon>
           </MenuItem>
+          <MenuItem Header="{CompiledBinding Lang.TaskBar_File_SavePalette}" Command="{CompiledBinding Command.SavePalette}" IsEnabled="{CompiledBinding CanSave}">
+            <MenuItem.Icon>
+              <Label Content="🪅"/>
+            </MenuItem.Icon>
+          </MenuItem>
           <Separator/>
           <MenuItem Header="{CompiledBinding Lang.TaskBar_File_Exit}" Command="{CompiledBinding Command.Exit}">
             <MenuItem.Icon>
