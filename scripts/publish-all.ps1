@@ -13,7 +13,7 @@ switch ($os)
 $sharpr = @("$sharpos-$arch")
 
 Set-Location ".."
-$callparam = "-r", $sharpr, "-c", "Release", "-p:PublishReadyToRun=true", "-p:PublishSingleFile=true", "-p:EnableCompressionInSingleFile=true"
+$callparam = "-r", $sharpr, "-c", "Release", "-p:PublishReadyToRun=true", "-p:PublishSingleFile=false"
 $sharpproj = "SPRView.Net", "SPRView.Net.CLI"
 if (Test-Path -Path ".\build" -PathType Container) {
     Remove-Item ".\build" -Force -Recurse
