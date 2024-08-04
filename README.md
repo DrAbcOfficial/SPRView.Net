@@ -1,5 +1,5 @@
 
-# SPRView.Net<img src="Assets/icon.ico" align="right" width="120"/>
+# SPRView.Net<img src="readme/icon.png" align="right" width="120"/>
 
 Yet another Sprite viewer for half-life series game (counter-strike, sven co-op, etc.)
 
