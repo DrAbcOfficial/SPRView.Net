@@ -32,7 +32,7 @@ jobs:
 
     - name: Publish
       shell: pwsh
-      run: ./scripts/publish-all.ps1 -os ${{ matrix.os }} -arch ${{ matrix.arch }}
+      run: cd scripts && ./publish-all.ps1 -os ${{ matrix.os }} -arch ${{ matrix.arch }}
 
     - name: Zipping All
       if: matrix.os == 'windows'
