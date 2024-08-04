@@ -2,7 +2,7 @@
   "TaskBar_File": "_文件",
   "TaskBar_File_Open": "打开(.spr)",
   "TaskBar_File_SaveFrame": "另存为图像",
-  "TaskBar_File_SaveGIF": "另存为GIF",
+  "TaskBar_File_SaveGIF": "另存为动图",
   "TaskBar_File_Export": "导出所有帧",
   "TaskBar_File_Exit": "退出",
   "TaskBar_View": "_浏览",
@@ -28,6 +28,6 @@
 
   "FileManager_OpenSprite": "打开精灵图",
   "FileManager_SaveImage": "另存为图片",
-  "FileManager_SaveGIF": "另存为GIF",
+  "FileManager_SaveGIF": "另存为动图",
   "FileManager_SaveSequence": "导出序列"
 }

@@ -2,7 +2,7 @@
   "TaskBar_File": "_File",
   "TaskBar_File_Open": "Open(.spr)",
   "TaskBar_File_SaveFrame": "Save as Image",
-  "TaskBar_File_SaveGIF": "Save as GIF",
+  "TaskBar_File_SaveGIF": "Save as Animate Image",
   "TaskBar_File_Export": "Export All Frame",
   "TaskBar_File_Exit": "Quit",
   "TaskBar_View": "_View",
@@ -28,6 +28,6 @@
 
   "FileManager_OpenSprite": "Open Sprite",
   "FileManager_SaveImage": "Save Image",
-  "FileManager_SaveGIF": "Save GIF",
+  "FileManager_SaveGIF": "Save Animate",
   "FileManager_SaveSequence": "Save Sequence"
 }

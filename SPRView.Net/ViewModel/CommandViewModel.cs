@@ -2,6 +2,7 @@
 using Avalonia.Threading;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Formats.Gif;
+using SixLabors.ImageSharp.Formats.Webp;
 using SixLabors.ImageSharp.PixelFormats;
 using System;
 using System.ComponentModel;
@@ -77,10 +78,10 @@ public class CommandViewModel : INotifyPropertyChanged
     {
         var sprite = App.GetAppStorage().NowSprite ?? throw new ArgumentNullException("Storage sprite is null!");
         var mainWindow = App.GetMainWindow();
-        FilePickerFileType gifstype = new("GIF Image")
+        FilePickerFileType gifstype = new("Animate Image")
         {
-            Patterns = ["*.gif"],
-            AppleUniformTypeIdentifiers = ["public.gif"],
+            Patterns = ["*.gif", "*.webp"],
+            AppleUniformTypeIdentifiers = ["public.gif", "public.webp"],
             MimeTypes = ["image/*"]
         };
         var file = await mainWindow.StorageProvider.SaveFilePickerAsync(new FilePickerSaveOptions
@@ -98,10 +99,19 @@ public class CommandViewModel : INotifyPropertyChanged
             var img = frame.GetImage();
             gif.Frames.AddFrame(img.Frames[0]);
         }
+
         await using var stream = await file.OpenWriteAsync();
-        GifMetadata gifMetadata = gif.Metadata.GetGifMetadata();
-        gifMetadata.RepeatCount = 0;
-        gif.Save(stream, new GifEncoder());
+        if (Path.GetExtension(file.TryGetLocalPath())?.ToLower() == ".webp"){
+            WebpMetadata metadata = gif.Metadata.GetWebpMetadata();
+            metadata.RepeatCount = 0;
+            gif.Save(stream, new WebpEncoder());
+        }
+        else
+        {
+            GifMetadata gifMetadata = gif.Metadata.GetGifMetadata();
+            gifMetadata.RepeatCount = 0;
+            gif.Save(stream, new GifEncoder());
+        }
     }
     public async void Export()
     {
