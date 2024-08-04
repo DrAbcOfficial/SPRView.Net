@@ -20,9 +20,9 @@ if (Test-Path -Path ".\build" -PathType Container) {
 }
 New-Item ".\build" -ItemType "directory"
 foreach($proj in $sharpproj){
-    Set-Location @("$proj\")
+    Set-Location $proj
     &"dotnet" "publish" $callparam
-    Copy-Item -Path @("build\*") -Destination "..\build\" -Recurse -Exclude "*.pdb" -Force
+    Copy-Item -Path @("build") -Destination ".." -Recurse -Exclude "*.pdb" -Force
     Set-Location ".."
 }
 
@@ -31,7 +31,7 @@ switch ($os)
     "windows" {
         $sharpproj = "SPRView.Net.Win32.Thumbnail"
         foreach($proj in $sharpproj){
-            Set-Location @("$proj\")
+            Set-Location $proj
             $ProgramFiles = [Environment]::GetEnvironmentVariable("ProgramFiles(x86)")
             $vsLocation= &@("$ProgramFiles\Microsoft Visual Studio\Installer\vswhere.exe") "-latest" "-products" "*" "-requires" "Microsoft.VisualStudio.Component.VC.Tools.x86.x64" "-property" "installationPath"
             Write-Output $vsLocation
@@ -39,7 +39,7 @@ switch ($os)
                 &"$($vsLocation)\Common7\Tools\vsdevcmd.bat" "-arch=x64"
                 &"$($vsLocation)\Msbuild\Current\Bin\MSBuild.exe" "$(Split-Path -Parent $MyInvocation.MyCommand.Definition)/../SPRView.Net.Win32.Thumbnail/SPRView.Net.Win32.Thumbnail.vcxproj" /p:Configuration="Release" /p:Platform="x64"
             }
-            Copy-Item -Path @(".\x64\Release\*") -Destination "..\build\" -Recurse -Exclude "*.pdb" -Force
+            Copy-Item -Path @(".\x64\Release\SPRView.Net.Win32.Thumbnail.dll") -Destination "..\build" -Force
             Set-Location ".."
         }
     }
