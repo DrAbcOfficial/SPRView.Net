@@ -29,18 +29,18 @@ foreach($proj in $sharpproj){
 switch ($os)
 {
     "windows" {
-        Set-Location $proj
         $ProgramFiles = [Environment]::GetEnvironmentVariable("ProgramFiles(x86)")
         $vsLocation= &@("$ProgramFiles\Microsoft Visual Studio\Installer\vswhere.exe") "-latest" "-products" "*" "-requires" "Microsoft.VisualStudio.Component.VC.Tools.x86.x64" "-property" "installationPath"
 
         $sharpproj = "SPRView.Net.Win32.Thumbnail"
         foreach($proj in $sharpproj){
+            Set-Location $proj
             &"nuget" "restore"
             if(Test-Path("$($vsLocation)\Common7\Tools\vsdevcmd.bat")){
                 &"$($vsLocation)\Common7\Tools\vsdevcmd.bat" "-arch=x64"
                 &"$($vsLocation)\Msbuild\Current\Bin\MSBuild.exe" "$(Split-Path -Parent $MyInvocation.MyCommand.Definition)/../SPRView.Net.Win32.Thumbnail/SPRView.Net.Win32.Thumbnail.vcxproj" /p:Configuration="Release" /p:Platform="x64"
             }
-            Copy-Item -Path @(".\x64\Release\SPRView.Net.Win32.Thumbnail.dll") -Destination "..\build" -Force
+            Copy-Item -Path ".\x64\Release\SPRView.Net.Win32.Thumbnail.dll" -Destination "..\build" -Force
             Set-Location ".."
         }
     }
