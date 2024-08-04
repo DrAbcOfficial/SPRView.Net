@@ -19,6 +19,16 @@ public class LangViewModel : INotifyPropertyChanged
             OnPropertyChanged(nameof(TaskBar_File));
         }
     }
+    private string m_TaskBar_File_Create = "Create";
+    public string TaskBar_File_Create
+    {
+        get => m_TaskBar_File_Create;
+        set
+        {
+            m_TaskBar_File_Create = value;
+            OnPropertyChanged(nameof(TaskBar_File_Create));
+        }
+    }
     private string m_TaskBar_File_Open = "Open";
     public string TaskBar_File_Open
     {

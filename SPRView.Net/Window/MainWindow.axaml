@@ -21,6 +21,11 @@
           </MenuItem.Header>
         </MenuItem>
         <MenuItem Header="{CompiledBinding Lang.TaskBar_File}">
+          <MenuItem Header="{CompiledBinding Lang.TaskBar_File_Create}" Command="{CompiledBinding Command.CreateFile}">
+            <MenuItem.Icon>
+              <Label Content="✏️"/>
+            </MenuItem.Icon>
+          </MenuItem>
           <MenuItem Header="{CompiledBinding Lang.TaskBar_File_Open}" Command="{CompiledBinding Command.OpenFile}">
             <MenuItem.Icon>
               <Label Content="📂"/>

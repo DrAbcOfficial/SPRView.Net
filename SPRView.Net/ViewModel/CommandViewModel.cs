@@ -37,6 +37,10 @@ public class CommandViewModel : INotifyPropertyChanged
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
     }
 
+    public async void CreateFile()
+    {
+
+    }
     public async void OpenFile()
     {
         var mainWindow = App.GetMainWindow();

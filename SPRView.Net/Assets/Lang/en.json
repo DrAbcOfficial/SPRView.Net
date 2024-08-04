@@ -1,5 +1,6 @@
 {
   "TaskBar_File": "_File",
+  "TaskBar_File_Create": "Create",
   "TaskBar_File_Open": "Open(.spr)",
   "TaskBar_File_SaveFrame": "Save as Image",
   "TaskBar_File_SaveGIF": "Save as Animate Image",

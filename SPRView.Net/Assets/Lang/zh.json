@@ -1,5 +1,6 @@
 {
   "TaskBar_File": "_文件",
+  "TaskBar_File_Create": "新建",
   "TaskBar_File_Open": "打开(.spr)",
   "TaskBar_File_SaveFrame": "另存为图像",
   "TaskBar_File_SaveGIF": "另存为动图",
