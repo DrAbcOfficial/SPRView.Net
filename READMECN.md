@@ -1,7 +1,7 @@
 
 # SPRView.Net<img src="readme/icon.png" align="right" width="120"/>
 
-Yet another Sprite viewer for half-life series game (counter-strike, sven co-op, etc.)
+是的又是一个 half-life 系列游戏 (counter-strike, sven co-op, etc.) spr查看器
 
 ![Downloads](https://img.shields.io/github/downloads/DrAbcOfficial/SPRView.Net/total?style=for-the-badge)
 ![Repo Size](https://img.shields.io/github/repo-size/DrAbcOfficial/SPRView.Net?style=for-the-badge)
@@ -9,39 +9,39 @@ Yet another Sprite viewer for half-life series game (counter-strike, sven co-op,
 
 
 ----
-# ✅Getting Start
+# ✅开始
 
--  Before you use this, will need install [<img src="https://raw.githubusercontent.com/dotnet/brand/main/logo/dotnet-logo.svg" width="24"/>.NET 8.0](ttps://aka.ms/get-dotnet-8) runtimes
--  Grab prebuild binary from [release](https://github.com/DrAbcOfficial/SPRView.Net/releases), x64 only
+-  在使用之前你需要安装 [<img src="https://raw.githubusercontent.com/dotnet/brand/main/logo/dotnet-logo.svg" width="24"/>.NET 8.0](ttps://aka.ms/get-dotnet-8) 运行时
+-  从 [release](https://github.com/DrAbcOfficial/SPRView.Net/releases)获得预先编译的二进制文件，仅提供x64架构
 
 
 ----
 
-# ❓️Why
+# ❓️为什么
 
-- My favourite tool is too old.
-- Newer tools I don't like.
-- The newer tools that I like are too ugly.
-- And no cross-platform
+- 我最喜欢的工具太老
+- 较新的工具我不喜欢
+- 较新我又喜欢的太丑
+- 而且基本都不跨平台
 
-# 💡Function
+# 💡功能
 
-This tool only provides the function to double-click and view spr, and more likely will not add the function to view/make a `wad`, view/make a `pak`, etc.
+这个工具只提供双击后查看spr的能力, 所以以后大概率不会替换类似于查看/制作 `wad`, `pak`, 之类文件的功能.
 
-If you need, I recommend the following repositories:
+如果你有需求我推荐使用:
 
 - [GIMP-hl-sprite-plugin](https://github.com/Psycrow101/GIMP-hl-sprite-plugin)
 - [HL-Texture-Tools](https://github.com/yuraj11/HL-Texture-Tools)
 - [WadMaker](https://github.com/pwitvoet/wadmaker)
 
-# 🖼️ Screenshot
+# 🖼️ 截图
 
 |1|2|
 |--|--|
 |<img src="readme/20240803003123.png" width="360"/>|<img src="readme//20240803003207.png" width="360"/>|
 
 
-# This repository used:
+# 第三方库:
 
 1. [AvaloniaUI](https://avaloniaui.net/)
 2. [ImageSharp](https://github.com/SixLabors/ImageSharp)
