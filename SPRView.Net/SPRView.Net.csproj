@@ -11,9 +11,13 @@
 
   <ItemGroup>
     <AvaloniaResource Include="Assets\**" />
+    <AvaloniaXaml Remove="build\**" />
     <AvaloniaXaml Remove="img\**" />
+    <Compile Remove="build\**" />
     <Compile Remove="img\**" />
+    <EmbeddedResource Remove="build\**" />
     <EmbeddedResource Remove="img\**" />
+    <None Remove="build\**" />
     <None Remove="img\**" />
     <None Remove="Assets\Lang\zh.json" />
     <PackageReference Include="Avalonia" Version="11.1.1" />
