@@ -9,6 +9,9 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
+    <Filter Include="Def">
+      <UniqueIdentifier>{b431d406-dcdf-4638-ae95-5d213fba988d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -18,6 +21,9 @@
       <Filter>Header</Filter>
     </ClInclude>
     <ClInclude Include="ThumbnailProvider.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Reg.h">
       <Filter>Header</Filter>
     </ClInclude>
   </ItemGroup>
@@ -34,9 +40,15 @@
     <ClCompile Include="ThumbnailProvider.cpp">
       <Filter>Source</Filter>
     </ClCompile>
+    <ClCompile Include="Reg.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="ExportFunctions.def">
+      <Filter>Def</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Natvis Include="$(MSBuildThisFileDirectory)..\..\natvis\wil.natvis" />

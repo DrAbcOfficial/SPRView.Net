@@ -1,12 +1,19 @@
 ﻿// dllmain.cpp : Defines the entry point for the DLL application.
 #include "pch.h"
 #include "ClassFactory.h"
+#include "Reg.h"
+#include "ShlObj.h"
+#include "olectl.h"
 
 HINSTANCE g_hInst = NULL;
 long g_cDllRef = 0;
 
 // {F5E7F8AF-F2BF-423D-9A14-FB194A9E5A84}
-static const GUID CLSID_PdfThumbnailProvider = { 0xf5e7f8af, 0xf2bf, 0x423d, { 0x9a, 0x14, 0xfb, 0x19, 0x4a, 0x9e, 0x5a, 0x84 } };
+static const GUID CLSID_SprThumbnailProvider = { 0xf5e7f8af, 0xf2bf, 0x423d, { 0x9a, 0x14, 0xfb, 0x19, 0x4a, 0x9e, 0x5a, 0x84 } };
+// {8F45BF90-A84F-4BB5-8043-65F5E62F89AE}
+static const GUID APPID_SprThumbnailProvider =
+{ 0x8f45bf90, 0xa84f, 0x4bb5, { 0x80, 0x43, 0x65, 0xf5, 0xe6, 0x2f, 0x89, 0xae } };
+
 
 
 BOOL APIENTRY DllMain(HMODULE hModule,
@@ -45,7 +52,7 @@ STDAPI DllGetClassObject(REFCLSID rclsid, REFIID riid, void** ppv)
 {
     HRESULT hr = CLASS_E_CLASSNOTAVAILABLE;
 
-    if (IsEqualCLSID(CLSID_PdfThumbnailProvider, rclsid))
+    if (IsEqualCLSID(CLSID_SprThumbnailProvider, rclsid))
     {
         hr = E_OUTOFMEMORY;
 
@@ -71,4 +78,68 @@ STDAPI DllGetClassObject(REFCLSID rclsid, REFIID riid, void** ppv)
 STDAPI DllCanUnloadNow(void)
 {
     return g_cDllRef > 0 ? S_FALSE : S_OK;
+}
+
+//
+//   FUNCTION: DllRegisterServer
+//
+//   PURPOSE: Register the COM server and the thumbnail handler.
+// 
+STDAPI DllRegisterServer(void)
+{
+    HRESULT hr;
+
+    wchar_t szModule[MAX_PATH];
+    if (GetModuleFileName(g_hInst, szModule, ARRAYSIZE(szModule)) == 0)
+    {
+        hr = HRESULT_FROM_WIN32(GetLastError());
+        return hr;
+    }
+
+    // Register the component.
+    hr = RegisterInprocServer(szModule, CLSID_SprThumbnailProvider,
+        L"SPRView.Net.Win32.Thumbnail.SprThumbnailProvider Class",
+        L"Apartment");
+    if (SUCCEEDED(hr))
+    {
+        // Register the thumbnail handler. The thumbnail handler is associated
+        // with the .recipe file class.
+        hr = RegisterShellExtThumbnailHandler(L"spr",
+            CLSID_SprThumbnailProvider);
+        if (SUCCEEDED(hr))
+        {
+            // This tells the shell to invalidate the thumbnail cache. It is 
+            // important because any .recipe files viewed before registering 
+            // this handler would otherwise show cached blank thumbnails.
+            SHChangeNotify(SHCNE_ASSOCCHANGED, SHCNF_IDLIST, NULL, NULL);
+        }
+    }
+
+    return hr;
+}
+//
+//   FUNCTION: DllUnregisterServer
+//
+//   PURPOSE: Unregister the COM server and the thumbnail handler.
+// 
+STDAPI DllUnregisterServer(void)
+{
+    HRESULT hr = S_OK;
+
+    wchar_t szModule[MAX_PATH];
+    if (GetModuleFileName(g_hInst, szModule, ARRAYSIZE(szModule)) == 0)
+    {
+        hr = HRESULT_FROM_WIN32(GetLastError());
+        return hr;
+    }
+
+    // Unregister the component.
+    hr = UnregisterInprocServer(CLSID_SprThumbnailProvider);
+    if (SUCCEEDED(hr))
+    {
+        // Unregister the thumbnail handler.
+        hr = UnregisterShellExtThumbnailHandler(L"spr");
+    }
+
+    return hr;
 }

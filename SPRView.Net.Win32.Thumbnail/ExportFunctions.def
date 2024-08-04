@@ -1,0 +1,6 @@
+LIBRARY	"SPRView.Net.Win32.Thumbnail.dll"
+EXPORTS
+    DllGetClassObject   PRIVATE
+    DllCanUnloadNow     PRIVATE
+    DllRegisterServer   PRIVATE
+    DllUnregisterServer PRIVATE
