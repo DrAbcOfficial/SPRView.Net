@@ -31,22 +31,22 @@
               <Label Content="📂"/>
             </MenuItem.Icon>
           </MenuItem>
-          <MenuItem Header="{CompiledBinding Lang.TaskBar_File_SaveFrame}" Command="{CompiledBinding Command.SaveFrame}" IsEnabled="{CompiledBinding CanSave}">
+          <MenuItem Header="{CompiledBinding Lang.TaskBar_File_SaveFrame}" Command="{CompiledBinding Command.SaveFrame}" IsEnabled="{CompiledBinding LoadedSpr}">
             <MenuItem.Icon>
               <Label Content="💾"/>
             </MenuItem.Icon>
           </MenuItem>
-          <MenuItem Header="{CompiledBinding Lang.TaskBar_File_SaveGIF}" Command="{CompiledBinding Command.SaveGIF}" IsEnabled="{CompiledBinding CanSave}">
+          <MenuItem Header="{CompiledBinding Lang.TaskBar_File_SaveGIF}" Command="{CompiledBinding Command.SaveGIF}" IsEnabled="{CompiledBinding LoadedSpr}">
             <MenuItem.Icon>
               <Label Content="🖼︎"/>
             </MenuItem.Icon>
           </MenuItem>
-          <MenuItem Header="{CompiledBinding Lang.TaskBar_File_Export}" Command="{CompiledBinding Command.Export}" IsEnabled="{CompiledBinding CanSave}">
+          <MenuItem Header="{CompiledBinding Lang.TaskBar_File_Export}" Command="{CompiledBinding Command.Export}" IsEnabled="{CompiledBinding LoadedSpr}">
             <MenuItem.Icon>
               <Label Content="⏏"/>
             </MenuItem.Icon>
           </MenuItem>
-          <MenuItem Header="{CompiledBinding Lang.TaskBar_File_SavePalette}" Command="{CompiledBinding Command.SavePalette}" IsEnabled="{CompiledBinding CanSave}">
+          <MenuItem Header="{CompiledBinding Lang.TaskBar_File_SavePalette}" Command="{CompiledBinding Command.SavePalette}" IsEnabled="{CompiledBinding LoadedSpr}">
             <MenuItem.Icon>
               <Label Content="🪅"/>
             </MenuItem.Icon>
@@ -64,7 +64,7 @@
               <Label Content="ℹ️"/>
             </MenuItem.Icon>
             <MenuItem.Header>
-              <CheckBox IsEnabled="{CompiledBinding CanSave}" IsChecked="{CompiledBinding CanShowInfo}" Content="{CompiledBinding Lang.TaskBar_View_Information}"/>
+              <CheckBox IsEnabled="{CompiledBinding LoadedSpr}" IsChecked="{CompiledBinding CanShowInfo}" Content="{CompiledBinding Lang.TaskBar_View_Information}"/>
             </MenuItem.Header>
           </MenuItem>
           <MenuItem>
@@ -72,7 +72,7 @@
               <Label Content="🎨"/>
             </MenuItem.Icon>
             <MenuItem.Header>
-              <CheckBox IsEnabled="{CompiledBinding CanSave}" IsChecked="{CompiledBinding CanShowPallet}" Content="{CompiledBinding Lang.TaskBar_View_Pallet}"/>
+              <CheckBox IsEnabled="{CompiledBinding LoadedSpr}" IsChecked="{CompiledBinding CanShowPallet}" Content="{CompiledBinding Lang.TaskBar_View_Pallet}"/>
             </MenuItem.Header>
           </MenuItem>
           <MenuItem Header="{CompiledBinding Lang.TaskBar_View_Language}">
@@ -101,39 +101,25 @@
       </Menu>
       <TextBlock/>
     </DockPanel>
-    <Grid>
-      <Grid.RowDefinitions>
-        <RowDefinition Height="*" />
-      </Grid.RowDefinitions>
-      <Grid.ColumnDefinitions>
-        <ColumnDefinition Width="2*" />
-        <ColumnDefinition Width="2*" />
-      </Grid.ColumnDefinitions>
-      <Grid Grid.Row="0" Grid.Column="0" VerticalAlignment="Stretch">
-        <Grid.RowDefinitions>
-          <RowDefinition Height="*" />
-          <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
+    <Grid ColumnDefinitions="*,*">
+      <Grid Grid.Column="0" VerticalAlignment="Stretch" RowDefinitions="*,*">
         <Image Source="{CompiledBinding SPR}" Width="{CompiledBinding SprViewerSize.Width}" Height="{CompiledBinding SprViewerSize.Height}" VerticalAlignment="Center" HorizontalAlignment="Center" MinHeight="300" Grid.Row="0"/>
         <StackPanel VerticalAlignment="Bottom" Grid.Row="1">
-          <Separator IsVisible="{CompiledBinding CanSave}"/>
+          <Separator IsVisible="{CompiledBinding LoadedSpr}"/>
           <DockPanel>
             <Label Content="{CompiledBinding Lang.Dock_Frame}"/>
-            <Button Content="◀️" IsEnabled="{CompiledBinding CanSave}" Command="{CompiledBinding Command.FrameStep}" CommandParameter="-1"/>
-            <TextBox Text="{CompiledBinding NowFrame}" IsEnabled="{CompiledBinding CanSave}" TextChanged="OnFrameTextBoxChanged" AcceptsReturn="False" AcceptsTab="False" TextWrapping="NoWrap"/>
-            <Button Content="▶️" IsEnabled="{CompiledBinding CanSave}" Command="{CompiledBinding Command.FrameStep}" CommandParameter="1"/>
+            <NumericUpDown Value="{CompiledBinding NowFrame}" Minimum="0" Maximum="{CompiledBinding MaxFrame}" MinWidth="120" FormatString="0" IsEnabled="{CompiledBinding LoadedSpr}"/>
             <Border Width="1" Background="Gray" Margin="4,0,4,0"/>
-            <Button Content="⏯️" IsEnabled="{CompiledBinding CanSave}" Command="{CompiledBinding Command.ToggleAnimationTimer}"/>
-            <CheckBox Content="🔁" IsEnabled="{CompiledBinding CanSave}" IsChecked="{CompiledBinding IsLoopPlay}" Margin="4,0,0,0"/>
+            <ToggleButton IsChecked="{CompiledBinding Command.IsTimerVliad}" IsEnabled="{CompiledBinding LoadedSpr}" Command="{CompiledBinding Command.ToggleAnimationTimer}">
+              <Label>⏯️</Label>
+            </ToggleButton>
+            <CheckBox Content="🔁" IsEnabled="{CompiledBinding LoadedSpr}" IsChecked="{CompiledBinding IsLoopPlay}" Margin="4,0,0,0"/>
             <Border Width="1" Background="Gray" Margin="4,0,4,0"/>
-            <Button Content="◀️" IsEnabled="{CompiledBinding CanSave}" Command="{CompiledBinding Command.ScaleStep}" CommandParameter="-25"/>
-            <TextBox Text="{CompiledBinding NowScale}" IsEnabled="{CompiledBinding CanSave}" TextChanged="OnSizeTextBoxChanged" AcceptsReturn="False" AcceptsTab="False" TextWrapping="NoWrap" Margin="4,0,0,0"/>
-            <Label Content="%"/>
-            <Button Content="▶️" IsEnabled="{CompiledBinding CanSave}" Command="{CompiledBinding Command.ScaleStep}" CommandParameter="25"/>
+            <NumericUpDown Value="{CompiledBinding NowScale}" Minimum="0" Maximum="8" MinWidth="120" FormatString="0%" Increment="0.25" IsEnabled="{CompiledBinding LoadedSpr}"/>
           </DockPanel>
         </StackPanel>
       </Grid>
-      <StackPanel Grid.Row="0" Grid.Column="1" IsVisible="{CompiledBinding CanShowSideBar}">
+      <StackPanel Grid.Column="1" IsVisible="{CompiledBinding CanShowSideBar}">
         <StackPanel IsVisible="{CompiledBinding CanShowInfo}">
           <Label Content="{CompiledBinding Lang.SpriteInfo}"/>
           <Grid >

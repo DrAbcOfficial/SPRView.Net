@@ -1,12 +1,12 @@
 using Avalonia.Controls;
-using System;
 
 namespace SPRView.Net;
 
-public partial class MainWindow : Window
+public partial class CreateNewWindow : Window
 {
-    public MainWindow()
+    public CreateNewWindow()
     {
         InitializeComponent();
     }
+
 }

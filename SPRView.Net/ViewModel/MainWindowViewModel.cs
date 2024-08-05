@@ -1,10 +1,7 @@
-﻿using Avalonia;
-using Avalonia.Controls;
-using Avalonia.Media;
+﻿using Avalonia.Controls;
 using Avalonia.Media.Imaging;
 using Avalonia.Platform;
-using SixLabors.ImageSharp.PixelFormats;
-using SPRView.Net.Lib.Interface;
+using SixLabors.ImageSharp;
 using System;
 using System.ComponentModel;
 using System.Globalization;
@@ -99,14 +96,15 @@ public class MainWindowViewModel : INotifyPropertyChanged
         {
             m_pSpr = value;
             OnPropertyChanged(nameof(SPR));
-            OnPropertyChanged(nameof(CanSave));
+            OnPropertyChanged(nameof(LoadedSpr));
             OnPropertyChanged(nameof(ColorPallet));
+            OnPropertyChanged(nameof(MaxFrame));
             SprInfo?.UpdateAll();
         }
     }
 
-    private Size m_SprViewerSize;
-    public Size SprViewerSize
+    private Avalonia.Size m_SprViewerSize;
+    public Avalonia.Size SprViewerSize
     {
         get => m_SprViewerSize;
         set
@@ -116,38 +114,46 @@ public class MainWindowViewModel : INotifyPropertyChanged
         }
     }
 
-    public bool CanSave
+    public bool LoadedSpr
     {
         get => m_pSpr != null;
     }
 
     public int m_iNowFrame = 0;
-    public string NowFrame
+    public int NowFrame
     {
-        get => m_iNowFrame.ToString();
+        get => m_iNowFrame;
         set
         {
-            m_iNowFrame = int.TryParse(value, out int result) ? result : 0;
+            m_iNowFrame = value;
             var spr = App.GetAppStorage().NowSprite ?? throw new Exception("Spr is null!");
             m_iNowFrame = Math.Clamp(m_iNowFrame, 0, spr.Frames.Count - 1);
             using var memoryStream = new MemoryStream();
             SixLabors.ImageSharp.Image img = spr.GetImage(m_iNowFrame);
-            img.Save(memoryStream, new SixLabors.ImageSharp.Formats.Png.PngEncoder());
+            img.SaveAsPng(memoryStream);
             memoryStream.Seek(0, SeekOrigin.Begin);
             SPR = new Bitmap(memoryStream);
             OnPropertyChanged(nameof(NowFrame));
             SprInfo?.UpdateOriginXY();
         }
     }
+    public int MaxFrame
+    {
+        get
+        {
+            var spr = App.GetAppStorage().NowSprite ?? throw new NullReferenceException("Null storage spr");
+            return spr.Frames.Count;
+        }
+    }
 
     private float m_flNowScale = 1.0f;
-    public string NowScale
+    public float NowScale
     {
-        get => ((int)(m_flNowScale * 100)).ToString();
+        get => m_flNowScale;
         set
         {
             var spr = SPR ?? throw new NullReferenceException("SPR is null!");
-            m_flNowScale = Math.Clamp(float.TryParse(value, out float result) ? result / 100.0f : 1.0f, 0.1f, 5.0f);
+            m_flNowScale = value;
             SprViewerSize = spr.Size * m_flNowScale;
             OnPropertyChanged(nameof(NowScale));
         }

@@ -20,15 +20,18 @@ public class CommandViewModel : INotifyPropertyChanged
         {
             var viewModel = App.GetViewModel();
             var spr = App.GetAppStorage().NowSprite ?? throw new NullReferenceException("Null storage spr");
-            int frame = int.Parse(viewModel.NowFrame);
+            int frame = viewModel.NowFrame;
             frame++;
             if (frame >= spr.Frames.Count)
             {
                 frame = 0;
                 if (!viewModel.IsLoopPlay)
+                {
                     animation_timer.Stop();
+                    OnPropertyChanged(nameof(IsTimerVliad));
+                } 
             }
-            viewModel.NowFrame = frame.ToString();
+            viewModel.NowFrame = frame;
         };
     }
     public event PropertyChangedEventHandler? PropertyChanged;
@@ -37,9 +40,24 @@ public class CommandViewModel : INotifyPropertyChanged
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
     }
 
+    public bool IsTimerVliad
+    {
+        get => animation_timer.IsEnabled;
+    }
+
     public async void CreateFile()
     {
-
+        var main = App.GetMainWindow();
+        var createNewData = new CreateNewViewModel()
+        {
+            Lang = App.GetViewModel().Lang,
+            Command = App.GetViewModel().Command
+        };
+        var createNew = new CreateNewWindow()
+        {
+            DataContext = createNewData,
+        };
+        await createNew.ShowDialog(main);
     }
     public async void OpenFile()
     {
@@ -225,20 +243,6 @@ public class CommandViewModel : INotifyPropertyChanged
         await about.ShowDialog(App.GetMainWindow());
     }
 
-    public void FrameStep(string arg)
-    {
-        int step = int.Parse(arg);
-        int now = int.Parse(App.GetViewModel().NowFrame);
-        App.GetViewModel().NowFrame = (step + now).ToString();
-    }
-    public void ScaleStep(string arg)
-    {
-        int step = int.Parse(arg);
-        int now = int.Parse(App.GetViewModel().NowScale);
-        App.GetViewModel().NowScale = (step + now).ToString();
-    }
-
-
     public void ToggleAnimationTimer()
     {
         if (!animation_timer.IsEnabled)
@@ -249,6 +253,7 @@ public class CommandViewModel : INotifyPropertyChanged
         }
         else
             animation_timer.Stop();
+        OnPropertyChanged(nameof(IsTimerVliad));
     }
 
     public void ChangeLang(string lang)

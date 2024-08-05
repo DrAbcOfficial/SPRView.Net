@@ -279,4 +279,13 @@ public class LangViewModel : INotifyPropertyChanged
     public string FileManager_SaveGIF { get; set; } = "Save GIF";
     public string FileManager_SaveSequence { get; set; } = "Save Sequence";
     public string FileManager_SavePalette { get; set; } = "Save Palette";
+
+    public string CreateNew_Title { get; set; } = "Create New";
+    public string CreateNew_AddImage { get; set; } = "Add";
+    public string CreateNew_RemoveImage { get; set; } = "Remove";
+    public string CreateNew_MoveUpImage { get; set; } = "Move up";
+    public string CreateNew_MoveDownImage { get; set; } = "Move down";
+    public string CreateNew_Property { get; set; } = "Property";
+    public string CreateNew_PlaySpeed { get; set; } = "Play speed";
+    public string CreateNew_PlaySpeed_WaterMarker { get; set; } = "Frames per seccond";
 }
