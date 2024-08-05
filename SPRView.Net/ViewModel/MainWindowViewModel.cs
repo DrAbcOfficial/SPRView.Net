@@ -146,8 +146,8 @@ public class MainWindowViewModel : INotifyPropertyChanged
     {
         get
         {
-            var spr = App.GetAppStorage().NowSprite ?? throw new NullReferenceException("Null storage spr");
-            return spr.Frames.Count;
+            var spr = App.GetAppStorage().NowSprite;
+            return spr == null ? 0 : spr.GetFrames();
         }
     }
 
