@@ -281,11 +281,27 @@ public class LangViewModel : INotifyPropertyChanged
     public string FileManager_SavePalette { get; set; } = "Save Palette";
 
     public string CreateNew_Title { get; set; } = "Create New";
+    public string CreateNew_AddImage_Title { get; set; } = "Select Images";
+    public string CreateNew_Tab_Property { get; set; } = "Property";
+    public string CreateNew_Tab_Preview { get; set; } = "Preview";
     public string CreateNew_AddImage { get; set; } = "Add";
     public string CreateNew_RemoveImage { get; set; } = "Remove";
     public string CreateNew_MoveUpImage { get; set; } = "Move up";
     public string CreateNew_MoveDownImage { get; set; } = "Move down";
-    public string CreateNew_Property { get; set; } = "Property";
     public string CreateNew_PlaySpeed { get; set; } = "Play speed";
     public string CreateNew_PlaySpeed_WaterMarker { get; set; } = "Frames per seccond";
+    public string CreateNew_Type { get; set; } = "Type:";
+    public string CreateNew_Type_ParallelUpright { get; set; } = "ParallelUpright";
+    public string CreateNew_Type_FacingUpright { get; set; } = "FacingUpright";
+    public string CreateNew_Type_Parallel { get; set; } = "Parallel";
+    public string CreateNew_Type_Oriented { get; set; } = "Oriented";
+    public string CreateNew_Type_ParallelOriented { get; set; } = "ParallelOriented";
+    public string CreateNew_Format { get; set; } = "Format:";
+    public string CreateNew_Format_Normal { get; set; } = "Normal";
+    public string CreateNew_Format_Additive { get; set; } = "Additive";
+    public string CreateNew_Format_IndexAlpha { get; set; } = "IndexAlpha";
+    public string CreateNew_Format_AlphaTest { get; set; } = "AlphaTest";
+    public string CreateNew_Sync { get; set; } = "Sync:";
+    public string CreateNew_Sync_Sync { get; set; } = "Sync";
+    public string CreateNew_Sync_Random { get; set; } = "Random";
 }

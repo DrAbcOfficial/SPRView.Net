@@ -38,12 +38,9 @@ public partial class App : Application
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
             m_pMainWindow = new MainWindow();
-
-            m_pViewModel = new MainWindowViewModel()
+            m_pViewModel = new MainWindowViewModel(m_pMainWindow)
             {
-                Lang = new LangViewModel(),
-                Command = new CommandViewModel(),
-                SprInfo = new SpriteInfoViewModel()
+                Lang = new LangViewModel()
             };
             m_pViewModel.LoadLangFile();
             m_pMainWindow.DataContext = m_pViewModel;

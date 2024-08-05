@@ -28,14 +28,47 @@
         <ListBox ItemsSource="{CompiledBinding ImagePaths}" Background="#20FFFFFF" Width="380" Height="410" SelectionMode="AlwaysSelected,Single"/>
       </StackPanel>
       <StackPanel Grid.Column="1" Margin="10,0,10,0">
-        <UniformGrid>
-          <Button Content="{CompiledBinding Lang.CreateNew_AddImage}"/>
-          <Button Content="{CompiledBinding Lang.CreateNew_MoveUpImage}"/>
-          <Button Content="{CompiledBinding Lang.CreateNew_RemoveImage}"/>
-          <Button Content="{CompiledBinding Lang.CreateNew_MoveDownImage}"/>
-        </UniformGrid>
-        <TextBlock Margin="0 5" Text="{CompiledBinding Lang.CreateNew_PlaySpeed}"/>
-        <TextBox  Watermark="{CompiledBinding Lang.CreateNew_PlaySpeed_WaterMarker}"/>
+        <TabControl>
+          <TabItem Header="{CompiledBinding Lang.CreateNew_Tab_Property}">
+            <StackPanel>
+              <UniformGrid>
+                <Button Content="{CompiledBinding Lang.CreateNew_AddImage}" MinWidth="150"/>
+                <Button Content="{CompiledBinding Lang.CreateNew_MoveUpImage}" MinWidth="150"/>
+                <Button Content="{CompiledBinding Lang.CreateNew_RemoveImage}" MinWidth="150"/>
+                <Button Content="{CompiledBinding Lang.CreateNew_MoveDownImage}" MinWidth="150"/>
+              </UniformGrid>
+              <StackPanel MinWidth="300">
+                <TextBlock Margin="0 5" Text="{CompiledBinding Lang.CreateNew_PlaySpeed}"/>
+                <NumericUpDown Value="{CompiledBinding PlaySpeed}" Minimum="0" FormatString="0" ToolTip.Tip="{CompiledBinding Lang.CreateNew_PlaySpeed_WaterMarker}"/>
+              </StackPanel>
+              <TextBlock Margin="0 5" Text="{CompiledBinding Lang.CreateNew_Type}"/>
+              <ComboBox SelectedIndex="{CompiledBinding Type}" MinWidth="300">
+                <ComboBoxItem Content="{CompiledBinding Lang.CreateNew_Type_ParallelUpright}"/>
+                <ComboBoxItem Content="{CompiledBinding Lang.CreateNew_Type_FacingUpright}"/>
+                <ComboBoxItem Content="{CompiledBinding Lang.CreateNew_Type_Parallel}"/>
+                <ComboBoxItem Content="{CompiledBinding Lang.CreateNew_Type_Oriented}"/>
+                <ComboBoxItem Content="{CompiledBinding Lang.CreateNew_Type_ParallelOriented}"/>
+              </ComboBox>
+              <TextBlock Margin="0 5" Text="{CompiledBinding Lang.CreateNew_Format}"/>
+              <ComboBox SelectedIndex="{CompiledBinding Format}" MinWidth="300">
+                <ComboBoxItem Content="{CompiledBinding Lang.CreateNew_Format_Normal}"/>
+                <ComboBoxItem Content="{CompiledBinding Lang.CreateNew_Format_Additive}"/>
+                <ComboBoxItem Content="{CompiledBinding Lang.CreateNew_Format_IndexAlpha}"/>
+                <ComboBoxItem Content="{CompiledBinding Lang.CreateNew_Format_AlphaTest}"/>
+              </ComboBox>
+              <TextBlock Margin="0 5" Text="{CompiledBinding Lang.CreateNew_Sync}"/>
+              <ComboBox SelectedIndex="{CompiledBinding Sync}" MinWidth="300">
+                <ComboBoxItem Content="{CompiledBinding Lang.CreateNew_Sync_Sync}"/>
+                <ComboBoxItem Content="{CompiledBinding Lang.CreateNew_Sync_Random}"/>
+              </ComboBox>
+            </StackPanel>
+          </TabItem>
+          <TabItem Header="{CompiledBinding Lang.CreateNew_Tab_Preview}">
+            <StackPanel MinWidth="300">
+              
+            </StackPanel>
+          </TabItem>
+        </TabControl>
       </StackPanel>
     </Grid>
   </StackPanel>

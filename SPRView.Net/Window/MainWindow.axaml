@@ -21,38 +21,38 @@
           </MenuItem.Header>
         </MenuItem>
         <MenuItem Header="{CompiledBinding Lang.TaskBar_File}">
-          <MenuItem Header="{CompiledBinding Lang.TaskBar_File_Create}" Command="{CompiledBinding Command.CreateFile}">
+          <MenuItem Header="{CompiledBinding Lang.TaskBar_File_Create}" Command="{CompiledBinding CreateFile}">
             <MenuItem.Icon>
               <Label Content="✏️"/>
             </MenuItem.Icon>
           </MenuItem>
-          <MenuItem Header="{CompiledBinding Lang.TaskBar_File_Open}" Command="{CompiledBinding Command.OpenFile}">
+          <MenuItem Header="{CompiledBinding Lang.TaskBar_File_Open}" Command="{CompiledBinding OpenFile}">
             <MenuItem.Icon>
               <Label Content="📂"/>
             </MenuItem.Icon>
           </MenuItem>
-          <MenuItem Header="{CompiledBinding Lang.TaskBar_File_SaveFrame}" Command="{CompiledBinding Command.SaveFrame}" IsEnabled="{CompiledBinding LoadedSpr}">
+          <MenuItem Header="{CompiledBinding Lang.TaskBar_File_SaveFrame}" Command="{CompiledBinding SaveFrame}" IsEnabled="{CompiledBinding LoadedSpr}">
             <MenuItem.Icon>
               <Label Content="💾"/>
             </MenuItem.Icon>
           </MenuItem>
-          <MenuItem Header="{CompiledBinding Lang.TaskBar_File_SaveGIF}" Command="{CompiledBinding Command.SaveGIF}" IsEnabled="{CompiledBinding LoadedSpr}">
+          <MenuItem Header="{CompiledBinding Lang.TaskBar_File_SaveGIF}" Command="{CompiledBinding SaveGIF}" IsEnabled="{CompiledBinding LoadedSpr}">
             <MenuItem.Icon>
               <Label Content="🖼︎"/>
             </MenuItem.Icon>
           </MenuItem>
-          <MenuItem Header="{CompiledBinding Lang.TaskBar_File_Export}" Command="{CompiledBinding Command.Export}" IsEnabled="{CompiledBinding LoadedSpr}">
+          <MenuItem Header="{CompiledBinding Lang.TaskBar_File_Export}" Command="{CompiledBinding Export}" IsEnabled="{CompiledBinding LoadedSpr}">
             <MenuItem.Icon>
               <Label Content="⏏"/>
             </MenuItem.Icon>
           </MenuItem>
-          <MenuItem Header="{CompiledBinding Lang.TaskBar_File_SavePalette}" Command="{CompiledBinding Command.SavePalette}" IsEnabled="{CompiledBinding LoadedSpr}">
+          <MenuItem Header="{CompiledBinding Lang.TaskBar_File_SavePalette}" Command="{CompiledBinding SavePalette}" IsEnabled="{CompiledBinding LoadedSpr}">
             <MenuItem.Icon>
               <Label Content="🪅"/>
             </MenuItem.Icon>
           </MenuItem>
           <Separator/>
-          <MenuItem Header="{CompiledBinding Lang.TaskBar_File_Exit}" Command="{CompiledBinding Command.Exit}">
+          <MenuItem Header="{CompiledBinding Lang.TaskBar_File_Exit}" Command="{CompiledBinding Exit}">
             <MenuItem.Icon>
               <Label Content="❌"/>
             </MenuItem.Icon>
@@ -79,12 +79,12 @@
             <MenuItem.Icon>
               <Label Content="🌏"/>
             </MenuItem.Icon>
-            <MenuItem Header="中文" Command="{CompiledBinding Command.ChangeLang}" CommandParameter="zh">
+            <MenuItem Header="中文" Command="{CompiledBinding ChangeLang}" CommandParameter="zh">
               <MenuItem.Icon>
                 <Label Content="🇨🇳"/>
               </MenuItem.Icon>
             </MenuItem>
-            <MenuItem Header="English" Command="{CompiledBinding Command.ChangeLang}" CommandParameter="en">
+            <MenuItem Header="English" Command="{CompiledBinding ChangeLang}" CommandParameter="en">
               <MenuItem.Icon>
                 <Label Content="🇬🇧"/>
               </MenuItem.Icon>
@@ -92,7 +92,7 @@
           </MenuItem>
         </MenuItem>
         <MenuItem Header="{CompiledBinding Lang.TaskBar_Help}">
-          <MenuItem Header="{CompiledBinding Lang.TaskBar_Help_About}" Command="{CompiledBinding Command.About}">
+          <MenuItem Header="{CompiledBinding Lang.TaskBar_Help_About}" Command="{CompiledBinding About}">
             <MenuItem.Icon>
               <Label Content="🛌"/>
             </MenuItem.Icon>
@@ -110,7 +110,7 @@
             <Label Content="{CompiledBinding Lang.Dock_Frame}"/>
             <NumericUpDown Value="{CompiledBinding NowFrame}" Minimum="0" Maximum="{CompiledBinding MaxFrame}" MinWidth="120" FormatString="0" IsEnabled="{CompiledBinding LoadedSpr}"/>
             <Border Width="1" Background="Gray" Margin="4,0,4,0"/>
-            <ToggleButton IsChecked="{CompiledBinding Command.IsTimerVliad}" IsEnabled="{CompiledBinding LoadedSpr}" Command="{CompiledBinding Command.ToggleAnimationTimer}">
+            <ToggleButton IsChecked="{CompiledBinding IsTimerVliad}" IsEnabled="{CompiledBinding LoadedSpr}" Command="{CompiledBinding ToggleAnimationTimer}">
               <Label>⏯️</Label>
             </ToggleButton>
             <CheckBox Content="🔁" IsEnabled="{CompiledBinding LoadedSpr}" IsChecked="{CompiledBinding IsLoopPlay}" Margin="4,0,0,0"/>
@@ -122,40 +122,27 @@
       <StackPanel Grid.Column="1" IsVisible="{CompiledBinding CanShowSideBar}">
         <StackPanel IsVisible="{CompiledBinding CanShowInfo}">
           <Label Content="{CompiledBinding Lang.SpriteInfo}"/>
-          <Grid >
-            <Grid.RowDefinitions>
-              <RowDefinition Height="*" />
-              <RowDefinition Height="*" />
-              <RowDefinition Height="*" />
-              <RowDefinition Height="*" />
-              <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-              <ColumnDefinition Width="*" />
-              <ColumnDefinition Width="*" />
-              <ColumnDefinition Width="*" />
-              <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
+          <Grid RowDefinitions="*,*,*,*" ColumnDefinitions="*,*,*,*">
             <TextBlock Text="{CompiledBinding Lang.SpriteInfo_Frames}" Grid.Row="0" Grid.Column="0" />
-            <TextBlock Text="{CompiledBinding SprInfo.Frame}" Grid.Row="0" Grid.Column="1" />
+            <TextBlock Text="{CompiledBinding Frame}" Grid.Row="0" Grid.Column="1" />
             <TextBlock Text="{CompiledBinding Lang.SpriteInfo_Format}" Grid.Row="0" Grid.Column="2" />
-            <TextBlock Text="{CompiledBinding SprInfo.Format}" Grid.Row="0" Grid.Column="3" />
+            <TextBlock Text="{CompiledBinding Format}" Grid.Row="0" Grid.Column="3" />
             <TextBlock Text="{CompiledBinding Lang.SpriteInfo_Width}" Grid.Row="1" Grid.Column="0" />
-            <TextBlock Text="{CompiledBinding SprInfo.Width}" Grid.Row="1" Grid.Column="1" />
+            <TextBlock Text="{CompiledBinding Width}" Grid.Row="1" Grid.Column="1" />
             <TextBlock Text="{CompiledBinding Lang.SpriteInfo_Sync}" Grid.Row="1" Grid.Column="2" />
-            <TextBlock Text="{CompiledBinding SprInfo.Sync}" Grid.Row="1" Grid.Column="3" />
+            <TextBlock Text="{CompiledBinding Sync}" Grid.Row="1" Grid.Column="3" />
             <TextBlock Text="{CompiledBinding Lang.SpriteInfo_Height}" Grid.Row="2" Grid.Column="0" />
-            <TextBlock Text="{CompiledBinding SprInfo.Height}" Grid.Row="2" Grid.Column="1" />
+            <TextBlock Text="{CompiledBinding Height}" Grid.Row="2" Grid.Column="1" />
             <TextBlock Text="{CompiledBinding Lang.SpriteInfo_BoundRadius}" Grid.Row="2" Grid.Column="2" />
-            <TextBlock Text="{CompiledBinding SprInfo.BoundRadius}" Grid.Row="2" Grid.Column="3" />
+            <TextBlock Text="{CompiledBinding BoundRadius}" Grid.Row="2" Grid.Column="3" />
             <TextBlock Text="{CompiledBinding Lang.SpriteInfo_Type}" Grid.Row="3" Grid.Column="0" />
-            <TextBlock Text="{CompiledBinding SprInfo.Type}" Grid.Row="3" Grid.Column="1" />
+            <TextBlock Text="{CompiledBinding Type}" Grid.Row="3" Grid.Column="1" />
             <TextBlock Text="{CompiledBinding Lang.SpriteInfo_BeamLength}" Grid.Row="3" Grid.Column="2" />
-            <TextBlock Text="{CompiledBinding SprInfo.BeamLength}" Grid.Row="3" Grid.Column="3" />
+            <TextBlock Text="{CompiledBinding BeamLength}" Grid.Row="3" Grid.Column="3" />
             <TextBlock Text="{CompiledBinding Lang.SpriteInfo_OriginX}" Grid.Row="4" Grid.Column="0" />
-            <TextBlock Text="{CompiledBinding SprInfo.OriginX}" Grid.Row="4" Grid.Column="1" />
+            <TextBlock Text="{CompiledBinding OriginX}" Grid.Row="4" Grid.Column="1" />
             <TextBlock Text="{CompiledBinding Lang.SpriteInfo_OriginY}" Grid.Row="4" Grid.Column="2" />
-            <TextBlock Text="{CompiledBinding SprInfo.OriginY}" Grid.Row="4" Grid.Column="3" />
+            <TextBlock Text="{CompiledBinding OriginY}" Grid.Row="4" Grid.Column="3" />
           </Grid>
         </StackPanel>
         <Separator/>
