@@ -282,9 +282,9 @@ HRESULT RegisterShellExtThumbnailHandler(PCWSTR pszFileType, const CLSID& clsid)
     }
 
     // Create the registry key 
-    // HKCR\<File Type>\shellex\{FFC0D284-E5A5-41C0-899A-B6535CB8CD8F}
+    // HKCR\<File Type>\shellex\{e357fccd-a995-4576-b01f-234630154e96}
     hr = StringCchPrintf(szSubkey, ARRAYSIZE(szSubkey), 
-        L".%s\\shellex\\{FFC0D284-E5A5-41C0-899A-B6535CB8CD8F}", pszFileType);
+        L".%s\\shellex\\{e357fccd-a995-4576-b01f-234630154e96}", pszFileType);
     if (SUCCEEDED(hr))
     {
         // Set the default value of the key.
@@ -337,9 +337,9 @@ HRESULT UnregisterShellExtThumbnailHandler(PCWSTR pszFileType)
     }
 
     // Remove the registry key: 
-    // HKCR\<File Type>\shellex\{FFC0D284-E5A5-41C0-899A-B6535CB8CD8F}
+    // HKCR\<File Type>\shellex\{e357fccd-a995-4576-b01f-234630154e96}
     hr = StringCchPrintf(szSubkey, ARRAYSIZE(szSubkey), 
-        L".%s\\shellex\\{FFC0D284-E5A5-41C0-899A-B6535CB8CD8F}", pszFileType);
+        L".%s\\shellex\\{e357fccd-a995-4576-b01f-234630154e96}", pszFileType);
     if (SUCCEEDED(hr))
     {
         hr = HRESULT_FROM_WIN32(RegDeleteTree(HKEY_CLASSES_ROOT, szSubkey));
