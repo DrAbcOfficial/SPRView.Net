@@ -8,13 +8,12 @@
 HINSTANCE g_hInst = NULL;
 long g_cDllRef = 0;
 
-// {F5E7F8AF-F2BF-423D-9A14-FB194A9E5A84}
-static const GUID CLSID_SprThumbnailProvider = { 0xf5e7f8af, 0xf2bf, 0x423d, { 0x9a, 0x14, 0xfb, 0x19, 0x4a, 0x9e, 0x5a, 0x84 } };
+// {C7657C4A-9F68-40fa-A4DF-96BC08EB3551}
+static const GUID CLSID_SprThumbnailProvider = 
+{ 0xC7657C4A, 0x9F68, 0x40fa, {0xA4, 0xDF, 0x96, 0xBC, 0x08, 0xEB, 0x35, 0x51} };
 // {8F45BF90-A84F-4BB5-8043-65F5E62F89AE}
 static const GUID APPID_SprThumbnailProvider =
 { 0x8f45bf90, 0xa84f, 0x4bb5, { 0x80, 0x43, 0x65, 0xf5, 0xe6, 0x2f, 0x89, 0xae } };
-
-
 
 BOOL APIENTRY DllMain(HMODULE hModule,
     DWORD ul_reason_for_call,
