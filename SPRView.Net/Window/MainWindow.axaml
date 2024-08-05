@@ -122,7 +122,7 @@
       <StackPanel Grid.Column="1" IsVisible="{CompiledBinding CanShowSideBar}">
         <StackPanel IsVisible="{CompiledBinding CanShowInfo}">
           <Label Content="{CompiledBinding Lang.SpriteInfo}"/>
-          <Grid RowDefinitions="*,*,*,*" ColumnDefinitions="*,*,*,*">
+          <Grid RowDefinitions="*,*,*,*,*" ColumnDefinitions="*,*,*,*">
             <TextBlock Text="{CompiledBinding Lang.SpriteInfo_Frames}" Grid.Row="0" Grid.Column="0" />
             <TextBlock Text="{CompiledBinding Frame}" Grid.Row="0" Grid.Column="1" />
             <TextBlock Text="{CompiledBinding Lang.SpriteInfo_Format}" Grid.Row="0" Grid.Column="2" />
