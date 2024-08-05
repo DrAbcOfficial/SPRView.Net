@@ -37,10 +37,7 @@
                 <Button Content="{CompiledBinding Lang.CreateNew_RemoveImage}" Command="{CompiledBinding RemoveImage}" MinWidth="150"/>
                 <RepeatButton Content="{CompiledBinding Lang.CreateNew_MoveDownImage}" Command="{CompiledBinding MovedownImage}" MinWidth="150"/>
               </UniformGrid>
-              <StackPanel MinWidth="300">
-                <TextBlock Margin="0 5" Text="{CompiledBinding Lang.CreateNew_PlaySpeed}"/>
-                <NumericUpDown Value="{CompiledBinding PlaySpeed}" Minimum="0" FormatString="0" ToolTip.Tip="{CompiledBinding Lang.CreateNew_PlaySpeed_WaterMarker}"/>
-              </StackPanel>
+              
               <TextBlock Margin="0 5" Text="{CompiledBinding Lang.CreateNew_Type}"/>
               <ComboBox SelectedIndex="{CompiledBinding Type}" MinWidth="300">
                 <ComboBoxItem Content="{CompiledBinding Lang.CreateNew_Type_ParallelUpright}"/>
@@ -61,6 +58,11 @@
                 <ComboBoxItem Content="{CompiledBinding Lang.CreateNew_Sync_Sync}"/>
                 <ComboBoxItem Content="{CompiledBinding Lang.CreateNew_Sync_Random}"/>
               </ComboBox>
+              <Panel Margin="0 5">
+                <TextBlock Text="{CompiledBinding Lang.CreateNew_BeamLength}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                <TextBlock Foreground="DarkKhaki" Margin="0 5" FontStyle="Italic" Text="{CompiledBinding Lang.CreateNew_BeamLength_Watermaker}" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+              </Panel>
+              <NumericUpDown Value="{CompiledBinding BeamLength}" Minimum="0" Maximum="2147483647" FormatString="0.00" MinWidth="300"/>
             </StackPanel>
           </TabItem>
           <TabItem Header="{CompiledBinding Lang.CreateNew_Tab_Preview}">
@@ -69,10 +71,12 @@
                 <Border BorderBrush="Gray" BorderThickness="1" Grid.Column="0">
                   <Image Source="{CompiledBinding PreviewImage}" Width="140" Height="140" Stretch="Fill"/>
                 </Border>
-                <StackPanel Grid.Column="1" MinWidth="140" Margin="5,0,0,0">
-                  <TextBlock Text="{CompiledBinding Lang.CreateNew_Export_Frame}" Margin="5,10,0,0"/>
-                  <NumericUpDown Value="{CompiledBinding Preview_Frame}" Minimum="0" Maximum="{CompiledBinding Preview_MaxFrame}" FormatString="0" Margin="0,8,0,0"/>
-                  <Button Content="{CompiledBinding Lang.CreateNew_Export_Play}" Command="{CompiledBinding StartPreview}" Margin="0,10,0,0" MinWidth="140"/>
+                <StackPanel Grid.Column="1" MinWidth="140" Margin="2,0,0,0">
+                  <TextBlock Text="{CompiledBinding Lang.CreateNew_Export_Frame}" Margin="2 2"/>
+                  <NumericUpDown Value="{CompiledBinding Preview_Frame}" Minimum="0" Maximum="{CompiledBinding Preview_MaxFrame}" FormatString="0"/>
+                  <TextBlock Margin="2 2" Text="{CompiledBinding Lang.CreateNew_PlaySpeed}"/>
+                  <NumericUpDown Value="{CompiledBinding PlaySpeed}" Minimum="0" FormatString="0" ToolTip.Tip="{CompiledBinding Lang.CreateNew_PlaySpeed_WaterMarker}"/>
+                  <Button Content="{CompiledBinding Lang.CreateNew_Export_Play}" Command="{CompiledBinding StartPreview}" Margin="0,2,0,0" MinWidth="140"/>
                 </StackPanel>
               </Grid>
               <Grid ColumnDefinitions="*,2*" Margin="0,10">
@@ -83,7 +87,7 @@
                 <TextBlock Text="{CompiledBinding Lang.CreateNew_Export_Height}" Grid.Column="0"/>
                 <NumericUpDown Value="{CompiledBinding Export_Height}" FormatString="0" Grid.Column="1"/>
               </Grid>
-              <ProgressBar Margin="0,10" MinHeight="25" Value="{CompiledBinding Progress}" Maximum="200"/>
+              <ProgressBar Margin="0,10" MinHeight="25" Value="{CompiledBinding Progress}" Minimum="0" Maximum="200"/>
               <Button MinWidth="300" MinHeight="60" Margin="0,2" Command="{CompiledBinding SaveToSpr}" IsEnabled="{CompiledBinding SaveValid}">
                 <TextBlock Text="{CompiledBinding Lang.CreateNew_Export_Save}" FontSize="24" FontStretch="Expanded" VerticalAlignment="Center" HorizontalAlignment="Center"/>
               </Button>

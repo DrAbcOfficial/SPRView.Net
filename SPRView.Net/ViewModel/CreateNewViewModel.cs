@@ -50,10 +50,10 @@ public class CreateNewViewModel : INotifyPropertyChanged
     }
 
     #region Property
-    public int PlaySpeed { get; set; } = 24;
     public int Type { get; set; } = 0;
     public int Format { get; set; } = 0;
     public int Sync { get; set; } = 0;
+    public float BeamLength { get; set; } = 0;
 
     public async void AddImage()
     {
@@ -142,6 +142,7 @@ public class CreateNewViewModel : INotifyPropertyChanged
         }
         return false;
     }
+    public int PlaySpeed { get; set; } = 24;
     private Bitmap? m_previewImage;
     public Bitmap? PreviewImage
     {
@@ -173,13 +174,20 @@ public class CreateNewViewModel : INotifyPropertyChanged
     }
     public int Export_Width { get; set; } = 64;
     public int Export_Height { get; set; } = 64;
-    public int Progress { get; set; } = 0;
+    private int m_iProgress = 0;
+    public int Progress { get => m_iProgress; set { m_iProgress = value; OnPropertyChanged(nameof(Progress)); } }
     public bool SaveValid
     {
         get => m_aryImagePaths.Count > 0;
     }
     public async void SaveToSpr()
     {
+        if(Export_Width % 2==1|| Export_Height % 2==1)
+        {
+            var box = MessageBoxWindow.CreateMessageBox(Lang.CreateNew_Export_NotSQRTWarning, null, Lang.Shared_OK, Lang.Shared_Cancel);
+            box.Position = new Avalonia.PixelPoint(Parent.Position.X + (int)Parent.Width / 2, Parent.Position.Y + (int)Parent.Height / 2);
+            await box.ShowDialog(Parent);
+        }
         Progress = 0;
         FilePickerFileType Sprites = new("GoldSrc Sprites")
         {
@@ -196,7 +204,7 @@ public class CreateNewViewModel : INotifyPropertyChanged
         {
             //量化
             //降低一个维度，以便统一量化
-            Image<Rgba32> image = new(Export_Width * m_aryImagePaths.Count, Export_Height * m_aryImagePaths.Count);
+            using Image<Rgba32> image = new(Export_Width * m_aryImagePaths.Count, Export_Height * m_aryImagePaths.Count);
             for (int i = 0; i < m_aryImagePaths.Count; i++)
             {
                 var path = m_aryImagePaths[i];
@@ -247,7 +255,7 @@ public class CreateNewViewModel : INotifyPropertyChanged
             //Count
             writer.Write(m_aryImagePaths.Count);
             //BeamLength
-            writer.Write(0.0f);
+            writer.Write(BeamLength);
             //Sync
             writer.Write(Sync);
             Progress = 60;
@@ -270,7 +278,7 @@ public class CreateNewViewModel : INotifyPropertyChanged
             //保存数据
             for (int k = 0; k < m_aryImagePaths.Count; k++)
             {
-                Progress += k / m_aryImagePaths.Count * 100;
+                Progress += k * 100 / m_aryImagePaths.Count;
                 //Group
                 writer.Write(0x00000000);
                 //OriginX
@@ -296,8 +304,8 @@ public class CreateNewViewModel : INotifyPropertyChanged
                     }
                 }
             }
-            image.Dispose();
-            var box = MessageBoxWindow.CreateMessageBox("☑︎🖻⏏💾", null, "🥰", "😠");
+            Progress = 200;
+            var box = MessageBoxWindow.CreateMessageBox("☑︎🖻⏏💾", null, Lang.Shared_OK, Lang.Shared_Cancel);
             box.Position = new Avalonia.PixelPoint(Parent.Position.X + (int)Parent.Width / 2, Parent.Position.Y + (int)Parent.Height / 2);
             await box.ShowDialog(Parent);
         }

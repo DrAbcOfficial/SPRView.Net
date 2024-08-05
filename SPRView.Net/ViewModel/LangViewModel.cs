@@ -274,6 +274,9 @@ public class LangViewModel : INotifyPropertyChanged
         }
     }
 
+    public string Shared_OK { get; set; } = "OK";
+    public string Shared_Cancel { get; set; } = "Cancel";
+
     public string FileManager_OpenSprite { get; set; } = "Open Sprite";
     public string FileManager_SaveImage { get; set; } = "Save Image";
     public string FileManager_SaveGIF { get; set; } = "Save GIF";
@@ -304,9 +307,12 @@ public class LangViewModel : INotifyPropertyChanged
     public string CreateNew_Sync { get; set; } = "Sync:";
     public string CreateNew_Sync_Sync { get; set; } = "Sync";
     public string CreateNew_Sync_Random { get; set; } = "Random";
+    public string CreateNew_BeamLength { get; set; } = "Beam Length:";
+    public string CreateNew_BeamLength_Watermaker { get; set; } = "Optional，Useless in Half-Life";
     public string CreateNew_Export_Frame { get; set; } = "Frame:";
     public string CreateNew_Export_Play { get; set; } = "Play";
     public string CreateNew_Export_Width { get; set; } = "Export Width";
     public string CreateNew_Export_Height { get; set; } = "Export Height";
     public string CreateNew_Export_Save { get; set; } = "Export!";
+    public string CreateNew_Export_NotSQRTWarning { get; set; } = "The size you set cannot be divided by 2, and it may not work in some versions of engine.";
 }

@@ -1,4 +1,7 @@
 {
+  "Shared_OK": "好的",
+  "Shared_Cancel": "取消",
+
   "TaskBar_File": "_文件",
   "TaskBar_File_Create": "新建",
   "TaskBar_File_Open": "打开(.spr)",
@@ -58,9 +61,12 @@
   "CreateNew_Sync": "同步性:",
   "CreateNew_Sync_Sync": "一致",
   "CreateNew_Sync_Random": "随机",
+  "CreateNew_BeamLength": "射线宽度:",
+  "CreateNew_BeamLength_Watermaker": "选填，在Half-Life中无效",
   "CreateNew_Export_Frame": "帧",
   "CreateNew_Export_Play": "播放",
   "CreateNew_Export_Width": "导出长度",
   "CreateNew_Export_Height": "导出宽度",
-  "CreateNew_Export_Save": "导出保存！"
+  "CreateNew_Export_Save": "导出保存！",
+  "CreateNew_Export_NotSQRTWarning": "你设置的尺寸不能被2整除\n可能无法在某些版本的引擎里使用"
 }

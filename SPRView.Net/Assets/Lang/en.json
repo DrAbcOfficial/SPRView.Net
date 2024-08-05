@@ -1,4 +1,7 @@
 {
+  "Shared_OK": "OK",
+  "Shared_Cancel": "Cancel",
+
   "TaskBar_File": "_File",
   "TaskBar_File_Create": "Create",
   "TaskBar_File_Open": "Open(.spr)",
@@ -58,9 +61,12 @@
   "CreateNew_Sync": "Synchronism:",
   "CreateNew_Sync_Sync": "Sync",
   "CreateNew_Sync_Random": "Random",
+  "CreateNew_BeamLength": "Beam Length:",
+  "CreateNew_BeamLength_Watermaker": "Optional，Useless in Half-Life",
   "CreateNew_Export_Frame": "Frame:",
   "CreateNew_Export_Play": "Play",
   "CreateNew_Export_Width": "Export Width",
   "CreateNew_Export_Height": "Export Height",
-  "CreateNew_Export_Save": "Export!"
+  "CreateNew_Export_Save": "Export!",
+  "CreateNew_Export_NotSQRTWarning": "The size you set cannot be divided by 2\nand it may not work in some versions of engine."
 }
