@@ -3,6 +3,7 @@ using Avalonia.Media;
 using SixLabors.ImageSharp.PixelFormats;
 using SPRView.Net.Lib;
 using SPRView.Net.Lib.Interface;
+using System;
 
 namespace SPRView.Net.Storage;
 
@@ -11,8 +12,24 @@ public class CStorage
     public class ColorPaletteView : IColorPalette
     {
         private ISpriteColorPalette? Original;
-        public int ColorCount { get => 16; }
-        public int ShadeCount { get => Original == null ? 0 : Original.Size / 16; }
+        public int ColorCount
+        {
+            get
+            {
+                if (Original == null)
+                    return 0;
+                return Original.Length < 16 ? Original.Length : 16;
+            }
+        }
+        public int ShadeCount
+        {
+            get
+            {
+                if (Original == null)
+                    return 0;
+                return Math.Max(1, Original.Length / 16);
+            }
+        }
         public Color GetColor(int colorIndex, int shadeIndex)
         {
             if (Original == null)
@@ -33,7 +50,7 @@ public class CStorage
             return Original != null;
         }
     }
-    private readonly ColorPaletteView m_pColorPalletView = new();
+    private ColorPaletteView m_pColorPalletView = new();
     private CSprite? m_pNowSprite;
     public CSprite? NowSprite
     {
@@ -43,7 +60,8 @@ public class CStorage
             if (value != null)
             {
                 m_pNowSprite = value;
-                m_pColorPalletView.SetOrigin(m_pNowSprite.Pallete);
+                m_pColorPalletView = new();
+                m_pColorPalletView.SetOrigin(value.Palette);
             }
         }
     }

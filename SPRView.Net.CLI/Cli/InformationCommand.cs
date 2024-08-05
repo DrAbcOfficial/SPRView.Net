@@ -41,11 +41,11 @@ public class InformationCommand : ICommand
                 console.Output.Write(line);
             }
             console.Output.Write("\tPalette:\n");
-            for(int i = 0; i < spr.Pallete.Length; i++)
+            for(int i = 0; i < spr.Palette.Length; i++)
             {
                 if(i % 16 == 0)
                     console.Output.Write("\n\t\t");
-                Rgba32 rgba = spr.Pallete.AtIndex(i);
+                Rgba32 rgba = spr.Palette.AtIndex(i);
                 console.Output.Write("■ ".Pastel(Color.FromArgb(rgba.A, rgba.R, rgba.G, rgba.B)));
             }
         }

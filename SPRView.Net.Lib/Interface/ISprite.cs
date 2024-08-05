@@ -35,7 +35,7 @@ public interface ISprite
     abstract public uint NumberOfFrames { get; set; }
     abstract public float BeamLength { get; set; }
     abstract public SpriteSynchron Synchronization { get; set; }
-    abstract public ISpriteColorPalette Pallete { get; set; }
+    abstract public ISpriteColorPalette Palette { get; set; }
     abstract public IFrame GetFrame(int i);
     abstract public int GetFrames();
     abstract public static ISprite Create(Stream stream);

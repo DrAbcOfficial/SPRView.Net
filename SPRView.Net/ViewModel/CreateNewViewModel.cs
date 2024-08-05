@@ -334,7 +334,7 @@ public class CreateNewViewModel : INotifyPropertyChanged
                 }
             }
             Progress = 200;
-            var box = MessageBoxWindow.CreateMessageBox("☑︎🖻⏏💾", null, Lang.Shared_OK, Lang.Shared_Cancel);
+            var box = MessageBoxWindow.CreateMessageBox("☑︎💾", null, Lang.Shared_OK, Lang.Shared_Cancel);
             box.Position = new Avalonia.PixelPoint(Parent.Position.X + (int)Parent.Width / 2, Parent.Position.Y + (int)Parent.Height / 2);
             await box.ShowDialog(Parent);
         }

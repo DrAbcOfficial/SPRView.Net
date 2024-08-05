@@ -13,7 +13,7 @@ public class CSprite : ISprite
     public uint NumberOfFrames { get; set; }
     public float BeamLength { get; set; }
     public ISprite.SpriteSynchron Synchronization { get; set; }
-    public ISpriteColorPalette Pallete { get => m_pPallete; set { m_pPallete = (CSpriteColorPalette)value; } }
+    public ISpriteColorPalette Palette { get => m_pPallete; set { m_pPallete = (CSpriteColorPalette)value; } }
     private CSpriteColorPalette m_pPallete { get; set; }
     private List<CFrame> m_aryFrames { get; set; } = [];
     public List<CFrame> Frames { get => m_aryFrames; set { m_aryFrames = value; } }
