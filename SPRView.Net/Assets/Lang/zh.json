@@ -57,5 +57,10 @@
   "CreateNew_Format_AlphaTest": "测试（色板最后一位透明）",
   "CreateNew_Sync": "同步性:",
   "CreateNew_Sync_Sync": "一致",
-  "CreateNew_Sync_Random": "随机"
+  "CreateNew_Sync_Random": "随机",
+  "CreateNew_Export_Frame": "帧",
+  "CreateNew_Export_Play": "播放",
+  "CreateNew_Export_Width": "导出长度",
+  "CreateNew_Export_Height": "导出宽度",
+  "CreateNew_Export_Save": "导出保存！"
 }

@@ -25,17 +25,17 @@
     </DockPanel>
     <Grid ColumnDefinitions="2*,*">
       <StackPanel Grid.Column="0">
-        <ListBox ItemsSource="{CompiledBinding ImagePaths}" Background="#20FFFFFF" Width="380" Height="410" SelectionMode="AlwaysSelected,Single"/>
+        <ListBox ItemsSource="{CompiledBinding ImagePaths}" SelectedIndex="{CompiledBinding PathSelected}" Background="#20FFFFFF" Width="380" Height="410" SelectionMode="AlwaysSelected,Single"/>
       </StackPanel>
       <StackPanel Grid.Column="1" Margin="10,0,10,0">
         <TabControl>
           <TabItem Header="{CompiledBinding Lang.CreateNew_Tab_Property}">
             <StackPanel>
               <UniformGrid>
-                <Button Content="{CompiledBinding Lang.CreateNew_AddImage}" MinWidth="150"/>
-                <Button Content="{CompiledBinding Lang.CreateNew_MoveUpImage}" MinWidth="150"/>
-                <Button Content="{CompiledBinding Lang.CreateNew_RemoveImage}" MinWidth="150"/>
-                <Button Content="{CompiledBinding Lang.CreateNew_MoveDownImage}" MinWidth="150"/>
+                <Button Content="{CompiledBinding Lang.CreateNew_AddImage}" Command="{CompiledBinding AddImage}" MinWidth="150"/>
+                <RepeatButton Content="{CompiledBinding Lang.CreateNew_MoveUpImage}" Command="{CompiledBinding MoveupImage}" MinWidth="150"/>
+                <Button Content="{CompiledBinding Lang.CreateNew_RemoveImage}" Command="{CompiledBinding RemoveImage}" MinWidth="150"/>
+                <RepeatButton Content="{CompiledBinding Lang.CreateNew_MoveDownImage}" Command="{CompiledBinding MovedownImage}" MinWidth="150"/>
               </UniformGrid>
               <StackPanel MinWidth="300">
                 <TextBlock Margin="0 5" Text="{CompiledBinding Lang.CreateNew_PlaySpeed}"/>
@@ -65,7 +65,28 @@
           </TabItem>
           <TabItem Header="{CompiledBinding Lang.CreateNew_Tab_Preview}">
             <StackPanel MinWidth="300">
-              
+              <Grid ColumnDefinitions="*,*" MinHeight="140">
+                <Border BorderBrush="Gray" BorderThickness="1" Grid.Column="0">
+                  <Image Source="{CompiledBinding PreviewImage}" Width="140" Height="140" Stretch="Fill"/>
+                </Border>
+                <StackPanel Grid.Column="1" MinWidth="140" Margin="5,0,0,0">
+                  <TextBlock Text="{CompiledBinding Lang.CreateNew_Export_Frame}" Margin="5,10,0,0"/>
+                  <NumericUpDown Value="{CompiledBinding Preview_Frame}" Minimum="0" Maximum="{CompiledBinding Preview_MaxFrame}" FormatString="0" Margin="0,8,0,0"/>
+                  <Button Content="{CompiledBinding Lang.CreateNew_Export_Play}" Command="{CompiledBinding StartPreview}" Margin="0,10,0,0" MinWidth="140"/>
+                </StackPanel>
+              </Grid>
+              <Grid ColumnDefinitions="*,2*" Margin="0,10">
+                <TextBlock Text="{CompiledBinding Lang.CreateNew_Export_Width}" Grid.Column="0"/>
+                <NumericUpDown Value="{CompiledBinding Export_Width}" FormatString="0" Grid.Column="1"/>
+              </Grid>
+              <Grid ColumnDefinitions="*,2*" Margin="0,10">
+                <TextBlock Text="{CompiledBinding Lang.CreateNew_Export_Height}" Grid.Column="0"/>
+                <NumericUpDown Value="{CompiledBinding Export_Height}" FormatString="0" Grid.Column="1"/>
+              </Grid>
+              <ProgressBar Margin="0,10" MinHeight="25"/>
+              <Button MinWidth="300" MinHeight="60" Margin="0,2">
+                <TextBlock Text="{CompiledBinding Lang.CreateNew_Export_Save}" FontSize="24" FontStretch="Expanded" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+              </Button>
             </StackPanel>
           </TabItem>
         </TabControl>

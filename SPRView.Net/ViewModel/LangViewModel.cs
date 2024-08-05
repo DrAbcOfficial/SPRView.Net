@@ -304,4 +304,9 @@ public class LangViewModel : INotifyPropertyChanged
     public string CreateNew_Sync { get; set; } = "Sync:";
     public string CreateNew_Sync_Sync { get; set; } = "Sync";
     public string CreateNew_Sync_Random { get; set; } = "Random";
+    public string CreateNew_Export_Frame { get; set; } = "Frame:";
+    public string CreateNew_Export_Play { get; set; } = "Play";
+    public string CreateNew_Export_Width { get; set; } = "Export Width";
+    public string CreateNew_Export_Height { get; set; } = "Export Height";
+    public string CreateNew_Export_Save { get; set; } = "Export!";
 }

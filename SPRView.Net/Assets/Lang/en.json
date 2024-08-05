@@ -57,5 +57,10 @@
   "CreateNew_Format_AlphaTest": "AlphaTest",
   "CreateNew_Sync": "Synchronism:",
   "CreateNew_Sync_Sync": "Sync",
-  "CreateNew_Sync_Random": "Random"
+  "CreateNew_Sync_Random": "Random",
+  "CreateNew_Export_Frame": "Frame:",
+  "CreateNew_Export_Play": "Play",
+  "CreateNew_Export_Width": "Export Width",
+  "CreateNew_Export_Height": "Export Height",
+  "CreateNew_Export_Save": "Export!"
 }

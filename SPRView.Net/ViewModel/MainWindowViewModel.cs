@@ -24,20 +24,19 @@ public class MainWindowViewModel : INotifyPropertyChanged
         animation_timer = new();
         animation_timer.Tick += (object? sender, EventArgs e) =>
         {
-            var viewModel = App.GetViewModel();
             var spr = App.GetAppStorage().NowSprite ?? throw new NullReferenceException("Null storage spr");
-            int frame = viewModel.NowFrame;
+            int frame = NowFrame;
             frame++;
             if (frame >= spr.Frames.Count)
             {
                 frame = 0;
-                if (!viewModel.IsLoopPlay)
+                if (!IsLoopPlay)
                 {
                     animation_timer.Stop();
                     OnPropertyChanged(nameof(IsTimerVliad));
                 }
             }
-            viewModel.NowFrame = frame;
+            NowFrame = frame;
         };
     }
     private void LoadLangFileInternal(Stream file)
@@ -311,24 +310,22 @@ public class MainWindowViewModel : INotifyPropertyChanged
     {
         get
         {
-            var now = App.GetViewModel().m_iNowFrame;
             var spr = App.GetAppStorage().NowSprite;
             if (spr == null)
                 return "0";
             else
-                return spr.Frames[now].OriginX.ToString();
+                return spr.Frames[m_iNowFrame].OriginX.ToString();
         }
     }
     public string OriginY
     {
         get
         {
-            var now = App.GetViewModel().m_iNowFrame;
             var spr = App.GetAppStorage().NowSprite;
             if (spr == null)
                 return "0";
             else
-                return spr.Frames[now].OriginY.ToString();
+                return spr.Frames[m_iNowFrame].OriginY.ToString();
         }
     }
 
@@ -362,7 +359,7 @@ public class MainWindowViewModel : INotifyPropertyChanged
         var createNew = new CreateNewWindow();
         var createNewData = new CreateNewViewModel(createNew)
         {
-            Lang = App.GetViewModel().Lang
+            Lang = Lang
         };
         createNew.DataContext = createNewData;
         await createNew.ShowDialog(Parent);
@@ -377,7 +374,7 @@ public class MainWindowViewModel : INotifyPropertyChanged
         };
         var files = await Parent.StorageProvider.OpenFilePickerAsync(new FilePickerOpenOptions
         {
-            Title = App.GetViewModel().Lang?.FileManager_OpenSprite,
+            Title = Lang?.FileManager_OpenSprite,
             AllowMultiple = false,
             FileTypeFilter = [Sprites]
         });
@@ -389,10 +386,10 @@ public class MainWindowViewModel : INotifyPropertyChanged
     }
     public async void SaveFrame()
     {
-        var bitmap = App.GetViewModel().SPR ?? throw new ArgumentNullException("SPR is null!");
+        var bitmap = SPR ?? throw new ArgumentNullException("SPR is null!");
         var file = await Parent.StorageProvider.SaveFilePickerAsync(new FilePickerSaveOptions
         {
-            Title = App.GetViewModel().Lang?.FileManager_SaveImage,
+            Title = Lang?.FileManager_SaveImage,
             DefaultExtension = "bmp",
             FileTypeChoices = [FilePickerFileTypes.ImageAll],
             ShowOverwritePrompt = true
@@ -413,7 +410,7 @@ public class MainWindowViewModel : INotifyPropertyChanged
         };
         var file = await Parent.StorageProvider.SaveFilePickerAsync(new FilePickerSaveOptions
         {
-            Title = App.GetViewModel().Lang?.FileManager_SaveGIF,
+            Title = Lang?.FileManager_SaveGIF,
             DefaultExtension = "gif",
             FileTypeChoices = [gifstype],
             ShowOverwritePrompt = true
@@ -446,7 +443,7 @@ public class MainWindowViewModel : INotifyPropertyChanged
         var sprite = App.GetAppStorage().NowSprite ?? throw new ArgumentNullException("Storage sprite is null!");
         var directories = await Parent.StorageProvider.OpenFolderPickerAsync(new FolderPickerOpenOptions
         {
-            Title = App.GetViewModel().Lang?.FileManager_SaveSequence,
+            Title = Lang?.FileManager_SaveSequence,
             AllowMultiple = false
         });
         if (directories.Count > 0)
@@ -474,7 +471,7 @@ public class MainWindowViewModel : INotifyPropertyChanged
         };
         var file = await Parent.StorageProvider.SaveFilePickerAsync(new FilePickerSaveOptions
         {
-            Title = App.GetViewModel().Lang?.FileManager_SaveGIF,
+            Title = Lang?.FileManager_SaveGIF,
             DefaultExtension = "pal",
             FileTypeChoices = [types],
             ShowOverwritePrompt = true
@@ -562,7 +559,7 @@ public class MainWindowViewModel : INotifyPropertyChanged
 
     public void ChangeLang(string lang)
     {
-        App.GetViewModel().LoadLangFile(lang);
+        LoadLangFile(lang);
     }
     #endregion
 }
