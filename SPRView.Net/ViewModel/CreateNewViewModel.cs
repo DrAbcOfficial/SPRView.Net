@@ -1,4 +1,5 @@
 ﻿using Avalonia.Controls;
+using Avalonia.Controls.Shapes;
 using Avalonia.Media.Imaging;
 using Avalonia.Platform.Storage;
 using Avalonia.Threading;
@@ -54,6 +55,7 @@ public class CreateNewViewModel : INotifyPropertyChanged
     public int Format { get; set; } = 0;
     public int Sync { get; set; } = 0;
     public float BeamLength { get; set; } = 0;
+    public bool UnPackAnimate { get; set; } = false;
 
     public async void AddImage()
     {
@@ -204,13 +206,34 @@ public class CreateNewViewModel : INotifyPropertyChanged
         {
             //量化
             //降低一个维度，以便统一量化
-            using Image<Rgba32> image = new(Export_Width * m_aryImagePaths.Count, Export_Height * m_aryImagePaths.Count);
+            
+            int buffersize = 0;
+            if (UnPackAnimate)
+            {
+                foreach(var path in m_aryImagePaths)
+                {
+                    SixLabors.ImageSharp.Image frame = SixLabors.ImageSharp.Image.Load(path);
+                    buffersize += frame.Frames.Count;
+                    frame.Dispose();
+                }
+                //会多一个
+                buffersize--;
+            }
+            else
+                buffersize = m_aryImagePaths.Count;
+            using Image<Rgba32> image = new(Export_Width, Export_Height * buffersize);
+            int bufferseek = 0;
             for (int i = 0; i < m_aryImagePaths.Count; i++)
             {
                 var path = m_aryImagePaths[i];
                 SixLabors.ImageSharp.Image frame = SixLabors.ImageSharp.Image.Load(path);
                 frame.Mutate(x => x.Resize(Export_Width, Export_Height));
-                image.Mutate(x => x.DrawImage(frame, new Point(Export_Width * i, Export_Height * i), 1.0f));
+                do
+                {
+                    image.Mutate(x => x.DrawImage(frame, new Point(0, Export_Height * bufferseek), 1.0f));
+                    frame.Frames.RemoveFrame(0);
+                    bufferseek++;
+                } while (frame.Frames.Count > 1);
                 frame.Dispose();
             }
             bool isAlphaTest = Format == (int)ISprite.SpriteFormat.AlphaTest;
@@ -254,7 +277,7 @@ public class CreateNewViewModel : INotifyPropertyChanged
             //Height
             writer.Write(Export_Height);
             //Count
-            writer.Write(m_aryImagePaths.Count);
+            writer.Write(buffersize);
             //BeamLength
             writer.Write(BeamLength);
             //Sync
@@ -283,9 +306,9 @@ public class CreateNewViewModel : INotifyPropertyChanged
             }
             Progress = 100;
             //保存数据
-            for (int k = 0; k < m_aryImagePaths.Count; k++)
+            for (int k = 0; k < buffersize; k++)
             {
-                Progress += k * 100 / m_aryImagePaths.Count;
+                Progress += k * 100 / buffersize;
                 //Group
                 writer.Write(0x00000000);
                 //OriginX
@@ -297,11 +320,10 @@ public class CreateNewViewModel : INotifyPropertyChanged
                 //Height
                 writer.Write(Export_Height);
 
-                var startX = k * Export_Width;
                 var startY = k * Export_Height;
-                for (int j = startY; j < startX + Export_Height; j++)
+                for (int j = startY; j < startY + Export_Height; j++)
                 {
-                    for (int i = startX; i < startX + Export_Width; i++)
+                    for (int i = 0; i < Export_Width; i++)
                     {
                         Rgba32 rgba32 = image[i, j];
                         if (isAlphaTest && rgba32.A <= 128)

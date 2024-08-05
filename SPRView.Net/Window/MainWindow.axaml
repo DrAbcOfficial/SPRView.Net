@@ -107,7 +107,7 @@
         <StackPanel VerticalAlignment="Bottom" Grid.Row="1">
           <Separator IsVisible="{CompiledBinding LoadedSpr}"/>
           <DockPanel>
-            <Label Content="{CompiledBinding Lang.Dock_Frame}"/>
+            <Label Content="{CompiledBinding Lang.Dock_Frame}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             <NumericUpDown Value="{CompiledBinding NowFrame}" Minimum="0" Maximum="{CompiledBinding MaxFrame}" MinWidth="120" FormatString="0" IsEnabled="{CompiledBinding LoadedSpr}"/>
             <Border Width="1" Background="Gray" Margin="4,0,4,0"/>
             <ToggleButton IsChecked="{CompiledBinding IsTimerVliad}" IsEnabled="{CompiledBinding LoadedSpr}" Command="{CompiledBinding ToggleAnimationTimer}">

@@ -63,6 +63,7 @@
                 <TextBlock Foreground="DarkKhaki" Margin="0 5" FontStyle="Italic" Text="{CompiledBinding Lang.CreateNew_BeamLength_Watermaker}" HorizontalAlignment="Right" VerticalAlignment="Center"/>
               </Panel>
               <NumericUpDown Value="{CompiledBinding BeamLength}" Minimum="0" Maximum="2147483647" FormatString="0.00" MinWidth="300"/>
+              <CheckBox IsChecked="{CompiledBinding UnPackAnimate}" Content="{CompiledBinding Lang.CreateNew_UnpackAnimate}"/>
             </StackPanel>
           </TabItem>
           <TabItem Header="{CompiledBinding Lang.CreateNew_Tab_Preview}">

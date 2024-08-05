@@ -63,6 +63,7 @@
   "CreateNew_Sync_Random": "随机",
   "CreateNew_BeamLength": "射线宽度:",
   "CreateNew_BeamLength_Watermaker": "选填，在Half-Life中无效",
+  "CreateNew_UnpackAnimate": "解包动图",
   "CreateNew_Export_Frame": "帧",
   "CreateNew_Export_Play": "播放",
   "CreateNew_Export_Width": "导出长度",

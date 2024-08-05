@@ -309,6 +309,7 @@ public class LangViewModel : INotifyPropertyChanged
     public string CreateNew_Sync_Random { get; set; } = "Random";
     public string CreateNew_BeamLength { get; set; } = "Beam Length:";
     public string CreateNew_BeamLength_Watermaker { get; set; } = "Optional，Useless in Half-Life";
+    public string CreateNew_UnpackAnimate { get; set; } = "Unpack animated image";
     public string CreateNew_Export_Frame { get; set; } = "Frame:";
     public string CreateNew_Export_Play { get; set; } = "Play";
     public string CreateNew_Export_Width { get; set; } = "Export Width";
