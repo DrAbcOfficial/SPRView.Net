@@ -213,10 +213,11 @@ public class CreateNewViewModel : INotifyPropertyChanged
                 image.Mutate(x => x.DrawImage(frame, new Point(Export_Width * i, Export_Height * i), 1.0f));
                 frame.Dispose();
             }
+            bool isAlphaTest = Format == (int)ISprite.SpriteFormat.AlphaTest;
             WuQuantizer quantizer = new(new QuantizerOptions
             {
                 Dither = null,
-                MaxColors = Format == (int)ISprite.SpriteFormat.AlphaTest ? 255 : 256
+                MaxColors = isAlphaTest ? 255 : 256
             });
             Progress = 20;
             image.Mutate(x => x.Quantize(quantizer));
@@ -231,7 +232,7 @@ public class CreateNewViewModel : INotifyPropertyChanged
                         palette.Add(rgba32, (byte)palette.Count);
                 }
             }
-            if (Format == (int)ISprite.SpriteFormat.AlphaTest)
+            if (isAlphaTest)
                 palette.Add(new Rgba32(0, 0, 255, 255), 255);
             Progress = 40;
             //保存
@@ -260,7 +261,7 @@ public class CreateNewViewModel : INotifyPropertyChanged
             writer.Write(Sync);
             Progress = 60;
             //Palette Size
-            writer.Write((short)256);
+            writer.Write((short)palette.Count);
             //Palette
             foreach (var p in palette.Keys)
             {
@@ -268,8 +269,14 @@ public class CreateNewViewModel : INotifyPropertyChanged
                 writer.Write(p.G);
                 writer.Write(p.B);
             }
-            if (palette.Count == 255)
+            if (palette.Count < 256 && isAlphaTest)
             {
+                for (int i = palette.Count; i < 255; i++)
+                {
+                    writer.Write((byte)0);
+                    writer.Write((byte)0);
+                    writer.Write((byte)0);
+                }
                 writer.Write((byte)0);
                 writer.Write((byte)0);
                 writer.Write((byte)255);
@@ -297,7 +304,7 @@ public class CreateNewViewModel : INotifyPropertyChanged
                     for (int i = startX; i < startX + Export_Width; i++)
                     {
                         Rgba32 rgba32 = image[i, j];
-                        if (Format == (int)ISprite.SpriteFormat.AlphaTest && rgba32.A <= 128)
+                        if (isAlphaTest && rgba32.A <= 128)
                             writer.Write(palette.Last().Value);
                         else
                             writer.Write(palette[rgba32]);
