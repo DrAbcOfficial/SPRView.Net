@@ -5,6 +5,7 @@ using Avalonia.Media.Imaging;
 using SixLabors.ImageSharp;
 using SPRView.Net.Storage;
 using SPRView.Net.ViewModel;
+using System;
 using System.IO;
 
 namespace SPRView.Net;
@@ -52,14 +53,22 @@ public partial class App : Application
     }
     public static void LoadFile(Stream file)
     {
-        var newSprite = new Lib.CSprite(file);
-        m_pStorage.NowSprite = newSprite;
-        using var memoryStream = new MemoryStream();
-        Image img = newSprite.GetImage(0);
-        img.SaveAsPng(memoryStream);
-        memoryStream.Seek(0, SeekOrigin.Begin);
-        m_pViewModel.SPR = new Bitmap(memoryStream);
-        m_pViewModel.SprViewerSize = m_pViewModel.SPR.Size;
+        try
+        {
+            var newSprite = new Lib.CSprite(file);
+            m_pStorage.NowSprite = newSprite;
+            using var memoryStream = new MemoryStream();
+            Image img = newSprite.GetImage(0);
+            img.SaveAsPng(memoryStream);
+            memoryStream.Seek(0, SeekOrigin.Begin);
+            m_pViewModel.SPR = new Bitmap(memoryStream);
+            m_pViewModel.SprViewerSize = m_pViewModel.SPR.Size;
+        }
+        catch (Exception e)
+        {
+            MessageBoxWindow messageBoxWindow = MessageBoxWindow.CreateMessageBox(e.ToString());
+            messageBoxWindow.ShowDialog(m_pMainWindow);
+        }
     }
 
     private void OnStartup(object? sender, ControlledApplicationLifetimeStartupEventArgs e)
