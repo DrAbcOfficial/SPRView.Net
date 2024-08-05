@@ -1,5 +1,4 @@
 ﻿using Avalonia.Controls;
-using Avalonia.Controls.Shapes;
 using Avalonia.Media.Imaging;
 using Avalonia.Platform.Storage;
 using Avalonia.Threading;
@@ -44,10 +43,10 @@ public class CreateNewViewModel : INotifyPropertyChanged
     }
 
     public int PathSelected { get; set; } = 0;
-    private List<string> m_aryImagePaths = [];
+    private readonly List<string> m_aryImagePaths = [];
     public string[] ImagePaths
     {
-        get { return m_aryImagePaths.ToArray(); }
+        get { return [.. m_aryImagePaths]; }
     }
 
     #region Property
@@ -124,7 +123,7 @@ public class CreateNewViewModel : INotifyPropertyChanged
     #endregion
 
     #region Export
-    private DispatcherTimer animation_timer;
+    private readonly DispatcherTimer animation_timer;
     public void StartPreview()
     {
         if (!animation_timer.IsEnabled)
@@ -184,9 +183,9 @@ public class CreateNewViewModel : INotifyPropertyChanged
     }
     public async void SaveToSpr()
     {
-        if(Export_Width % 2==1|| Export_Height % 2==1)
+        if (Export_Width % 2 == 1 || Export_Height % 2 == 1)
         {
-            var box = MessageBoxWindow.CreateMessageBox(Lang.CreateNew_Export_NotSQRTWarning, null, Lang.Shared_OK, Lang.Shared_Cancel);
+            var box = MessageBoxWindow.CreateMessageBox(Lang!.CreateNew_Export_NotSQRTWarning, null, Lang.Shared_OK, Lang.Shared_Cancel);
             box.Position = new Avalonia.PixelPoint(Parent.Position.X + (int)Parent.Width / 2, Parent.Position.Y + (int)Parent.Height / 2);
             await box.ShowDialog(Parent);
         }
@@ -206,11 +205,11 @@ public class CreateNewViewModel : INotifyPropertyChanged
         {
             //量化
             //降低一个维度，以便统一量化
-            
+
             int buffersize = 0;
             if (UnPackAnimate)
             {
-                foreach(var path in m_aryImagePaths)
+                foreach (var path in m_aryImagePaths)
                 {
                     SixLabors.ImageSharp.Image frame = SixLabors.ImageSharp.Image.Load(path);
                     buffersize += frame.Frames.Count;
@@ -334,7 +333,7 @@ public class CreateNewViewModel : INotifyPropertyChanged
                 }
             }
             Progress = 200;
-            var box = MessageBoxWindow.CreateMessageBox("☑︎💾", null, Lang.Shared_OK, Lang.Shared_Cancel);
+            var box = MessageBoxWindow.CreateMessageBox("☑︎💾", null, Lang!.Shared_OK, Lang.Shared_Cancel);
             box.Position = new Avalonia.PixelPoint(Parent.Position.X + (int)Parent.Width / 2, Parent.Position.Y + (int)Parent.Height / 2);
             await box.ShowDialog(Parent);
         }

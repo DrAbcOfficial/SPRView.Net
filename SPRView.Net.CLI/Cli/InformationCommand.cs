@@ -14,11 +14,11 @@ public class InformationCommand : ICommand
     private string Pad(object src, int len = 12)
     {
         string? temp = src.ToString();
-        if(temp == null)
+        if (temp == null)
             return string.Empty;
         if (len <= temp.Length)
             return temp;
-        while(temp.Length < len)
+        while (temp.Length < len)
         {
             temp += " ";
         }
@@ -41,9 +41,9 @@ public class InformationCommand : ICommand
                 console.Output.Write(line);
             }
             console.Output.Write("\tPalette:\n");
-            for(int i = 0; i < spr.Palette.Length; i++)
+            for (int i = 0; i < spr.Palette.Length; i++)
             {
-                if(i % 16 == 0)
+                if (i % 16 == 0)
                     console.Output.Write("\n\t\t");
                 Rgba32 rgba = spr.Palette.AtIndex(i);
                 console.Output.Write("■ ".Pastel(Color.FromArgb(rgba.A, rgba.R, rgba.G, rgba.B)));

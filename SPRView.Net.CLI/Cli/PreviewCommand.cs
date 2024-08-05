@@ -29,7 +29,7 @@ public class PreviewCommand : ICommand
             int width = image.Width;
             int height = image.Height;
             float ratio = 1.0f;
-            if(width > height)
+            if (width > height)
             {
                 ratio = (float)PreviewSize / width;
                 width = PreviewSize;
@@ -44,10 +44,10 @@ public class PreviewCommand : ICommand
             image.Mutate(x => x.Resize(width, height));
             for (int i = 0; i < height; i++)
             {
-                for(int j = 0; j < width; j++)
+                for (int j = 0; j < width; j++)
                 {
                     Rgba32 rgba = image[j, i];
-                    console.Output.Write("██".Pastel(System.Drawing.Color.FromArgb(rgba.A,rgba.R,rgba.G,rgba.B)));
+                    console.Output.Write("██".Pastel(System.Drawing.Color.FromArgb(rgba.A, rgba.R, rgba.G, rgba.B)));
                 }
                 console.Output.Write('\n');
             }

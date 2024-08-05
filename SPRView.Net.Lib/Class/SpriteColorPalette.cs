@@ -12,8 +12,8 @@ public class CSpriteColorPalette(int size) : ISpriteColorPalette
     {
         return this[index];
     }
-    private Rgba32[] _color = new Rgba32[size];
-    private int _size = size;
+    private readonly Rgba32[] _color = new Rgba32[size];
+    private readonly int _size = size;
     public int Size { get => _size; }
     public int Length { get => _color.Length; }
     public Rgba32 this[int index]

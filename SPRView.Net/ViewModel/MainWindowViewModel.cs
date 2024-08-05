@@ -348,7 +348,7 @@ public class MainWindowViewModel : INotifyPropertyChanged
     #endregion
 
     #region Command
-    private DispatcherTimer animation_timer;
+    private readonly DispatcherTimer animation_timer;
     public bool IsTimerVliad
     {
         get => animation_timer.IsEnabled;

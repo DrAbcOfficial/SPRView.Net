@@ -37,7 +37,6 @@
                 <Button Content="{CompiledBinding Lang.CreateNew_RemoveImage}" Command="{CompiledBinding RemoveImage}" MinWidth="150"/>
                 <RepeatButton Content="{CompiledBinding Lang.CreateNew_MoveDownImage}" Command="{CompiledBinding MovedownImage}" MinWidth="150"/>
               </UniformGrid>
-              
               <TextBlock Margin="0 5" Text="{CompiledBinding Lang.CreateNew_Type}"/>
               <ComboBox SelectedIndex="{CompiledBinding Type}" MinWidth="300">
                 <ComboBoxItem Content="{CompiledBinding Lang.CreateNew_Type_ParallelUpright}"/>

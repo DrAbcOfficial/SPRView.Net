@@ -1,7 +1,6 @@
 ﻿using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
 using SPRView.Net.Lib.Interface;
-using System.Diagnostics.CodeAnalysis;
 namespace SPRView.Net.Lib;
 public class CSprite : ISprite
 {
@@ -60,7 +59,7 @@ public class CSprite : ISprite
     }
     public CSprite(string? path)
     {
-        if(path == null) 
+        if (path == null)
             throw new FileLoadException("Open a null invalid file path");
         using FileStream fs = new(path, FileMode.Open);
         Init(fs);
@@ -70,7 +69,7 @@ public class CSprite : ISprite
     public static ISprite Create(Stream stream)
     {
         return new CSprite(stream);
-    } 
+    }
     public static ISprite Create(string? path)
     {
         return new CSprite(path);
@@ -87,7 +86,7 @@ public class CSprite : ISprite
 
     public Image GetImage(int frame)
     {
-        if(frame < 0 || frame >= m_aryFrames.Count)
+        if (frame < 0 || frame >= m_aryFrames.Count)
         {
             throw new IndexOutOfRangeException("Frame index out of bound");
         }
