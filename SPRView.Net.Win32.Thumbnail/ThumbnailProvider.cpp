@@ -7,9 +7,6 @@
 #include <Shlwapi.h>
 #include <string>
 
-#include <wil/com.h>
-
-
 extern HINSTANCE g_hInst;
 extern long g_cDllRef;
 

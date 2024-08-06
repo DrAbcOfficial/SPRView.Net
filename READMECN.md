@@ -11,7 +11,7 @@
 ----
 # ✅开始
 
--  在使用之前你需要安装 [<img src="https://raw.githubusercontent.com/dotnet/brand/main/logo/dotnet-logo.svg" width="24"/>.NET 8.0](ttps://aka.ms/get-dotnet-8) 运行时
+-  在使用之前你需要安装 <img src="https://raw.githubusercontent.com/dotnet/brand/main/logo/dotnet-logo.svg" width="24"/> [.NET 8.0](https://aka.ms/get-dotnet-8) 运行时
 -  从 [release](https://github.com/DrAbcOfficial/SPRView.Net/releases)获得预先编译的二进制文件，仅提供x64架构
 
 

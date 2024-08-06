@@ -11,7 +11,8 @@ Yet another Sprite viewer for half-life series game (counter-strike, sven co-op,
 ----
 # ✅Getting Start
 
--  Before you use this, will need install [<img src="https://raw.githubusercontent.com/dotnet/brand/main/logo/dotnet-logo.svg" width="24"/>.NET 8.0](ttps://aka.ms/get-dotnet-8) runtimes
+- [中文](READMECN.md)
+-  Before you use this, will need install <img src="https://raw.githubusercontent.com/dotnet/brand/main/logo/dotnet-logo.svg" width="24"/>[.NET 8.0](https://aka.ms/get-dotnet-8) runtimes
 -  Grab prebuild binary from [release](https://github.com/DrAbcOfficial/SPRView.Net/releases), x64 only
 
 

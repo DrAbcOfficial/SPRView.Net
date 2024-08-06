@@ -31,8 +31,6 @@ switch ($os)
     "windows" {
         $ProgramFiles = [Environment]::GetEnvironmentVariable("ProgramFiles(x86)")
         $vsLocation= &@("$ProgramFiles\Microsoft Visual Studio\Installer\vswhere.exe") "-latest" "-products" "*" "-requires" "Microsoft.VisualStudio.Component.VC.Tools.x86.x64" "-property" "installationPath"
-
-        &"nuget" "restore"
         $sharpproj = "SPRView.Net.Win32.Thumbnail"
         foreach($proj in $sharpproj){
             Set-Location $proj
