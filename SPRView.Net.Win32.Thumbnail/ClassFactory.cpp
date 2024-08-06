@@ -1,14 +1,31 @@
+/****************************** Module Header ******************************\
+Module Name:  ClassFactory.cpp
+Project:      CppShellExtThumbnailHandler
+Copyright (c) Microsoft Corporation.
+
+The file implements the class factory for the RecipeThumbnailProvider COM class.
+
+This source is subject to the Microsoft Public License.
+See http://www.microsoft.com/opensource/licenses.mspx#Ms-PL.
+All other rights reserved.
+
+THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
+EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
+WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
+\***************************************************************************/
+
 #include "pch.h"
 #include "ClassFactory.h"
-#include "ThumbnailProvider.h"
-
+#include "RecipeThumbnailProvider.h"
 #include <new>
 #include <Shlwapi.h>
+#pragma comment(lib, "shlwapi.lib")
+
 
 extern long g_cDllRef;
 
-ClassFactory::ClassFactory() :
-    m_cRef(1)
+
+ClassFactory::ClassFactory() : m_cRef(1)
 {
     InterlockedIncrement(&g_cDllRef);
 }
@@ -18,13 +35,15 @@ ClassFactory::~ClassFactory()
     InterlockedDecrement(&g_cDllRef);
 }
 
+
 //
 // IUnknown
 //
 
 IFACEMETHODIMP ClassFactory::QueryInterface(REFIID riid, void** ppv)
 {
-    static const QITAB qit[] = {
+    static const QITAB qit[] =
+    {
         QITABENT(ClassFactory, IClassFactory),
         { 0 },
     };
@@ -46,7 +65,8 @@ IFACEMETHODIMP_(ULONG) ClassFactory::Release()
     return cRef;
 }
 
-//
+
+// 
 // IClassFactory
 //
 
@@ -54,13 +74,16 @@ IFACEMETHODIMP ClassFactory::CreateInstance(IUnknown* pUnkOuter, REFIID riid, vo
 {
     HRESULT hr = CLASS_E_NOAGGREGATION;
 
+    // pUnkOuter is used for aggregation. We do not support it in the sample.
     if (pUnkOuter == NULL)
     {
         hr = E_OUTOFMEMORY;
 
-        SprThumbnailProvider* pExt = new (std::nothrow) SprThumbnailProvider();
+        // Create the COM component.
+        RecipeThumbnailProvider* pExt = new (std::nothrow) RecipeThumbnailProvider();
         if (pExt)
         {
+            // Query the specified interface.
             hr = pExt->QueryInterface(riid, ppv);
             pExt->Release();
         }
@@ -79,6 +102,5 @@ IFACEMETHODIMP ClassFactory::LockServer(BOOL fLock)
     {
         InterlockedDecrement(&g_cDllRef);
     }
-
     return S_OK;
 }

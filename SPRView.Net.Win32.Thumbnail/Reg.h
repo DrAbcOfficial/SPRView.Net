@@ -3,7 +3,7 @@ Module Name:  Reg.h
 Project:      CppShellExtThumbnailHandler
 Copyright (c) Microsoft Corporation.
 
-The file declares reusable helper functions to register and unregister 
+The file declares reusable helper functions to register and unregister
 in-process COM components and shell thumbnail handlers in the registry.
 
 RegisterInprocServer - register the in-process component in the registry.
@@ -15,15 +15,15 @@ This source is subject to the Microsoft Public License.
 See http://www.microsoft.com/opensource/licenses.mspx#Ms-PL.
 All other rights reserved.
 
-THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, 
-EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED 
+THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
+EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
 WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 \***************************************************************************/
 
 #pragma once
 
 #include <windows.h>
-#include <objbase.h>
+
 
 //
 //   FUNCTION: RegisterInprocServer
@@ -52,7 +52,7 @@ WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 //      }
 //   }
 //
-HRESULT RegisterInprocServer(PCWSTR pszModule, const CLSID& clsid, 
+HRESULT RegisterInprocServer(PCWSTR pszModule, const CLSID& clsid,
     PCWSTR pszFriendlyName, PCWSTR pszThreadModel);
 
 

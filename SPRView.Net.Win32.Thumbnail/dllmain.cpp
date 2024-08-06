@@ -1,27 +1,58 @@
-﻿// dllmain.cpp : Defines the entry point for the DLL application.
+﻿/****************************** Module Header ******************************\
+Module Name:  dllmain.cpp
+Project:      CppShellExtThumbnailHandler
+Copyright (c) Microsoft Corporation.
+
+The file implements DllMain, and the DllGetClassObject, DllCanUnloadNow,
+DllRegisterServer, DllUnregisterServer functions that are necessary for a COM
+DLL.
+
+DllGetClassObject invokes the class factory defined in ClassFactory.h/cpp and
+queries to the specific interface.
+
+DllCanUnloadNow checks if we can unload the component from the memory.
+
+DllRegisterServer registers the COM server and the thumbnail handler in the
+registry by invoking the helper functions defined in Reg.h/cpp. The thumbnail
+handler is associated with the .recipe file class.
+
+DllUnregisterServer unregisters the COM server and the thumbnail handler.
+
+This source is subject to the Microsoft Public License.
+See http://www.microsoft.com/opensource/licenses.mspx#Ms-PL.
+All other rights reserved.
+
+THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
+EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
+WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
+\***************************************************************************/
+
 #include "pch.h"
-#include "ClassFactory.h"
+#include <windows.h>
+#include <shlobj.h>                 // For SHChangeNotify
+#include "ClassFactory.h"           // For the class factory
 #include "Reg.h"
-#include "ShlObj.h"
-#include "olectl.h"
 
-HINSTANCE g_hInst = NULL;
-long g_cDllRef = 0;
 
-// {C7657C4A-9F68-40fa-A4DF-96BC08EB3551}
-static const GUID CLSID_SprThumbnailProvider = 
-{ 0xC7657C4A, 0x9F68, 0x40fa, {0xA4, 0xDF, 0x96, 0xBC, 0x08, 0xEB, 0x35, 0x51} };
-// {8F45BF90-A84F-4BB5-8043-65F5E62F89AE}
-static const GUID APPID_SprThumbnailProvider =
-{ 0x8f45bf90, 0xa84f, 0x4bb5, { 0x80, 0x43, 0x65, 0xf5, 0xe6, 0x2f, 0x89, 0xae } };
+// {4D555153-67DE-4350-860D-671B7618B83B}
+// When you write your own handler, you must create a new CLSID by using the 
+// "Create GUID" tool in the Tools menu, and specify the CLSID value here.
+static const GUID CLSID_RecipeThumbnailProvider =
+{ 0x4d555153, 0x67de, 0x4350, { 0x86, 0xd, 0x67, 0x1b, 0x76, 0x18, 0xb8, 0x3b } };
 
-BOOL APIENTRY DllMain(HMODULE hModule,
-    DWORD ul_reason_for_call,
-    LPVOID lpReserved)
+
+
+HINSTANCE   g_hInst = NULL;
+long        g_cDllRef = 0;
+
+
+BOOL APIENTRY DllMain(HMODULE hModule, DWORD dwReason, LPVOID lpReserved)
 {
-    switch (ul_reason_for_call)
+    switch (dwReason)
     {
     case DLL_PROCESS_ATTACH:
+        // Hold the instance of this DLL module, we will use it to get the 
+        // path of the DLL to register the component.
         g_hInst = hModule;
         DisableThreadLibraryCalls(hModule);
         break;
@@ -33,6 +64,7 @@ BOOL APIENTRY DllMain(HMODULE hModule,
     return TRUE;
 }
 
+
 //
 //   FUNCTION: DllGetClassObject
 //
@@ -40,18 +72,18 @@ BOOL APIENTRY DllMain(HMODULE hModule,
 //
 //   PARAMETERS:
 //   * rclsid - The CLSID that will associate the correct data and code.
-//   * riid - A reference to the identifier of the interface that the caller
+//   * riid - A reference to the identifier of the interface that the caller 
 //     is to use to communicate with the class object.
-//   * ppv - The address of a pointer variable that receives the interface
-//     pointer requested in riid. Upon successful return, *ppv contains the
-//     requested interface pointer. If an error occurs, the interface pointer
-//     is NULL.
+//   * ppv - The address of a pointer variable that receives the interface 
+//     pointer requested in riid. Upon successful return, *ppv contains the 
+//     requested interface pointer. If an error occurs, the interface pointer 
+//     is NULL. 
 //
 STDAPI DllGetClassObject(REFCLSID rclsid, REFIID riid, void** ppv)
 {
     HRESULT hr = CLASS_E_CLASSNOTAVAILABLE;
 
-    if (IsEqualCLSID(CLSID_SprThumbnailProvider, rclsid))
+    if (IsEqualCLSID(CLSID_RecipeThumbnailProvider, rclsid))
     {
         hr = E_OUTOFMEMORY;
 
@@ -66,18 +98,20 @@ STDAPI DllGetClassObject(REFCLSID rclsid, REFIID riid, void** ppv)
     return hr;
 }
 
+
 //
 //   FUNCTION: DllCanUnloadNow
 //
 //   PURPOSE: Check if we can unload the component from the memory.
 //
-//   NOTE: The component can be unloaded from the memory when its reference
+//   NOTE: The component can be unloaded from the memory when its reference 
 //   count is zero (i.e. nobody is still using the component).
-//
+// 
 STDAPI DllCanUnloadNow(void)
 {
     return g_cDllRef > 0 ? S_FALSE : S_OK;
 }
+
 
 //
 //   FUNCTION: DllRegisterServer
@@ -96,15 +130,15 @@ STDAPI DllRegisterServer(void)
     }
 
     // Register the component.
-    hr = RegisterInprocServer(szModule, CLSID_SprThumbnailProvider,
-        L"SPRView.Net.Win32.Thumbnail.SprThumbnailProvider Class",
+    hr = RegisterInprocServer(szModule, CLSID_RecipeThumbnailProvider,
+        L"SPRView.Net.Win32.Thumbnail.RecipeThumbnailProvider Class",
         L"Apartment");
     if (SUCCEEDED(hr))
     {
         // Register the thumbnail handler. The thumbnail handler is associated
         // with the .recipe file class.
-        hr = RegisterShellExtThumbnailHandler(L"spr",
-            CLSID_SprThumbnailProvider);
+        hr = RegisterShellExtThumbnailHandler(L".spr",
+            CLSID_RecipeThumbnailProvider);
         if (SUCCEEDED(hr))
         {
             // This tells the shell to invalidate the thumbnail cache. It is 
@@ -116,6 +150,8 @@ STDAPI DllRegisterServer(void)
 
     return hr;
 }
+
+
 //
 //   FUNCTION: DllUnregisterServer
 //
@@ -133,11 +169,11 @@ STDAPI DllUnregisterServer(void)
     }
 
     // Unregister the component.
-    hr = UnregisterInprocServer(CLSID_SprThumbnailProvider);
+    hr = UnregisterInprocServer(CLSID_RecipeThumbnailProvider);
     if (SUCCEEDED(hr))
     {
         // Unregister the thumbnail handler.
-        hr = UnregisterShellExtThumbnailHandler(L"spr");
+        hr = UnregisterShellExtThumbnailHandler(L".spr");
     }
 
     return hr;
