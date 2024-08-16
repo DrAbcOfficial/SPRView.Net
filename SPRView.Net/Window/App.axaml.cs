@@ -3,6 +3,7 @@ using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 using Avalonia.Media.Imaging;
 using SixLabors.ImageSharp;
+using SPRView.Net.Lib.Class;
 using SPRView.Net.Storage;
 using SPRView.Net.ViewModel;
 using System;
@@ -55,7 +56,7 @@ public partial class App : Application
     {
         try
         {
-            var newSprite = new Lib.CSprite(file);
+            var newSprite = new CSprite(file);
             m_pStorage.NowSprite = newSprite;
             using var memoryStream = new MemoryStream();
             Image img = newSprite.GetImage(0);
