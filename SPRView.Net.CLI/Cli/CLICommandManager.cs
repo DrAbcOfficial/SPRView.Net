@@ -1,5 +1,6 @@
 ﻿using CliFx;
-namespace SPRView.Net.Cli;
+
+namespace SPRView.Net.CLI.Cli;
 public class CLICommandManager
 {
     public async void Run(string[] args) => await new CliApplicationBuilder()
@@ -7,6 +8,7 @@ public class CLICommandManager
         .AddCommand<SaveImageCommand>()
         .AddCommand<InformationCommand>()
         .AddCommand<PreviewCommand>()
+        .AddCommand<CreateCommand>()
         .Build()
         .RunAsync(args);
 }

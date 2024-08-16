@@ -3,8 +3,8 @@ using CliFx.Attributes;
 using CliFx.Infrastructure;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Processing;
-using SPRView.Net.Lib;
-namespace SPRView.Net.Cli;
+using SPRView.Net.Lib.Class;
+namespace SPRView.Net.CLI.Cli;
 [Command("thumbnail", Description = "Generate thumbnail form a spr")]
 public class ThumbnailCommand : ICommand
 {

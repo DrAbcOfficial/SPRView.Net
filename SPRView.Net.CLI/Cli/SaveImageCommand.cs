@@ -2,8 +2,8 @@
 using CliFx.Attributes;
 using CliFx.Infrastructure;
 using SixLabors.ImageSharp;
-using SPRView.Net.Lib;
-namespace SPRView.Net.Cli;
+using SPRView.Net.Lib.Class;
+namespace SPRView.Net.CLI.Cli;
 [Command("image", Description = "Save spr to image")]
 public class SaveImageCommand : ICommand
 {

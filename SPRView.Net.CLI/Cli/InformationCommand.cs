@@ -3,9 +3,9 @@ using CliFx.Attributes;
 using CliFx.Infrastructure;
 using Pastel;
 using SixLabors.ImageSharp.PixelFormats;
-using SPRView.Net.Lib;
+using SPRView.Net.Lib.Class;
 using System.Drawing;
-namespace SPRView.Net.Cli;
+namespace SPRView.Net.CLI.Cli;
 [Command("information", Description = "Get spr information")]
 public class InformationCommand : ICommand
 {

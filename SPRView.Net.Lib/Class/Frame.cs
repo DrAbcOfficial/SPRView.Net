@@ -1,5 +1,6 @@
 ﻿using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
+using SPRView.Net.Lib.Class;
 using SPRView.Net.Lib.Interface;
 
 namespace SPRView.Net.Lib;

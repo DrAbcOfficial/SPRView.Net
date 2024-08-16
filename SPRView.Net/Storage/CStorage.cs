@@ -1,7 +1,7 @@
 ﻿using Avalonia.Controls;
 using Avalonia.Media;
 using SixLabors.ImageSharp.PixelFormats;
-using SPRView.Net.Lib;
+using SPRView.Net.Lib.Class;
 using SPRView.Net.Lib.Interface;
 using System;
 

@@ -5,8 +5,8 @@ using Pastel;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp.Processing;
-using SPRView.Net.Lib;
-namespace SPRView.Net.Cli;
+using SPRView.Net.Lib.Class;
+namespace SPRView.Net.CLI.Cli;
 [Command("preview", Description = "Preview a spr in console")]
 public class PreviewCommand : ICommand
 {

@@ -2,10 +2,7 @@
 using Avalonia.Media.Imaging;
 using Avalonia.Platform.Storage;
 using Avalonia.Threading;
-using SixLabors.ImageSharp;
-using SixLabors.ImageSharp.PixelFormats;
-using SixLabors.ImageSharp.Processing;
-using SixLabors.ImageSharp.Processing.Processors.Quantization;
+using SPRView.Net.Lib.Class;
 using SPRView.Net.Lib.Interface;
 using System;
 using System.Collections.Generic;
@@ -203,135 +200,10 @@ public class CreateNewViewModel : INotifyPropertyChanged
         });
         if (files != null)
         {
-            //量化
-            //降低一个维度，以便统一量化
-
-            int buffersize = 0;
-            if (UnPackAnimate)
-            {
-                foreach (var path in m_aryImagePaths)
-                {
-                    SixLabors.ImageSharp.Image frame = SixLabors.ImageSharp.Image.Load(path);
-                    buffersize += frame.Frames.Count;
-                    frame.Dispose();
-                }
-                //会多一个
-                buffersize--;
-            }
-            else
-                buffersize = m_aryImagePaths.Count;
-            using Image<Rgba32> image = new(Export_Width, Export_Height * buffersize);
-            int bufferseek = 0;
-            for (int i = 0; i < m_aryImagePaths.Count; i++)
-            {
-                var path = m_aryImagePaths[i];
-                SixLabors.ImageSharp.Image frame = SixLabors.ImageSharp.Image.Load(path);
-                frame.Mutate(x => x.Resize(Export_Width, Export_Height));
-                do
-                {
-                    image.Mutate(x => x.DrawImage(frame, new Point(0, Export_Height * bufferseek), 1.0f));
-                    frame.Frames.RemoveFrame(0);
-                    bufferseek++;
-                } while (frame.Frames.Count > 1);
-                frame.Dispose();
-            }
-            bool isAlphaTest = Format == (int)ISprite.SpriteFormat.AlphaTest;
-            WuQuantizer quantizer = new(new QuantizerOptions
-            {
-                Dither = null,
-                MaxColors = isAlphaTest ? 255 : 256
-            });
-            Progress = 20;
-            image.Mutate(x => x.Quantize(quantizer));
-            //生成色板
-            Dictionary<Rgba32, byte> palette = [];
-            for (int j = 0; j < image.Height; j++)
-            {
-                for (int i = 0; i < image.Width; i++)
-                {
-                    Rgba32 rgba32 = image[i, j];
-                    if (!palette.ContainsKey(rgba32))
-                        palette.Add(rgba32, (byte)palette.Count);
-                }
-            }
-            if (isAlphaTest)
-                palette.Add(new Rgba32(0, 0, 255, 255), 255);
-            Progress = 40;
-            //保存
-            await using Stream file = await files.OpenWriteAsync();
-            using BinaryWriter writer = new(file);
-            //Header
-            writer.Write(0x50534449);
-            //Version
-            writer.Write(0x00000002);
-            //Type
-            writer.Write(Type);
-            //Format
-            writer.Write(Format);
-            //BoundRadius
-            float radius = (float)Math.Sqrt(Math.Pow(Export_Width, 2) + Math.Pow(Export_Height, 2)) / 2;
-            writer.Write(radius);
-            //Width
-            writer.Write(Export_Width);
-            //Height
-            writer.Write(Export_Height);
-            //Count
-            writer.Write(buffersize);
-            //BeamLength
-            writer.Write(BeamLength);
-            //Sync
-            writer.Write(Sync);
-            Progress = 60;
-            //Palette Size
-            writer.Write((short)palette.Count);
-            //Palette
-            foreach (var p in palette.Keys)
-            {
-                writer.Write(p.R);
-                writer.Write(p.G);
-                writer.Write(p.B);
-            }
-            if (palette.Count < 256 && isAlphaTest)
-            {
-                for (int i = palette.Count; i < 255; i++)
-                {
-                    writer.Write((byte)0);
-                    writer.Write((byte)0);
-                    writer.Write((byte)0);
-                }
-                writer.Write((byte)0);
-                writer.Write((byte)0);
-                writer.Write((byte)255);
-            }
-            Progress = 100;
-            //保存数据
-            for (int k = 0; k < buffersize; k++)
-            {
-                Progress += k * 100 / buffersize;
-                //Group
-                writer.Write(0x00000000);
-                //OriginX
-                writer.Write(0x00000000);
-                //OriginY
-                writer.Write(0x00000000);
-                //Width
-                writer.Write(Export_Width);
-                //Height
-                writer.Write(Export_Height);
-
-                var startY = k * Export_Height;
-                for (int j = startY; j < startY + Export_Height; j++)
-                {
-                    for (int i = 0; i < Export_Width; i++)
-                    {
-                        Rgba32 rgba32 = image[i, j];
-                        if (isAlphaTest && rgba32.A <= 128)
-                            writer.Write(palette.Last().Value);
-                        else
-                            writer.Write(palette[rgba32]);
-                    }
-                }
-            }
+            Progress = 0;
+            await using Stream fs = await files.OpenWriteAsync();
+            CSprite.Save(m_aryImagePaths.ToArray(), fs, Export_Width, Export_Height,
+                (ISprite.SpriteFormat)Format, (ISprite.SpriteType)Type, (ISprite.SpriteSynchron)Sync, BeamLength, UnPackAnimate);
             Progress = 200;
             var box = MessageBoxWindow.CreateMessageBox("☑︎💾", null, Lang!.Shared_OK, Lang.Shared_Cancel);
             box.Position = new Avalonia.PixelPoint(Parent.Position.X + (int)Parent.Width / 2, Parent.Position.Y + (int)Parent.Height / 2);

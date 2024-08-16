@@ -41,4 +41,8 @@ public interface ISprite
     abstract public static ISprite Create(Stream stream);
     abstract public static ISprite Create(string? path);
     abstract public Image GetImage(int frame);
+
+    abstract public static void Save(string[] files, Stream stream, int width, int height,
+        SpriteFormat format = SpriteFormat.Normal, SpriteType type = SpriteType.Parallel, SpriteSynchron sync = SpriteSynchron.Sync,
+        float beamlength = 0, bool bUnpack = false);
 }
