@@ -121,12 +121,13 @@ public class CSprite : ISprite
             var path = files[i];
             Image frame = Image.Load(path);
             frame.Mutate(x => x.Resize(width, height));
-            while (frame.Frames.Count > 1)
+            do
             {
                 image.Mutate(x => x.DrawImage(frame, new Point(0, height * bufferseek), 1.0f));
-                frame.Frames.RemoveFrame(0);
+                if (frame.Frames.Count > 1)
+                    frame.Frames.RemoveFrame(0);
                 bufferseek++;
-            };
+            } while (frame.Frames.Count > 1);
             frame.Dispose();
         }
         bool isAlphaTest = format == ISprite.SpriteFormat.AlphaTest;
