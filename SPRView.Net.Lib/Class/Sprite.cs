@@ -109,8 +109,6 @@ public class CSprite : ISprite
                 buffersize += frame.Frames.Count;
                 frame.Dispose();
             }
-            //会多一个
-            buffersize--;
         }
         else
             buffersize = files.Length;

@@ -202,7 +202,7 @@ public class CreateNewViewModel : INotifyPropertyChanged
         {
             Progress = 0;
             await using Stream fs = await files.OpenWriteAsync();
-            CSprite.Save(m_aryImagePaths.ToArray(), fs, Export_Width, Export_Height,
+            CSprite.Save([.. m_aryImagePaths], fs, Export_Width, Export_Height,
                 (ISprite.SpriteFormat)Format, (ISprite.SpriteType)Type, (ISprite.SpriteSynchron)Sync, BeamLength, UnPackAnimate);
             Progress = 200;
             var box = MessageBoxWindow.CreateMessageBox("☑︎💾", null, Lang!.Shared_OK, Lang.Shared_Cancel);
