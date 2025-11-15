@@ -10,7 +10,7 @@
         CanResize="False"
         TransparencyLevelHint="AcrylicBlur"
         ExtendClientAreaToDecorationsHint="True"
-        Background="#60FFFFFF"
+        Background="#DDF5F5F5"
         mc:Ignorable="d" d:DesignWidth="450" d:DesignHeight="450">
   <StackPanel>
     <DockPanel VerticalAlignment="Top" HorizontalAlignment="Left">
