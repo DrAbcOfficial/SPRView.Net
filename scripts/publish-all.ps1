@@ -32,13 +32,22 @@ if (Test-Path -Path $build -PathType Container) {
 }
 New-Item -ItemType Directory -Path $build | Out-Null
 
+# Staging lives outside the output folder: Unix AOT executables have no
+# extension, so a "SPRView.Net" staging directory inside build/ would collide
+# with the published "SPRView.Net" executable.
+$stageRoot = Join-Path ([System.IO.Path]::GetTempPath()) "sprview-publish-stage"
+
 foreach ($project in "SPRView.Net", "SPRView.Net.CLI", "SPRView.Net.Thumbnailer") {
-    $projectDir = Join-Path $build $project
+    $projectDir = Join-Path $stageRoot $project
+    if (Test-Path -Path $projectDir -PathType Container) {
+        Remove-Item $projectDir -Recurse -Force
+    }
     dotnet publish (Join-Path $repo "src\$project\$project.csproj") -c Release -r $rid -o $projectDir
     if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
     Get-ChildItem -Path $projectDir -Exclude *.pdb | Move-Item -Destination $build -Force
     Remove-Item $projectDir -Recurse -Force
 }
+Remove-Item $stageRoot -Recurse -Force -ErrorAction SilentlyContinue
 
 # C ABI shared library for native consumers (Swift, C/C++, ...).
 & (Join-Path $PSScriptRoot "publish-native-core.ps1") -rid $rid
