@@ -1,18 +1,25 @@
+<!--
+  BorderOnly keeps the platform frame, and the platform drop shadow drawn
+  around it, while leaving the caption to the app. The shadow only exists for a
+  window that carries the resizable frame, so CanResize stays on and the width is
+  locked instead: the dialog reads as fixed and still gets the shadow.
+-->
 <Window
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     x:Class="SPRView.Net.MessageBoxWindow"
-    CanResize="False"
+    CanResize="True"
     ShowInTaskbar="False"
     SizeToContent="Height"
     Width="400"
+    MinWidth="400" MaxWidth="400"
     MaxHeight="520"
     Background="{DynamicResource SolidBackgroundFillColorBaseBrush}"
     ExtendClientAreaToDecorationsHint="True"
     ExtendClientAreaTitleBarHeightHint="32"
-    WindowDecorations="None"
+    WindowDecorations="BorderOnly"
     WindowStartupLocation="CenterOwner"
     mc:Ignorable="d" d:DesignWidth="420">
 

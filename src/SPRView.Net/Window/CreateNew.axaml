@@ -1,3 +1,5 @@
+<!-- BorderOnly keeps the platform frame, and the platform drop shadow that
+     comes with it, without drawing a caption. -->
 <Window
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -9,11 +11,12 @@
     Title="{CompiledBinding Lang.CreateNew_Title}"
     Width="712" Height="512"
     MinWidth="640" MinHeight="440"
+    MaxWidth="712" MaxHeight="512"
     Icon="/Assets/icon.ico"
     Background="{DynamicResource SolidBackgroundFillColorBaseBrush}"
     ExtendClientAreaToDecorationsHint="True"
     ExtendClientAreaTitleBarHeightHint="32"
-    WindowDecorations="None"
+    WindowDecorations="BorderOnly"
     WindowStartupLocation="CenterOwner"
     mc:Ignorable="d" d:DesignWidth="712" d:DesignHeight="512">
 
