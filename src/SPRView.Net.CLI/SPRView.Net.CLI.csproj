@@ -3,7 +3,15 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <AssemblyName>SPRView.Net.CLI</AssemblyName>
+    <!-- NativeAOT end to end; commands are rooted for the trimmer because
+         CliFx discovers them via reflection. -->
+    <PublishAot>true</PublishAot>
+    <IsAotCompatible>true</IsAotCompatible>
   </PropertyGroup>
+
+  <ItemGroup>
+    <TrimmerRootAssembly Include="SPRView.Net.CLI" />
+  </ItemGroup>
 
   <ItemGroup>
     <Compile Remove="build\**" />

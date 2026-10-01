@@ -13,6 +13,8 @@ public static class CliApp
         .AddCommand<InformationCommand>()
         .AddCommand<PreviewCommand>()
         .AddCommand<CreateCommand>()
+        // Assembly.Location is empty under NativeAOT, so CliFx cannot infer it.
+        .SetExecutableName("SPRView.Net.CLI")
         .Build()
         .RunAsync(args)
         .AsTask();
