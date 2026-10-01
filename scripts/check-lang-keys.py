@@ -52,7 +52,11 @@ def main():
             referenced.append(read(path))
     blob = "\n".join(referenced)
 
-    unused = sorted(key for key in english if key not in blob)
+    # Matched as whole identifiers, not as substrings: "TaskBar_File" occurs
+    # inside "TaskBar_File_Create", so a plain containment test reports a dead
+    # key as used and hides exactly the leftovers this is meant to catch.
+    unused = sorted(key for key in english
+                    if not re.search(rf"\b{re.escape(key)}\b", blob))
     if unused:
         problems.append(f"keys nothing references: {unused}")
 

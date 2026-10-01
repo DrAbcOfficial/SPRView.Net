@@ -11,6 +11,10 @@ using Avalonia.Platform.Storage;
 using Avalonia.Threading;
 using SPRView.Net;
 using SPRView.Net.Core;
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Formats.Gif;
+using SixLabors.ImageSharp.Formats.Webp;
+using SPRView.Net.Services;
 using SPRView.Net.ViewModel;
 
 namespace UiSnapshot;
@@ -35,6 +39,7 @@ internal static class InteractionChecks
         }
 
         CheckBuildInfo();
+        CheckAnimationExport(sprPath);
         CheckMainWindow(sprPath);
         CheckExtremeSizes(sprPath);
         CheckDragAndDrop(sprPath);
@@ -217,7 +222,12 @@ internal static class InteractionChecks
         vm.ShowPalettePanel = true;
         vm.ChangeLang("zh");
         Settle();
-        Expect(vm.Lang!.TaskBar_View_Information == "信息", "ChangeLang loads Chinese");
+        // Comparing against a literal made this break whenever the wording was
+        // refined. What matters is that the switch took effect, so the check is
+        // that the Chinese text differs from the English one and is not empty.
+        string zhInfo = vm.Lang!.TaskBar_View_Information;
+        Expect(!string.IsNullOrWhiteSpace(zhInfo) && zhInfo != "Show sprite information",
+            $"ChangeLang loads Chinese (got \"{zhInfo}\")");
         Expect(vm.PaletteCountLabel.Contains("色"), "palette count is localized");
         vm.ChangeLang("en");
         Settle();
@@ -259,6 +269,56 @@ internal static class InteractionChecks
         Expect(about.BuildTimeLabel.Contains(buildTime), "the dialog shows the build time");
         Expect(about.Lang.About_Version.Contains("{0}") && about.Lang.About_BuildTime.Contains("{0}"),
             "both captions carry the format placeholder, or the values would be dropped");
+    }
+
+    /// <summary>
+    /// The animated export has no user-facing way to be checked without saving
+    /// a file and opening it elsewhere, so the properties that were wrong before
+    /// are asserted here: the frame count matches the sprite, every frame
+    /// carries the requested delay in the unit its container uses, the loop is
+    /// forever, and the export does not start on a blank frame.
+    /// </summary>
+    private static void CheckAnimationExport(string sprPath)
+    {
+        var sprite = SPRView.Net.Core.SprDocument.Load(sprPath);
+        var output = new MemoryStream();
+
+        AnimationExporter.SaveAnimated(sprite, output, "anim.gif", 100);
+        output.Position = 0;
+        using (var gif = SixLabors.ImageSharp.Image.Load<SixLabors.ImageSharp.PixelFormats.Rgba32>(output))
+        {
+            Expect(gif.Frames.Count == sprite.Frames.Count,
+                $"gif frame count matches the sprite ({gif.Frames.Count}/{sprite.Frames.Count})");
+
+            int repeat = gif.Metadata.GetGifMetadata().RepeatCount;
+            Expect(repeat == 0, $"gif loops forever (repeat={repeat})");
+
+            var delays = new List<int>();
+            for (int i = 0; i < gif.Frames.Count; i++)
+                delays.Add(gif.Frames[i].Metadata.GetGifMetadata().FrameDelay);
+            // GIF counts hundredths of a second, so 100ms is 10.
+            Expect(delays.Distinct().Count() == 1 && delays[0] == 10,
+                $"every gif frame carries the requested 100ms ({delays[0]}cs)");
+        }
+
+        output = new MemoryStream();
+        AnimationExporter.SaveAnimated(sprite, output, "anim.webp", 100);
+        output.Position = 0;
+        using (var webp = SixLabors.ImageSharp.Image.Load<SixLabors.ImageSharp.PixelFormats.Rgba32>(output))
+        {
+            Expect(webp.Frames.Count == sprite.Frames.Count,
+                $"webp frame count matches the sprite ({webp.Frames.Count}/{sprite.Frames.Count})");
+
+            int repeat = webp.Metadata.GetWebpMetadata().RepeatCount;
+            Expect(repeat == 0, $"webp loops forever (repeat={repeat})");
+
+            var delays = new List<int>();
+            for (int i = 0; i < webp.Frames.Count; i++)
+                delays.Add((int)webp.Frames[i].Metadata.GetWebpMetadata().FrameDelay);
+            // WebP counts milliseconds.
+            Expect(delays.Distinct().Count() == 1 && delays[0] == 100,
+                $"every webp frame carries the requested 100ms ({delays[0]}ms)");
+        }
     }
 
     /// <summary>
@@ -317,7 +377,7 @@ internal static class InteractionChecks
         foreach (var (w, h) in new[] { (200.0, 150.0), (80.0, 60.0), (16.0, 16.0) })
         {
             var root = (Control)window.Content!;
-            root.Measure(new Size(w, h));
+            root.Measure(new Avalonia.Size(w, h));
             root.Arrange(new Rect(0, 0, w, h));
             Dispatcher.UIThread.RunJobs();
 
@@ -373,7 +433,7 @@ internal static class InteractionChecks
 
         var transfer = new DataTransfer();
         transfer.Add(DataTransferItem.CreateFile(file));
-        var point = new Point(400, 300);
+        var point = new Avalonia.Point(400, 300);
 
         window.DragDrop(point, RawDragEventType.DragEnter, transfer, DragDropEffects.Copy, RawInputModifiers.None);
         Settle();

@@ -181,7 +181,7 @@
                 <ToggleButton Classes="toolbar" Theme="{StaticResource ToolbarToggleButton}"
                               IsChecked="{CompiledBinding ShowPalettePanel}"
                               IsEnabled="{CompiledBinding SectionTogglesEnabled}"
-                              ToolTip.Tip="{CompiledBinding Lang.TaskBar_View_Pallet}">
+                              ToolTip.Tip="{CompiledBinding Lang.TaskBar_View_Palette}">
                   <Path Classes="icon" Data="{StaticResource Icon_Palette}" />
                 </ToggleButton>
                 <ToggleButton Name="TransparencyToggle"
@@ -381,7 +381,7 @@
                     <Path Grid.Column="0" Classes="icon" Width="16" Height="16"
                           Data="{StaticResource Icon_Palette}" />
                     <TextBlock Grid.Column="1" Classes="bodyStrong"
-                               Text="{CompiledBinding Lang.TaskBar_View_Pallet}"
+                               Text="{CompiledBinding Lang.TaskBar_View_Palette}"
                                VerticalAlignment="Center" />
                     <TextBlock Grid.Column="2" Classes="caption" VerticalAlignment="Center"
                                Text="{CompiledBinding PaletteCountLabel}" />

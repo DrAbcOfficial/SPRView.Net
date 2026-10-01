@@ -19,21 +19,18 @@ public class LangViewModel : INotifyPropertyChanged
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
     }
 
-    public string TaskBar_File { get => field; set { field = value; OnPropertyChanged(nameof(TaskBar_File)); } } = "File";
-    public string TaskBar_File_Create { get => field; set { field = value; OnPropertyChanged(nameof(TaskBar_File_Create)); } } = "Create";
-    public string TaskBar_File_Open { get => field; set { field = value; OnPropertyChanged(nameof(TaskBar_File_Open)); } } = "Open";
-    public string TaskBar_File_SaveFrame { get => field; set { field = value; OnPropertyChanged(nameof(TaskBar_File_SaveFrame)); } } = "Save Frame";
-    public string TaskBar_File_SaveGIF { get => field; set { field = value; OnPropertyChanged(nameof(TaskBar_File_SaveGIF)); } } = "Save GIF";
-    public string TaskBar_File_SavePalette { get => field; set { field = value; OnPropertyChanged(nameof(TaskBar_File_SavePalette)); } } = "Save Palette";
-    public string TaskBar_File_Export { get => field; set { field = value; OnPropertyChanged(nameof(TaskBar_File_Export)); } } = "Export";
+    public string TaskBar_File_Create { get => field; set { field = value; OnPropertyChanged(nameof(TaskBar_File_Create)); } } = "Create a new sprite";
+    public string TaskBar_File_Open { get => field; set { field = value; OnPropertyChanged(nameof(TaskBar_File_Open)); } } = "Open a sprite";
+    public string TaskBar_File_SaveFrame { get => field; set { field = value; OnPropertyChanged(nameof(TaskBar_File_SaveFrame)); } } = "Save frame as image";
+    public string TaskBar_File_SaveGIF { get => field; set { field = value; OnPropertyChanged(nameof(TaskBar_File_SaveGIF)); } } = "Save as animation";
+    public string TaskBar_File_SavePalette { get => field; set { field = value; OnPropertyChanged(nameof(TaskBar_File_SavePalette)); } } = "Save palette";
+    public string TaskBar_File_Export { get => field; set { field = value; OnPropertyChanged(nameof(TaskBar_File_Export)); } } = "Export all frames";
 
-    public string TaskBar_View { get => field; set { field = value; OnPropertyChanged(nameof(TaskBar_View)); } } = "View";
-    public string TaskBar_View_Information { get => field; set { field = value; OnPropertyChanged(nameof(TaskBar_View_Information)); } } = "Information";
-    public string TaskBar_View_Pallet { get => field; set { field = value; OnPropertyChanged(nameof(TaskBar_View_Pallet)); } } = "Pallet";
+    public string TaskBar_View_Information { get => field; set { field = value; OnPropertyChanged(nameof(TaskBar_View_Information)); } } = "Information panel";
+    public string TaskBar_View_Palette { get => field; set { field = value; OnPropertyChanged(nameof(TaskBar_View_Palette)); } } = "Palette panel";
     public string TaskBar_View_Language { get => field; set { field = value; OnPropertyChanged(nameof(TaskBar_View_Language)); } } = "Language";
     public string Palette_Colors { get => field; set { field = value; OnPropertyChanged(nameof(Palette_Colors)); } } = "{0} colors";
 
-    public string TaskBar_Help { get => field; set { field = value; OnPropertyChanged(nameof(TaskBar_Help)); } } = "Help";
     public string TaskBar_Help_About { get => field; set { field = value; OnPropertyChanged(nameof(TaskBar_Help_About)); } } = "About";
 
 

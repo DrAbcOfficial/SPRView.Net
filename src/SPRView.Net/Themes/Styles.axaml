@@ -142,6 +142,33 @@
     <Setter Property="Margin" Value="3,4" />
   </Style>
 
+  <!-- ======================== Command bar tooltips ======================== -->
+  <!--
+    In icon mode the tooltip is the only thing that says what a button does, and
+    a disabled button is exactly the one someone needs explained (the save
+    actions before a sprite is open). ToolTip.ShowOnDisabled defaults to false,
+    so it is switched on for the whole command bar here rather than repeated on
+    each button. Placement is pinned below the button so the text never covers
+    the command bar it describes.
+  -->
+  <Style Selector="Button.command">
+    <Setter Property="ToolTip.ShowOnDisabled" Value="True" />
+    <!-- Anchored to the button rather than following the pointer, so a tooltip
+         in a toolbar row appears in a predictable place. -->
+    <Setter Property="ToolTip.Placement" Value="Bottom" />
+    <Setter Property="ToolTip.VerticalOffset" Value="4" />
+  </Style>
+  <Style Selector="ToggleButton.toolbar">
+    <Setter Property="ToolTip.ShowOnDisabled" Value="True" />
+    <Setter Property="ToolTip.Placement" Value="Bottom" />
+    <Setter Property="ToolTip.VerticalOffset" Value="4" />
+  </Style>
+  <Style Selector="Button.subtle">
+    <Setter Property="ToolTip.ShowOnDisabled" Value="True" />
+    <Setter Property="ToolTip.Placement" Value="Bottom" />
+    <Setter Property="ToolTip.VerticalOffset" Value="4" />
+  </Style>
+
   <!-- ======================== Fluent theme tuning ======================== -->
   <Style Selector="Button">
     <Setter Property="FontSize" Value="14" />

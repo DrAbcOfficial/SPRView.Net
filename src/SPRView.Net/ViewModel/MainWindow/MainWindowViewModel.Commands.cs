@@ -114,24 +114,44 @@ public partial class MainWindowViewModel
     public async void SaveGIF()
     {
         var sprite = App.Storage.NowSprite ?? throw new ArgumentNullException("Storage sprite is null!");
-        FilePickerFileType gifstype = new("Animate Image")
+        // Offered as two entries rather than one pattern list covering both, so
+        // the format is chosen explicitly instead of being inferred from
+        // whatever extension the name happens to end with.
+        FilePickerFileType gifType = new("GIF animation")
         {
-            Patterns = ["*.gif", "*.webp"],
-            AppleUniformTypeIdentifiers = ["public.gif", "public.webp"],
-            MimeTypes = ["image/*"]
+            Patterns = ["*.gif"],
+            AppleUniformTypeIdentifiers = ["com.compuserve.gif"],
+            MimeTypes = ["image/gif"]
         };
-        var file = await Parent.StorageProvider.SaveFilePickerAsync(new FilePickerSaveOptions
+        FilePickerFileType webpType = new("WebP animation")
+        {
+            Patterns = ["*.webp"],
+            AppleUniformTypeIdentifiers = ["org.webmproject.webp"],
+            MimeTypes = ["image/webp"]
+        };
+        // WithResultAsync rather than SaveFilePickerAsync, because the chosen
+        // entry is what decides the container. Deriving it from the file name
+        // instead would let "WebP animation" plus a name without the extension
+        // write a file whose contents disagree with its name.
+        var result = await Parent.StorageProvider.SaveFilePickerWithResultAsync(new FilePickerSaveOptions
         {
             Title = Lang?.FileManager_SaveGIF,
             DefaultExtension = "gif",
             SuggestedFileName = SuggestName("anim"),
-            FileTypeChoices = [gifstype],
+            FileTypeChoices = [gifType, webpType],
             ShowOverwritePrompt = true
         });
-        if (file == null)
+        if (result.File is not { } file)
             return;
+
+        bool webp = result.SelectedFileType?.Patterns?.FirstOrDefault() == "*.webp";
+        string extension = webp ? ".webp" : ".gif";
+
         await using var stream = await file.OpenWriteAsync();
-        AnimationExporter.SaveAnimated(sprite, stream, file.TryGetLocalPath() ?? ".gif");
+        // Match the preview: the export should run at the speed the animation
+        // was played back at in the viewer.
+        int delayMs = (int)Math.Round(1000.0 / Math.Max(1, App.Storage.PlaySpeed));
+        AnimationExporter.SaveAnimated(sprite, stream, extension, delayMs);
     }
 
     public async void Export()
@@ -151,36 +171,44 @@ public partial class MainWindowViewModel
 
     public async void SavePalette()
     {
-        FilePickerFileType types = new("Palette files")
+        // The two are separate formats with separate writers, so they are
+        // separate entries in the dialog rather than one entry listing both.
+        FilePickerFileType palType = new("RIFF palette")
         {
-            Patterns = ["*.pal", "*.gpl"],
-            AppleUniformTypeIdentifiers = ["microsoft.pal", "gimp.gpl"],
-            MimeTypes = ["palette/*"]
+            Patterns = ["*.pal"],
+            AppleUniformTypeIdentifiers = ["com.microsoft.pal"],
+            MimeTypes = ["application/x-riff-palette"]
         };
-        var file = await Parent.StorageProvider.SaveFilePickerAsync(new FilePickerSaveOptions
+        FilePickerFileType gplType = new("GIMP palette")
+        {
+            Patterns = ["*.gpl"],
+            AppleUniformTypeIdentifiers = ["org.gimp.gpl"],
+            MimeTypes = ["application/x-gimp-palette"]
+        };
+        var result = await Parent.StorageProvider.SaveFilePickerWithResultAsync(new FilePickerSaveOptions
         {
             Title = Lang?.FileManager_SavePalette,
             DefaultExtension = "pal",
             SuggestedFileName = SuggestName("palette"),
-            FileTypeChoices = [types],
+            FileTypeChoices = [palType, gplType],
             ShowOverwritePrompt = true
         });
-        if (file == null)
+        if (result.File is not { } file)
             return;
         var palette = App.Storage.NowPalette.GetOrigin() ?? throw new ArgumentNullException("Storage palette is null!");
+
+        // Same reasoning as the animation export: the chosen entry decides the
+        // format, so the bytes always match the name.
+        bool gimp = result.SelectedFileType?.Patterns?.FirstOrDefault() == "*.gpl";
+        string name = Path.GetFileNameWithoutExtension(file.TryGetLocalPath() ?? string.Empty);
+        if (string.IsNullOrEmpty(name))
+            name = "palette";
+
         await using var fs = await file.OpenWriteAsync();
-        string? local = file.TryGetLocalPath();
-        string? ext = Path.GetExtension(local)?.ToLowerInvariant();
-        string name = Path.GetFileNameWithoutExtension(local) ?? "palette";
-        switch (ext)
-        {
-            case ".pal":
-                PaletteFileWriter.WriteRiffPal(fs, palette);
-                break;
-            case ".gpl":
-                PaletteFileWriter.WriteGimpPal(fs, palette, name);
-                break;
-        }
+        if (gimp)
+            PaletteFileWriter.WriteGimpPal(fs, palette, name);
+        else
+            PaletteFileWriter.WriteRiffPal(fs, palette);
     }
 
     #region Zoom
