@@ -88,12 +88,18 @@ jobs:
           ARTIFACT: SPRView.Net-${{ matrix.os }}-${{ matrix.arch }}.tar.gz
       run: |
           set -euo pipefail
+          # A release left in draft by an earlier run is visible to `view` but
+          # not published, so it is repaired rather than skipped: upload into it
+          # and then release it.
           if ! gh release view "$TAG" >/dev/null 2>&1; then
-            # --verify-tag keeps a missing tag a hard error, and a failure here
-            # most likely means another job won the race, which is fine.
+            # --verify-tag keeps a missing tag a hard error. A failure here most
+            # likely means another job created it first, which is fine.
             gh release create "$TAG" --title "SPRView.Net $TAG" --verify-tag || true
           fi
-          gh release upload "$TAG" "$ARTIFACT" --clobber
+          gh release upload "$TAG" "$ARTIFACT" --clobber || true
+          if [ "$(gh release view "$TAG" --json isDraft --jq .isDraft)" = "true" ]; then
+            gh release edit "$TAG" --draft=false
+          fi
 
     - name: Publish to release (Windows)
       if: matrix.os == 'windows' && startsWith(github.ref, 'refs/tags/')
@@ -103,9 +109,13 @@ jobs:
           TAG: ${{ github.ref_name }}
           ARTIFACT: SPRView.Net-${{ matrix.os }}-${{ matrix.arch }}.zip
       run: |
+          # A draft left behind by an earlier run is visible to `view` but not
+          # published, so it is repaired rather than skipped.
           if (-not (gh release view $env:TAG 2>$null)) {
             gh release create $env:TAG --title "SPRView.Net $env:TAG" --verify-tag
             if ($LASTEXITCODE -ne 0) { Write-Host "another job created it first" }
           }
           gh release upload $env:TAG $env:ARTIFACT --clobber
-          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          if ($LASTEXITCODE -ne 0) { Write-Host "upload failed, likely a concurrent job" }
+          $draft = gh release view $env:TAG --json isDraft --jq .isDraft
+          if ($draft -eq 'true') { gh release edit $env:TAG --draft=false }
