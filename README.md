@@ -1,19 +1,36 @@
 
 # SPRView.Net<img src="readme/icon.png" align="right" width="120"/>
 
-Yet another Sprite viewer for half-life series game (counter-strike, sven co-op, etc.)
+Yet another sprite viewer for the Half-Life series games (Counter-Strike, Sven Co-op, etc.)
 
+![Release](https://img.shields.io/github/v/release/DrAbcOfficial/SPRView.Net?style=for-the-badge)
 ![Downloads](https://img.shields.io/github/downloads/DrAbcOfficial/SPRView.Net/total?style=for-the-badge)
 ![Repo Size](https://img.shields.io/github/repo-size/DrAbcOfficial/SPRView.Net?style=for-the-badge)
 ![Last Commit](https://img.shields.io/github/last-commit/DrAbcOfficial/SPRView.Net?style=for-the-badge)
 
 
 ----
-# ✅Getting Start
+# ✅Getting Started
 
 - [中文](READMECN.md)
 -  Grab prebuild binaries from [release](https://github.com/DrAbcOfficial/SPRView.Net/releases) — x64 and arm64 for macOS/Linux, x64 for Windows — everything is published with <img src="https://raw.githubusercontent.com/dotnet/brand/main/logo/dotnet-logo.svg" width="24"/> NativeAOT, no .NET runtime install needed
 -  To build from source you need the [.NET 10 SDK](https://dotnet.microsoft.com/download/dotnet/10.0) (plus `clang` and `zlib1g-dev` on Linux)
+
+----
+# 🖼️ Screenshot
+
+|Viewer|Create new|
+|--|--|
+|<img src="readme/main-light.png" width="420"/>|<img src="readme/createnew-light.png" width="420"/>|
+
+|Dark theme|Create new (dark)|
+|--|--|
+|<img src="readme/main-dark.png" width="420"/>|<img src="readme/createnew-dark.png" width="420"/>|
+
+|About|About (dark)|
+|--|--|
+|<img src="readme/about-light.png" width="300"/>|<img src="readme/about-dark.png" width="300"/>|
+
 
 ----
 # 🧩 Architecture
@@ -61,8 +78,9 @@ the host theme, so the three platforms render identically:
   information and palette sections collapse from their own headers, so a 256
   colour palette can take the whole panel when the metadata is not what you are
   looking at. The command bar itself starts on icons and only spells its labels
-  out once the window is wide enough that they cannot clip. Small sprites are auto-fitted on whole-number
-  zoom steps, so pixel art stays sharp.
+  out once the window is wide enough that they cannot clip.
+- **Zooming** fits small sprites to the canvas on whole-number steps, so pixel
+  art stays sharp instead of blurring on a fractional scale.
 - **Versioning** is one file: `version.txt` at the repository root. MSBuild
   bakes it, together with the build timestamp, into every binary, and the About
   dialog reads them back from the assembly, so a published single file build
@@ -93,6 +111,27 @@ All three platform thumbnail providers sit under `platform/` and share that
 C ABI: the Windows Explorer extension is an independent C++20 project that
 loads `sprview_core.dll` at runtime, and the macOS QuickLook extension calls
 the same library (or shells out to `sprview-thumbnailer`).
+
+# ⌨️ Command line
+
+`SPRView.Net.CLI` ships in the release archive as a self contained binary and
+covers everything the viewer does without a display:
+
+```sh
+SPRView.Net.CLI information <file.spr>              # header and palette
+SPRView.Net.CLI preview     <file.spr> [-s size] [-f frame]
+SPRView.Net.CLI image       <file.spr> <out> [-f format]
+SPRView.Net.CLI thumbnail   <file.spr> [-o out]     # base64 unless -o is given
+SPRView.Net.CLI create      <images> <w> <h> <out> [-t type] [-f format]
+```
+
+`create` takes a comma separated list of images and packs them into a sprite;
+`-t` selects the render type, `-f` the blend format, and `-u` splits animated
+inputs into single frames. `image` writes any format ImageSharp supports
+(`.png .bmp .jpg .tga .gif .webp .tiff .qoi`).
+
+The same command line drives the compositing the GUI uses, so a sprite built
+here opens in the viewer and in the engine.
 
 # 🖼️ Thumbnail providers
 
@@ -132,16 +171,6 @@ If you need, I recommend the following repositories:
 - [GIMP-hl-sprite-plugin](https://github.com/Psycrow101/GIMP-hl-sprite-plugin)
 - [HL-Texture-Tools](https://github.com/yuraj11/HL-Texture-Tools)
 - [WadMaker](https://github.com/pwitvoet/wadmaker)
-
-# 🖼️ Screenshot
-
-|Viewer|Create new|
-|--|--|
-|<img src="readme/main-light.png" width="420"/>|<img src="readme/createnew-light.png" width="420"/>|
-
-|Dark theme|About|
-|--|--|
-|<img src="readme/main-dark.png" width="420"/>|<img src="readme/about-light.png" width="280"/>|
 
 
 # This repository used:

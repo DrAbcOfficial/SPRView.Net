@@ -1,8 +1,9 @@
 
 # SPRView.Net<img src="readme/icon.png" align="right" width="120"/>
 
-是的又是一个 half-life 系列游戏 (counter-strike, sven co-op, etc.) spr查看器
+是的又是一个 Half-Life 系列游戏（Counter-Strike、Sven Co-op 等）的 spr 查看器
 
+![Release](https://img.shields.io/github/v/release/DrAbcOfficial/SPRView.Net?style=for-the-badge)
 ![Downloads](https://img.shields.io/github/downloads/DrAbcOfficial/SPRView.Net/total?style=for-the-badge)
 ![Repo Size](https://img.shields.io/github/repo-size/DrAbcOfficial/SPRView.Net?style=for-the-badge)
 ![Last Commit](https://img.shields.io/github/last-commit/DrAbcOfficial/SPRView.Net?style=for-the-badge)
@@ -13,6 +14,22 @@
 
 -  从 [release](https://github.com/DrAbcOfficial/SPRView.Net/releases)获得预先编译的二进制文件：macOS/Linux 提供 x64 与 arm64，Windows 提供 x64。所有产物均以 <img src="https://raw.githubusercontent.com/dotnet/brand/main/logo/dotnet-logo.svg" width="24"/> NativeAOT 编译为原生代码，无需安装 .NET 运行时
 -  从源码构建需要 [.NET 10 SDK](https://dotnet.microsoft.com/download/dotnet/10.0)（Linux 上还需要 `clang` 和 `zlib1g-dev`）
+
+----
+# 🖼️ 截图
+
+|查看器|新建精灵图|
+|--|--|
+|<img src="readme/main-light.png" width="420"/>|<img src="readme/createnew-light.png" width="420"/>|
+
+|暗色主题|新建精灵图（暗色）|
+|--|--|
+|<img src="readme/main-dark.png" width="420"/>|<img src="readme/createnew-dark.png" width="420"/>|
+
+|关于|关于（暗色）|
+|--|--|
+|<img src="readme/about-light.png" width="300"/>|<img src="readme/about-dark.png" width="300"/>|
+
 
 ----
 # 🧩 架构
@@ -82,6 +99,24 @@ dotnet publish src/SPRView.Net.Core -c Release -r <rid> -p:NativeLib=Shared -p:P
 扩展是独立的 C++20 工程，运行时加载 `sprview_core.dll`；macOS QuickLook
 扩展调用同一库（或调起 `sprview-thumbnailer`）。
 
+# ⌨️ 命令行
+
+`SPRView.Net.CLI` 随发布包提供，为自包含二进制，无需图形界面即可完成查看器的全部功能：
+
+```sh
+SPRView.Net.CLI information <file.spr>              # 文件头与调色板
+SPRView.Net.CLI preview     <file.spr> [-s size] [-f frame]
+SPRView.Net.CLI image       <file.spr> <out> [-f format]
+SPRView.Net.CLI thumbnail   <file.spr> [-o out]     # 未指定 -o 时输出 base64
+SPRView.Net.CLI create      <images> <w> <h> <out> [-t type] [-f format]
+```
+
+`create` 接收逗号分隔的图片列表并打包为精灵图；`-t` 指定渲染类型，`-f` 指定混合格式，
+`-u` 将动图拆分为单帧。`image` 可写出 ImageSharp 支持的任意格式
+（`.png .bmp .jpg .tga .gif .webp .tiff .qoi`）。
+
+命令行与图形界面共用同一套合成逻辑，因此这里生成的精灵图在查看器和引擎中都能正常打开。
+
 # 🖼️ 缩略图支持
 
 除了双击查看，三大平台的文件管理器缩略图也已支持：
@@ -116,16 +151,6 @@ dotnet publish src/SPRView.Net.Core -c Release -r <rid> -p:NativeLib=Shared -p:P
 - [GIMP-hl-sprite-plugin](https://github.com/Psycrow101/GIMP-hl-sprite-plugin)
 - [HL-Texture-Tools](https://github.com/yuraj11/HL-Texture-Tools)
 - [WadMaker](https://github.com/pwitvoet/wadmaker)
-
-# 🖼️ 截图
-
-|查看器|新建精灵图|
-|--|--|
-|<img src="readme/main-light.png" width="420"/>|<img src="readme/createnew-light.png" width="420"/>|
-
-|暗色主题|关于|
-|--|--|
-|<img src="readme/main-dark.png" width="420"/>|<img src="readme/about-light.png" width="280"/>|
 
 
 # 第三方库:
