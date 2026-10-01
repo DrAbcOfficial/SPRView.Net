@@ -264,6 +264,22 @@ internal static class Program
         }
         Dump($"main-collapsed-{suffix}.png", collapsedWindow, 720, 560);
 
+        // Extreme pass: well below any sane size, to see what the layout
+        // degrades into when a window manager ignores the declared floor. The
+        // window clamps its own size, so the frame is captured at the floor and
+        // the real question - does the content survive - is answered by the
+        // interaction checks that measure the root directly.
+        var tinyWindow = new MainWindow();
+        var tinyVm = new MainWindowViewModel(tinyWindow) { Lang = LangLoader.Load(_lang) };
+        tinyWindow.DataContext = tinyVm;
+        if (_sprPath != null && File.Exists(_sprPath))
+        {
+            using FileStream stream = File.OpenRead(_sprPath);
+            SprDocument sprite = SprDocument.Load(stream);
+            tinyVm.LoadSprite(sprite, Path.GetFileName(_sprPath));
+        }
+        Dump($"main-tiny-{suffix}.png", tinyWindow, 1, 1);
+
         // Fourth pass: at the minimum window size.
         var narrowWindow = new MainWindow();
         var narrowVm = new MainWindowViewModel(narrowWindow) { Lang = LangLoader.Load(_lang) };

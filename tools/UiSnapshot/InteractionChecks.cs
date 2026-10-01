@@ -35,6 +35,7 @@ internal static class InteractionChecks
         }
 
         CheckMainWindow(sprPath);
+        CheckExtremeSizes(sprPath);
         CheckDragAndDrop(sprPath);
         CheckCreateNewWindow(sprPath);
 
@@ -227,6 +228,89 @@ internal static class InteractionChecks
         LoadSprite(vm, sprPath, "second.spr");
         Settle();
         Expect(!vm.IsPlaying, "loading a document stops playback");
+
+        window.Close();
+    }
+
+    /// <summary>
+    /// Shrinks the window to absurd sizes and checks the layout holds.
+    ///
+    /// Sizes well under the declared minimum are requested on purpose: the
+    /// platform clamps them, but a layout that only survives because of that
+    /// clamp would still break the moment the clamp changed, so the content is
+    /// also measured while tiny.
+    /// </summary>
+    private static void CheckExtremeSizes(string sprPath)
+    {
+        var window = new MainWindow();
+        var vm = new MainWindowViewModel(window) { Lang = LangLoader.Load("en") };
+        window.DataContext = vm;
+        window.Show();
+        Settle();
+        LoadSprite(vm, sprPath, "demo.spr");
+        Settle();
+
+        // What the window asks for versus what it allows.
+        Expect(window.MinWidth > 0 && window.MinHeight > 0,
+            $"the window declares a floor ({window.MinWidth}x{window.MinHeight})");
+
+        // Negative sizes are rejected by Avalonia's own property guard, so the
+        // cases worth testing are the non-negative ones that a drag, a snap or a
+        // window manager restore can actually produce.
+        foreach (var (width, height) in new[]
+                 { (0.0, 0.0), (1.0, 1.0), (40.0, 30.0), (599.0, 439.0), (600.0, 440.0) })
+        {
+            window.Width = width;
+            window.Height = height;
+            Settle();
+
+            double actualWidth = window.ClientSize.Width;
+            double actualHeight = window.ClientSize.Height;
+            Expect(actualWidth >= window.MinWidth - 0.5 && actualHeight >= window.MinHeight - 0.5,
+                $"requesting {width}x{height} settles at {actualWidth:F0}x{actualHeight:F0}, not below the floor");
+        }
+
+        // The content has to stay laid out at the floor, panel open, rather than
+        // collapsing to zero or throwing while measuring.
+        window.Width = 600;
+        window.Height = 440;
+        vm.ShowSidePanel = true;
+        vm.ShowPalettePanel = true;
+        Settle();
+        Expect(window.ClientSize.Width > 0 && window.ClientSize.Height > 0,
+            "the window still has a size with every panel open at the floor");
+        Expect(vm.SPR != null, "the sprite is still decoded at the floor size");
+
+        // A window manager may ignore the declared minimum, so the content is
+        // laid out at sizes below the floor as well. Measuring and arranging the
+        // root directly bypasses the window clamp and shows whether the visuals
+        // survive on their own.
+        foreach (var (w, h) in new[] { (200.0, 150.0), (80.0, 60.0), (16.0, 16.0) })
+        {
+            var root = (Control)window.Content!;
+            root.Measure(new Size(w, h));
+            root.Arrange(new Rect(0, 0, w, h));
+            Dispatcher.UIThread.RunJobs();
+
+            var measured = root.Bounds;
+            Expect(measured.Width >= 0 && measured.Height >= 0 &&
+                   !double.IsNaN(measured.Width) && !double.IsNaN(measured.Height),
+                $"content lays out without NaN or negative bounds at {w}x{h}");
+
+            // Layout alone can look fine while the render throws, so the frame
+            // is captured too. At these sizes it will be empty or clipped; what
+            // matters is that the pass completes and yields a bitmap.
+            var tiny = window.CaptureRenderedFrame();
+            Expect(tiny != null, $"the render pass completes at {w}x{h}");
+            tiny?.Dispose();
+        }
+
+        // Restoring a normal size must return the layout to normal.
+        window.Width = 720;
+        window.Height = 560;
+        Settle();
+        Expect(Math.Abs(window.ClientSize.Width - 720) < 1 && Math.Abs(window.ClientSize.Height - 560) < 1,
+            "restoring the default size works after shrinking");
 
         window.Close();
     }
