@@ -209,6 +209,20 @@ internal static class Program
         Dump($"main-wide-{suffix}.png", wideWindow, 1280, 700);
         DumpTree(wideWindow, "wide");
 
+        // Fifth pass: information collapsed, palette taking the whole panel.
+        var collapsedWindow = new MainWindow();
+        var collapsedVm = new MainWindowViewModel(collapsedWindow) { Lang = LangLoader.Load(_lang) };
+        collapsedWindow.DataContext = collapsedVm;
+        collapsedVm.ShowPalettePanel = true;
+        if (_sprPath != null && File.Exists(_sprPath))
+        {
+            using FileStream stream = File.OpenRead(_sprPath);
+            SprDocument sprite = SprDocument.Load(stream);
+            collapsedVm.LoadSprite(sprite, Path.GetFileName(_sprPath));
+            collapsedVm.IsInfoExpanded = false;
+        }
+        Dump($"main-collapsed-{suffix}.png", collapsedWindow, 840, 560);
+
         // Fourth pass: at the minimum window size.
         var narrowWindow = new MainWindow();
         var narrowVm = new MainWindowViewModel(narrowWindow) { Lang = LangLoader.Load(_lang) };

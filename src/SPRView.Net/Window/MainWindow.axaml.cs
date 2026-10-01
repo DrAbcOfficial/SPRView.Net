@@ -145,6 +145,18 @@ public partial class MainWindow : Window
     private void OnAboutClick(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
         => Vm?.About();
 
+    private void OnToggleInfoSection(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+    {
+        if (Vm is { } vm)
+            vm.IsInfoExpanded = !vm.IsInfoExpanded;
+    }
+
+    private void OnTogglePaletteSection(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+    {
+        if (Vm is { } vm)
+            vm.IsPaletteExpanded = !vm.IsPaletteExpanded;
+    }
+
     #endregion
 
     #region Transport

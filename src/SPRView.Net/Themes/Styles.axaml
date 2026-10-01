@@ -56,6 +56,22 @@
     <Setter Property="StrokeThickness" Value="1.8" />
   </Style>
 
+  <!-- Chevrons sit in a 12x12 box and are not scaled. -->
+  <Style Selector="Path.iconChevron">
+    <Setter Property="Width" Value="12" />
+    <Setter Property="Height" Value="12" />
+    <Setter Property="Stretch" Value="None" />
+    <Setter Property="StrokeThickness" Value="1.4" />
+    <Setter Property="StrokeLineCap" Value="Round" />
+    <Setter Property="StrokeJoin" Value="Round" />
+    <Setter Property="Stroke" Value="{DynamicResource TextFillColorSecondaryBrush}" />
+    <Setter Property="Fill" Value="{x:Null}" />
+    <Setter Property="VerticalAlignment" Value="Center" />
+  </Style>
+  <Style Selector="Button:pointerover Path.iconChevron">
+    <Setter Property="Stroke" Value="{DynamicResource TextFillColorPrimaryBrush}" />
+  </Style>
+
   <!-- Caption glyphs: 10x10, 1px hairline, matching the native WinUI chrome. -->
   <Style Selector="Path.glyph">
     <Setter Property="Width" Value="10" />

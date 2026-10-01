@@ -55,8 +55,10 @@ the host theme, so the three platforms render identically:
 - **Chrome** is app-drawn: the caption, the command bar and the resize grips
   come from `Window/WindowChrome.cs`, so the window looks the same instead of
   picking up the native title bar on each OS.
-- **Layout** is a caption, a command bar, a checkerboard canvas, a collapsible
-  side panel and a transport bar. Small sprites are auto-fitted on whole-number
+- **Layout** is a caption, a command bar, a checkerboard canvas, a side panel
+  and a transport bar. The information and palette sections inside the side
+  panel collapse from their headers, so a 256 colour palette can take the whole
+  panel when the sprite metadata is not what you are looking at. Small sprites are auto-fitted on whole-number
   zoom steps, so pixel art stays sharp.
 - **Transparency** is applied per the sprite format by default. The toggle in
   the command bar turns that off to show the frames exactly as the file stores

@@ -3,6 +3,7 @@ using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
 using Avalonia.Headless;
 using Avalonia.Input;
+using Avalonia.Interactivity;
 using Avalonia.Input.Raw;
 using Avalonia.Media.Imaging;
 using Avalonia.Platform;
@@ -128,6 +129,47 @@ internal static class InteractionChecks
             Settle();
             Expect(vm.ApplyTransparency, "clicking it again turns transparency back on");
         }
+
+        // Section headers inside the side panel collapse independently of the
+        // command bar, so a long palette can use the whole panel.
+        vm.ShowPalettePanel = true;
+        Settle();
+        Expect(vm.IsInfoExpanded && vm.IsPaletteExpanded, "both sections start expanded");
+        Expect(vm.ShowInfoDivider, "the divider shows while both sections are open");
+
+        vm.IsInfoExpanded = false;
+        Settle();
+        Expect(!vm.IsInfoExpanded, "the information section collapses");
+        Expect(!vm.ShowInfoDivider, "collapsing information drops the divider");
+
+        var infoHeader = window.FindControl<Button>("InfoSectionHeader");
+        Expect(infoHeader != null, "the panel exposes the information header button");
+        if (infoHeader != null)
+        {
+            // A Button has no click verb in the API; raising the event is what
+            // the pointer would do, and it runs the real handler.
+            infoHeader.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+            Settle();
+            Expect(vm.IsInfoExpanded, "clicking the header expands it again");
+            infoHeader.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+            Settle();
+            Expect(!vm.IsInfoExpanded, "clicking it again collapses it");
+        }
+
+        var paletteHeader = window.FindControl<Button>("PaletteSectionHeader");
+        Expect(paletteHeader != null, "the panel exposes the palette header button");
+        if (paletteHeader != null)
+        {
+            paletteHeader.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+            Settle();
+            Expect(!vm.IsPaletteExpanded, "the palette section collapses");
+            paletteHeader.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+            Settle();
+            Expect(vm.IsPaletteExpanded, "the palette section expands again");
+        }
+
+        vm.IsInfoExpanded = true;
+        Settle();
 
         // Panel toggles are plain properties the command bar binds to.
         vm.ShowPalettePanel = true;

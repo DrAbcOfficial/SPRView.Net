@@ -313,6 +313,7 @@ public partial class MainWindowViewModel : INotifyPropertyChanged
             m_bShowInfoPanel = value;
             OnPropertyChanged(nameof(ShowInfoPanel));
             OnPropertyChanged(nameof(CanShowSideBar));
+            OnPropertyChanged(nameof(ShowInfoDivider));
         }
     }
 
@@ -325,8 +326,47 @@ public partial class MainWindowViewModel : INotifyPropertyChanged
             m_bShowPalettePanel = value;
             OnPropertyChanged(nameof(ShowPalettePanel));
             OnPropertyChanged(nameof(CanShowSideBar));
+            OnPropertyChanged(nameof(ShowInfoDivider));
         }
     }
+
+    private bool m_bIsInfoExpanded = true;
+
+    /// <summary>
+    /// Whether the information rows are expanded inside the side panel. The
+    /// command bar controls whether the panel exists at all; this controls the
+    /// section within it, so a long palette can take the whole panel.
+    /// </summary>
+    public bool IsInfoExpanded
+    {
+        get => m_bIsInfoExpanded;
+        set
+        {
+            if (m_bIsInfoExpanded == value)
+                return;
+            m_bIsInfoExpanded = value;
+            OnPropertyChanged(nameof(IsInfoExpanded));
+            OnPropertyChanged(nameof(ShowInfoDivider));
+        }
+    }
+
+    private bool m_bIsPaletteExpanded = true;
+
+    /// <summary>Whether the palette swatches are expanded inside the side panel.</summary>
+    public bool IsPaletteExpanded
+    {
+        get => m_bIsPaletteExpanded;
+        set
+        {
+            if (m_bIsPaletteExpanded == value)
+                return;
+            m_bIsPaletteExpanded = value;
+            OnPropertyChanged(nameof(IsPaletteExpanded));
+        }
+    }
+
+    /// <summary>The rule between the two sections only earns its space when both are open.</summary>
+    public bool ShowInfoDivider => m_bShowInfoPanel && m_bShowPalettePanel && m_bIsInfoExpanded;
 
     public bool CanShowSideBar => (m_bShowInfoPanel || m_bShowPalettePanel) && HasSprite;
 

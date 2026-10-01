@@ -55,5 +55,8 @@
   <!-- ============================ Chrome ============================ -->
   <StreamGeometry x:Key="Icon_ChevronDown">M6,8.4 L10,12.4 L14,8.4</StreamGeometry>
   <StreamGeometry x:Key="Icon_ChevronRight">M7.8,5.2 L12.6,10 L7.8,14.8</StreamGeometry>
+  <!-- 12x12 variants: the 20x20 grid above is clipped when drawn at 12px. -->
+  <StreamGeometry x:Key="Icon_ChevronDown12">M2.6,4.6 L6,8 L9.4,4.6</StreamGeometry>
+  <StreamGeometry x:Key="Icon_ChevronRight12">M4.6,2.6 L8,6 L4.6,9.4</StreamGeometry>
   <StreamGeometry x:Key="Icon_Check">M5,10.4 L8.6,14 L15,6.6</StreamGeometry>
 </ResourceDictionary>

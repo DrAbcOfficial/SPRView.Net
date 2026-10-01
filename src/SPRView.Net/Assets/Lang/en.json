@@ -30,6 +30,7 @@
   "Dock_ZoomReset": "Reset zoom",
   "Dock_Fit": "Fit to window",
   "Dock_Transparency": "Hide transparent background",
+  "Dock_CollapseSection": "Collapse / expand",
 
   "Empty_Title": "No sprite open",
   "Empty_Subtitle": "Open a .spr file, or drop one anywhere in this window.",
