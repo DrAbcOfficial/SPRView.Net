@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <!-- The thumbnailer is NativeAOT by design: it is spawned on demand by
+         file managers (Linux XDG) and the macOS QuickLook extension, so cold
+         start time matters more than JIT warmup. -->
+    <PublishAot>true</PublishAot>
+    <IsAotCompatible>true</IsAotCompatible>
+    <AssemblyName>sprview-thumbnailer</AssemblyName>
+    <InvariantGlobalization>true</InvariantGlobalization>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SPRView.Net.Core\SPRView.Net.Core.csproj" />
+  </ItemGroup>
+
+</Project>

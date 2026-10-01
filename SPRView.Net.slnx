@@ -2,6 +2,7 @@
   <Folder Name="/src/">
     <Project Path="src/SPRView.Net.CLI/SPRView.Net.CLI.csproj" />
     <Project Path="src/SPRView.Net.Core/SPRView.Net.Core.csproj" />
+    <Project Path="src/SPRView.Net.Thumbnailer/SPRView.Net.Thumbnailer.csproj" />
     <Project Path="src/SPRView.Net/SPRView.Net.csproj" />
   </Folder>
 </Solution>
