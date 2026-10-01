@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <!-- Windows Explorer shell thumbnail provider: a NativeAOT in-proc COM
+         server loaded directly by explorer.exe. -->
+    <PublishAot>true</PublishAot>
+    <IsAotCompatible>true</IsAotCompatible>
+    <NativeLib>Shared</NativeLib>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <AssemblyName>sprview-thumbnailer-win</AssemblyName>
+    <InvariantGlobalization>true</InvariantGlobalization>
+    <PlatformTarget>x64</PlatformTarget>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SPRView.Net.Core\SPRView.Net.Core.csproj" />
+  </ItemGroup>
+
+</Project>
