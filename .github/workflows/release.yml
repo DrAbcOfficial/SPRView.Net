@@ -4,6 +4,10 @@ on:
   push:
     tags:
     - 'v*'
+  # Allows dispatching the build matrix from the Actions tab or `gh workflow
+  # run` for CI verification; release steps are tag guarded, so a manual run
+  # on a branch only compiles.
+  workflow_dispatch:
 
 jobs:
 
