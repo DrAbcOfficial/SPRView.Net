@@ -32,7 +32,7 @@
     <DefaultLanguage>zh-CN</DefaultLanguage>
     <AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
     <NoWarn>$(NoWarn);NU1702</NoWarn>
-    <EntryPointProjectUniqueName>..\SPRView.Net\SPRView.Net.csproj</EntryPointProjectUniqueName>
+    <EntryPointProjectUniqueName>..\src\SPRView.Net\SPRView.Net.csproj</EntryPointProjectUniqueName>
     <PackageCertificateThumbprint>1E6420D0BC5255A2BB16FCE2E3A8AAADB8F8AB37</PackageCertificateThumbprint>
     <GenerateAppInstallerFile>False</GenerateAppInstallerFile>
     <AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
@@ -127,7 +127,7 @@
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.4188" PrivateAssets="all" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SPRView.Net.CLI\SPRView.Net.CLI.csproj" />
-    <ProjectReference Include="..\SPRView.Net\SPRView.Net.csproj" />
+    <ProjectReference Include="..\src\SPRView.Net.CLI\SPRView.Net.CLI.csproj" />
+    <ProjectReference Include="..\src\SPRView.Net\SPRView.Net.csproj" />
   </ItemGroup>
 </Project>

@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <AssemblyName>SPRView.Net.CLI</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="build\**" />
+    <EmbeddedResource Remove="build\**" />
+    <None Remove="build\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CliFx" Version="2.3.6" />
+    <PackageReference Include="Pastel" Version="8.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SPRView.Net.Core\SPRView.Net.Core.csproj" />
+  </ItemGroup>
+
+</Project>

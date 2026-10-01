@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <!-- Core is consumed both as a managed library and published as a
+         NativeAOT shared library exporting the C ABI in Native/. -->
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <IsAotCompatible>true</IsAotCompatible>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- ImageSharp pinned to 3.1.x: 4.x requires a build-time Six Labors
+         license file (sixlabors.lic) which is not viable for a public repo. -->
+    <PackageReference Include="SixLabors.ImageSharp" Version="3.1.12" />
+  </ItemGroup>
+
+</Project>
