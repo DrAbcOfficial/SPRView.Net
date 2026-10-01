@@ -35,12 +35,18 @@ public sealed class SprDocument
 
     public SprFrame GetFrame(int index) => _frames[index];
 
-    /// <summary>Decode the frame at <paramref name="index"/> into a full color image.</summary>
-    public Image<Rgba32> GetFrameImage(int index)
+    /// <summary>
+    /// Decode the frame at <paramref name="index"/> into a full color image.
+    /// </summary>
+    /// <param name="applyTransparency">
+    /// When false the frame is returned exactly as stored, background included,
+    /// instead of honouring the sprite format's transparency rule.
+    /// </param>
+    public Image<Rgba32> GetFrameImage(int index, bool applyTransparency = true)
     {
         if (index < 0 || index >= _frames.Count)
             throw new IndexOutOfRangeException("Frame index out of bound");
-        return _frames[index].Decode();
+        return _frames[index].Decode(applyTransparency);
     }
 
     /// <summary>

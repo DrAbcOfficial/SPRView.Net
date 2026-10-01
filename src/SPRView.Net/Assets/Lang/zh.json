@@ -32,6 +32,7 @@
   "Dock_ZoomOut": "缩小",
   "Dock_ZoomReset": "恢复 100%",
   "Dock_Fit": "适应窗口",
+  "Dock_Transparency": "剔除透明背景",
 
   "Empty_Title": "未打开精灵图",
   "Empty_Subtitle": "打开一个 .spr 文件，或将文件拖入此窗口。",

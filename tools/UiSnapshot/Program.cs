@@ -150,6 +150,19 @@ internal static class Program
                           $"viewer={vm.SprViewerSize} sidebar={vm.CanShowSideBar} frames={vm.MaxFrame}");
         Dump($"main-{suffix}.png", window, 1080, 720);
 
+        // Third pass: transparency off, so the stored pixels show through.
+        var rawWindow = new MainWindow();
+        var rawVm = new MainWindowViewModel(rawWindow) { Lang = LangLoader.Load(_lang) };
+        rawWindow.DataContext = rawVm;
+        if (_sprPath != null && File.Exists(_sprPath))
+        {
+            using FileStream stream = File.OpenRead(_sprPath);
+            SprDocument sprite = SprDocument.Load(stream);
+            rawVm.LoadSprite(sprite, Path.GetFileName(_sprPath));
+            rawVm.ApplyTransparency = false;
+        }
+        Dump($"main-raw-{suffix}.png", rawWindow, 1080, 720);
+
         // Second pass: both side panels open.
         var window2 = new MainWindow();
         var vm2 = new MainWindowViewModel(window2) { Lang = LangLoader.Load(_lang) };

@@ -12,12 +12,17 @@ internal static class FrameDecoder
     /// <summary>
     /// Decode indexed data into an RGBA image.
     /// </summary>
+    /// <param name="applyTransparency">
+    /// When false the frame is returned exactly as the file stores it: every
+    /// pixel opaque, showing the background an author painted under the
+    /// artwork. Useful for inspecting what is really in the file.
+    /// </param>
     public static Image<Rgba32> Decode(byte[] indexedData, SprPalette palette, int width, int height,
-        SpriteFormat format)
+        SpriteFormat format, bool applyTransparency = true)
     {
         ValidateLength(indexedData, width, height);
 
-        var key = new TransparencyKey(palette, format);
+        var key = new TransparencyKey(palette, format, applyTransparency);
 
         Image<Rgba32> image = new(width, height);
         for (int y = 0; y < height; y++)
@@ -32,11 +37,11 @@ internal static class FrameDecoder
     /// Decode indexed data into a tightly packed RGBA8888 buffer.
     /// </summary>
     public static byte[] DecodeToRgba(byte[] indexedData, SprPalette palette, int width, int height,
-        SpriteFormat format)
+        SpriteFormat format, bool applyTransparency = true)
     {
         ValidateLength(indexedData, width, height);
 
-        var key = new TransparencyKey(palette, format);
+        var key = new TransparencyKey(palette, format, applyTransparency);
 
         byte[] rgba = new byte[width * height * 4];
         for (int i = 0; i < width * height; i++)
@@ -78,25 +83,34 @@ internal static class FrameDecoder
     /// </summary>
     private readonly struct TransparencyKey
     {
+        private readonly bool _enabled;
         private readonly bool _alphaByIndex;
         private readonly bool _blackIsEmpty;
         private readonly bool _hasKey;
         private readonly Rgba32 _key;
 
-        public TransparencyKey(SprPalette palette, SpriteFormat format)
+        public TransparencyKey(SprPalette palette, SpriteFormat format, bool enabled)
         {
+            _enabled = enabled;
             _alphaByIndex = format == SpriteFormat.IndexAlpha;
             _blackIsEmpty = format == SpriteFormat.Additive;
             _hasKey = !_alphaByIndex && palette.Length == SpritePaletteSize;
             _key = _hasKey ? palette[SpritePaletteSize - 1] : default;
         }
 
+        /// <summary>
+        /// Maps one palette index to a pixel. A disabled key returns the palette
+        /// entry untouched, so the caller sees the stored image rather than the
+        /// artwork with its background removed.
+        /// </summary>
         public Rgba32 Resolve(int index, SprPalette palette)
         {
-            if (_alphaByIndex)
-                return WithAlpha(palette[index], (byte)index);
-
             Rgba32 color = palette[index];
+            if (!_enabled)
+                return color;
+
+            if (_alphaByIndex)
+                return WithAlpha(color, (byte)index);
             if (_blackIsEmpty && color.R == 0 && color.G == 0 && color.B == 0)
                 return default;
             if (_hasKey && color.R == _key.R && color.G == _key.G && color.B == _key.B)

@@ -22,6 +22,8 @@
   <StreamGeometry x:Key="Icon_SaveImage">M3.5,4.5 H16.5 A1.5,1.5 0 0 1 18,6 V14 A1.5,1.5 0 0 1 16.5,15.5 H3.5 A1.5,1.5 0 0 1 2,14 V6 A1.5,1.5 0 0 1 3.5,4.5 Z M13.6,7.2 A1.3,1.3 0 1 1 13.6,9.8 A1.3,1.3 0 1 1 13.6,7.2 M2,12.6 L6.4,8.4 L9.8,11.8 L12.2,9.6 L15,12.4</StreamGeometry>
   <StreamGeometry x:Key="Icon_SavePalette">M4.2,6.4 H15.8 A1.2,1.2 0 0 1 17,7.6 V14.4 A1.2,1.2 0 0 1 15.8,15.6 H4.2 A1.2,1.2 0 0 1 3,14.4 V7.6 A1.2,1.2 0 0 1 4.2,6.4 Z M3,11.6 H17 M7.2,6.4 V15.6 M12.8,6.4 V15.6</StreamGeometry>
   <StreamGeometry x:Key="Icon_Details">M3,4.6 H17 M3,10 H11.6 M3,15.4 H17 M14.2,13.1 A2.4,2.4 0 1 1 14.2,8.3 A2.4,2.4 0 1 1 14.2,13.1 Z</StreamGeometry>
+  <!-- Two filled quadrant squares inside a frame: the transparency checker. -->
+  <StreamGeometry x:Key="Icon_Transparency">M3,3 H17 V17 H3 Z M5.2,5.2 H9.6 V9.6 H5.2 Z M10.4,10.4 H14.8 V14.8 H10.4 Z</StreamGeometry>
   <StreamGeometry x:Key="Icon_About">M2.5,10 A7.5,7.5 0 1 1 17.5,10 A7.5,7.5 0 1 1 2.5,10 M8.2,8.1 A1.9,1.9 0 0 1 11.9,8.7 C11.9,10.1 10.1,10.4 10.1,11.6 V11.9 M10.1,14.4 V14.9</StreamGeometry>
   <StreamGeometry x:Key="Icon_Refresh">M16.4,10 A6.4,6.4 0 1 1 14.4,5.5 M14.9,2.6 V5.9 H11.6</StreamGeometry>
   <StreamGeometry x:Key="Icon_SaveAnimate">M4,4.5 H16 A1.5,1.5 0 0 1 17.5,6 V14 A1.5,1.5 0 0 1 16,15.5 H4 A1.5,1.5 0 0 1 2.5,14 V6 A1.5,1.5 0 0 1 4,4.5 Z M8.2,7.3 L13.1,10 L8.2,12.7 Z</StreamGeometry>

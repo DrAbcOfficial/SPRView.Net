@@ -58,6 +58,10 @@ the host theme, so the three platforms render identically:
 - **Layout** is a caption, a command bar, a checkerboard canvas, a collapsible
   side panel and a transport bar. Small sprites are auto-fitted on whole-number
   zoom steps, so pixel art stays sharp.
+- **Transparency** is applied per the sprite format by default. The toggle in
+  the command bar turns that off to show the frames exactly as the file stores
+  them, background and all, which is what you want when checking what an artist
+  painted underneath the artwork.
 
 `tools/UiSnapshot` renders every window off screen in both themes, which is how
 the layout is reviewed without a desktop session:

@@ -64,6 +64,7 @@ public class LangViewModel : INotifyPropertyChanged
     public string Dock_Loop { get => field; set { field = value; OnPropertyChanged(nameof(Dock_Loop)); } } = "Loop";
     public string Dock_ZoomIn { get => field; set { field = value; OnPropertyChanged(nameof(Dock_ZoomIn)); } } = "Zoom in";
     public string Dock_ZoomOut { get => field; set { field = value; OnPropertyChanged(nameof(Dock_ZoomOut)); } } = "Zoom out";
+    public string Dock_Transparency { get => field; set { field = value; OnPropertyChanged(nameof(Dock_Transparency)); } } = "Hide transparent background";
     public string Dock_ZoomReset { get => field; set { field = value; OnPropertyChanged(nameof(Dock_ZoomReset)); } } = "Reset zoom";
     public string Dock_Fit { get => field; set { field = value; OnPropertyChanged(nameof(Dock_Fit)); } } = "Fit to window";
 

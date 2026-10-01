@@ -152,10 +152,35 @@ public partial class MainWindowViewModel : INotifyPropertyChanged
     {
         var spr = App.Storage.NowSprite ?? throw new NullReferenceException("Null storage spr");
         using var memoryStream = new MemoryStream();
-        using Image img = spr.GetFrameImage(index);
+        using Image img = spr.GetFrameImage(index, ApplyTransparency);
         img.SaveAsPng(memoryStream);
         memoryStream.Seek(0, SeekOrigin.Begin);
         return new Bitmap(memoryStream);
+    }
+
+    private bool m_bApplyTransparency = true;
+
+    /// <summary>
+    /// Whether the sprite format's transparency rule is applied.
+    ///
+    /// Off shows the frames exactly as the file stores them, background and all,
+    /// which is what you want when checking what an artist actually painted
+    /// underneath the artwork.
+    /// </summary>
+    public bool ApplyTransparency
+    {
+        get => m_bApplyTransparency;
+        set
+        {
+            if (m_bApplyTransparency == value)
+                return;
+            m_bApplyTransparency = value;
+            OnPropertyChanged(nameof(ApplyTransparency));
+
+            // The current frame has to be decoded again under the new rule.
+            if (m_pSpr != null)
+                SPR = RenderFrame(m_iNowFrame);
+        }
     }
 
     public int MaxFrame

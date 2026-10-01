@@ -169,6 +169,13 @@
                               ToolTip.Tip="{CompiledBinding Lang.TaskBar_View_Pallet}">
                   <Path Classes="icon" Data="{StaticResource Icon_Palette}" />
                 </ToggleButton>
+                <ToggleButton Name="TransparencyToggle"
+                              Classes="toolbar" Theme="{StaticResource ToolbarToggleButton}"
+                              IsChecked="{CompiledBinding ApplyTransparency}"
+                              IsEnabled="{CompiledBinding HasSprite}"
+                              ToolTip.Tip="{CompiledBinding Lang.Dock_Transparency}">
+                  <Path Classes="icon" Data="{StaticResource Icon_Transparency}" />
+                </ToggleButton>
               </StackPanel>
             </Border>
 

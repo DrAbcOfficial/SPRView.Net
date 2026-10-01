@@ -37,16 +37,24 @@ public sealed class SprFrame
     /// Decode this frame into a full color image using the document palette and
     /// the transparency rule of the sprite format.
     /// </summary>
-    public Image<Rgba32> Decode()
+    /// <param name="applyTransparency">
+    /// When false the frame is returned exactly as stored, background included,
+    /// instead of honouring the sprite format's transparency rule.
+    /// </param>
+    public Image<Rgba32> Decode(bool applyTransparency = true)
     {
-        return FrameDecoder.Decode(IndexedData, _palette, Width, Height, _format);
+        return FrameDecoder.Decode(IndexedData, _palette, Width, Height, _format, applyTransparency);
     }
 
     /// <summary>
     /// Decode this frame into a tightly packed RGBA8888 buffer.
     /// </summary>
-    public byte[] DecodeToRgba()
+    /// <param name="applyTransparency">
+    /// When false the frame is returned exactly as stored, background included,
+    /// instead of honouring the sprite format's transparency rule.
+    /// </param>
+    public byte[] DecodeToRgba(bool applyTransparency = true)
     {
-        return FrameDecoder.DecodeToRgba(IndexedData, _palette, Width, Height, _format);
+        return FrameDecoder.DecodeToRgba(IndexedData, _palette, Width, Height, _format, applyTransparency);
     }
 }

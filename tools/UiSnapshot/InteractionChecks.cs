@@ -1,8 +1,11 @@
 using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Controls.Primitives;
 using Avalonia.Headless;
 using Avalonia.Input;
 using Avalonia.Input.Raw;
+using Avalonia.Media.Imaging;
+using Avalonia.Platform;
 using Avalonia.Platform.Storage;
 using Avalonia.Threading;
 using SPRView.Net;
@@ -87,6 +90,44 @@ internal static class InteractionChecks
         Settle();
         Expect(vm.ZoomPercent > 100, "fit upscales a small sprite");
         Expect(vm.ZoomPercent % 100 == 0, "fit keeps whole-number zoom steps");
+
+        // Transparency toggle: on = the sprite format's rule is applied, off =
+        // the frame is shown exactly as stored.
+        var withTransparency = vm.SPR!;
+        Expect(vm.ApplyTransparency, "transparency starts enabled");
+        vm.ApplyTransparency = false;
+        Settle();
+        Expect(!vm.ApplyTransparency, "the toggle switches off");
+        Expect(!ReferenceEquals(vm.SPR, withTransparency), "switching re-decodes the frame");
+
+        int opaqueOff = CountOpaque(vm.SPR!);
+        vm.ApplyTransparency = true;
+        Settle();
+        int opaqueOn = CountOpaque(vm.SPR!);
+        Expect(opaqueOff > opaqueOn,
+            $"hiding transparency removes pixels ({opaqueOn} opaque vs {opaqueOff} raw)");
+
+        // Switching back and forth must be stable.
+        vm.ApplyTransparency = false;
+        vm.ApplyTransparency = true;
+        Settle();
+        Expect(CountOpaque(vm.SPR!) == opaqueOn, "toggling twice returns to the same image");
+        Expect(vm.SPR!.Size == withTransparency.Size, "the frame geometry is unchanged");
+
+        // Drive the real command bar button, so the binding is covered and not
+        // just the property behind it.
+        var toggle = window.FindControl<ToggleButton>("TransparencyToggle");
+        Expect(toggle != null, "the command bar exposes the transparency toggle");
+        if (toggle != null)
+        {
+            Expect(toggle.IsChecked == true, "the button reflects the enabled state");
+            toggle.IsChecked = false;
+            Settle();
+            Expect(!vm.ApplyTransparency, "clicking the button turns transparency off");
+            toggle.IsChecked = true;
+            Settle();
+            Expect(vm.ApplyTransparency, "clicking it again turns transparency back on");
+        }
 
         // Panel toggles are plain properties the command bar binds to.
         vm.ShowPalettePanel = true;
@@ -210,6 +251,33 @@ internal static class InteractionChecks
         Expect(vm.PreviewImage == null, "preview clears with an empty list");
 
         window.Close();
+    }
+
+    /// <summary>Counts fully opaque pixels by reading the rendered bitmap back.</summary>
+    private static unsafe int CountOpaque(Bitmap bitmap)
+    {
+        var size = bitmap.PixelSize;
+        using var readable = new WriteableBitmap(size, new Vector(96, 96),
+            PixelFormat.Bgra8888, AlphaFormat.Unpremul);
+        using (var target = readable.Lock())
+        {
+            bitmap.CopyPixels(new PixelRect(size), target.Address,
+                target.RowBytes * size.Height, target.RowBytes);
+        }
+
+        using var frame = readable.Lock();
+        int opaque = 0;
+        for (int y = 0; y < size.Height; y++)
+        {
+            byte* row = (byte*)frame.Address + (y * frame.RowBytes);
+            for (int x = 0; x < size.Width; x++)
+            {
+                // BGRA8888, so the alpha channel is the fourth byte of the pixel.
+                if (row[(x * 4) + 3] == 255)
+                    opaque++;
+            }
+        }
+        return opaque;
     }
 
     private static void LoadSprite(MainWindowViewModel vm, string path, string name)
