@@ -5,4 +5,7 @@
     <Project Path="src/SPRView.Net.Thumbnailer/SPRView.Net.Thumbnailer.csproj" />
     <Project Path="src/SPRView.Net/SPRView.Net.csproj" />
   </Folder>
+  <Folder Name="/tools/">
+    <Project Path="tools/UiSnapshot/UiSnapshot.csproj" />
+  </Folder>
 </Solution>

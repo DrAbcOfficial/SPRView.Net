@@ -4,152 +4,447 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:vm="using:SPRView.Net.ViewModel"
-        x:Class="SPRView.Net.MainWindow"
-        x:DataType="vm:MainWindowViewModel"
-        SizeToContent="WidthAndHeight"
-        CanResize="False"
-        TransparencyLevelHint="AcrylicBlur"
-        ExtendClientAreaToDecorationsHint="True"
-        Background="#DDF5F5F5"
-        mc:Ignorable="d" d:DesignWidth="450" d:DesignHeight="450">
-  <StackPanel>
-    <DockPanel VerticalAlignment="Top" HorizontalAlignment="Left">
-      <Menu DockPanel.Dock="Top">
-        <MenuItem>
-          <MenuItem.Header>
-            <Image Source="/Assets/icon.ico" Height="16" Width="16"/>
-          </MenuItem.Header>
-        </MenuItem>
-        <MenuItem Header="{CompiledBinding Lang.TaskBar_File}">
-          <MenuItem Header="{CompiledBinding Lang.TaskBar_File_Create}" Command="{CompiledBinding CreateFile}">
-            <MenuItem.Icon>
-              <Label Content="✏️"/>
-            </MenuItem.Icon>
-          </MenuItem>
-          <MenuItem Header="{CompiledBinding Lang.TaskBar_File_Open}" Command="{CompiledBinding OpenFile}">
-            <MenuItem.Icon>
-              <Label Content="📂"/>
-            </MenuItem.Icon>
-          </MenuItem>
-          <MenuItem Header="{CompiledBinding Lang.TaskBar_File_SaveFrame}" Command="{CompiledBinding SaveFrame}" IsEnabled="{CompiledBinding LoadedSpr}">
-            <MenuItem.Icon>
-              <Label Content="💾"/>
-            </MenuItem.Icon>
-          </MenuItem>
-          <MenuItem Header="{CompiledBinding Lang.TaskBar_File_SaveGIF}" Command="{CompiledBinding SaveGIF}" IsEnabled="{CompiledBinding LoadedSpr}">
-            <MenuItem.Icon>
-              <Label Content="🖼︎"/>
-            </MenuItem.Icon>
-          </MenuItem>
-          <MenuItem Header="{CompiledBinding Lang.TaskBar_File_Export}" Command="{CompiledBinding Export}" IsEnabled="{CompiledBinding LoadedSpr}">
-            <MenuItem.Icon>
-              <Label Content="⏏"/>
-            </MenuItem.Icon>
-          </MenuItem>
-          <MenuItem Header="{CompiledBinding Lang.TaskBar_File_SavePalette}" Command="{CompiledBinding SavePalette}" IsEnabled="{CompiledBinding LoadedSpr}">
-            <MenuItem.Icon>
-              <Label Content="🪅"/>
-            </MenuItem.Icon>
-          </MenuItem>
-          <Separator/>
-          <MenuItem Header="{CompiledBinding Lang.TaskBar_File_Exit}" Command="{CompiledBinding Exit}">
-            <MenuItem.Icon>
-              <Label Content="❌"/>
-            </MenuItem.Icon>
-          </MenuItem>
-        </MenuItem>
-        <MenuItem Header="{CompiledBinding Lang.TaskBar_View}">
-          <MenuItem>
-            <MenuItem.Icon>
-              <Label Content="ℹ️"/>
-            </MenuItem.Icon>
-            <MenuItem.Header>
-              <CheckBox IsEnabled="{CompiledBinding LoadedSpr}" IsChecked="{CompiledBinding CanShowInfo}" Content="{CompiledBinding Lang.TaskBar_View_Information}"/>
-            </MenuItem.Header>
-          </MenuItem>
-          <MenuItem>
-            <MenuItem.Icon>
-              <Label Content="🎨"/>
-            </MenuItem.Icon>
-            <MenuItem.Header>
-              <CheckBox IsEnabled="{CompiledBinding LoadedSpr}" IsChecked="{CompiledBinding CanShowPallet}" Content="{CompiledBinding Lang.TaskBar_View_Pallet}"/>
-            </MenuItem.Header>
-          </MenuItem>
-          <MenuItem Header="{CompiledBinding Lang.TaskBar_View_Language}">
-            <MenuItem.Icon>
-              <Label Content="🌏"/>
-            </MenuItem.Icon>
-            <MenuItem Header="中文" Command="{CompiledBinding ChangeLang}" CommandParameter="zh">
-              <MenuItem.Icon>
-                <Label Content="🇨🇳"/>
-              </MenuItem.Icon>
-            </MenuItem>
-            <MenuItem Header="English" Command="{CompiledBinding ChangeLang}" CommandParameter="en">
-              <MenuItem.Icon>
-                <Label Content="🇬🇧"/>
-              </MenuItem.Icon>
-            </MenuItem>
-          </MenuItem>
-        </MenuItem>
-        <MenuItem Header="{CompiledBinding Lang.TaskBar_Help}">
-          <MenuItem Header="{CompiledBinding Lang.TaskBar_Help_About}" Command="{CompiledBinding About}">
-            <MenuItem.Icon>
-              <Label Content="🛌"/>
-            </MenuItem.Icon>
-          </MenuItem>
-        </MenuItem>
-      </Menu>
-      <TextBlock/>
-    </DockPanel>
-    <Grid ColumnDefinitions="*,*">
-      <Grid Grid.Column="0" VerticalAlignment="Stretch" RowDefinitions="*,*">
-        <Image Source="{CompiledBinding SPR}" Width="{CompiledBinding SprViewerSize.Width}" Height="{CompiledBinding SprViewerSize.Height}" VerticalAlignment="Center" HorizontalAlignment="Center" MinHeight="300" Grid.Row="0"/>
-        <StackPanel VerticalAlignment="Bottom" Grid.Row="1">
-          <Separator IsVisible="{CompiledBinding LoadedSpr}"/>
-          <DockPanel>
-            <Label Content="{CompiledBinding Lang.Dock_Frame}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            <NumericUpDown Value="{CompiledBinding NowFrame}" Minimum="0" Maximum="{CompiledBinding MaxFrame}" MinWidth="120" FormatString="0" IsEnabled="{CompiledBinding LoadedSpr}"/>
-            <Border Width="1" Background="Gray" Margin="4,0,4,0"/>
-            <ToggleButton IsChecked="{CompiledBinding IsTimerVliad}" IsEnabled="{CompiledBinding LoadedSpr}" Command="{CompiledBinding ToggleAnimationTimer}">
-              <Label>⏯️</Label>
-            </ToggleButton>
-            <CheckBox Content="🔁" IsEnabled="{CompiledBinding LoadedSpr}" IsChecked="{CompiledBinding IsLoopPlay}" Margin="4,0,0,0"/>
-            <Border Width="1" Background="Gray" Margin="4,0,4,0"/>
-            <NumericUpDown Value="{CompiledBinding NowScale}" Minimum="0" Maximum="8" MinWidth="120" FormatString="0%" Increment="0.25" IsEnabled="{CompiledBinding LoadedSpr}"/>
-          </DockPanel>
+    xmlns:media="using:Avalonia.Media"
+    x:Class="SPRView.Net.MainWindow"
+    x:DataType="vm:MainWindowViewModel"
+    Title="SPRView.Net"
+    Width="1080" Height="720"
+    MinWidth="820" MinHeight="560"
+    Icon="/Assets/icon.ico"
+    Background="{DynamicResource SolidBackgroundFillColorBaseBrush}"
+    ExtendClientAreaToDecorationsHint="True"
+    ExtendClientAreaTitleBarHeightHint="40"
+    WindowDecorations="None"
+    WindowStartupLocation="CenterScreen"
+    mc:Ignorable="d" d:DesignWidth="1080" d:DesignHeight="720"
+    DragDrop.AllowDrop="True">
+
+  <Window.KeyBindings>
+    <KeyBinding Gesture="Ctrl+N" Command="{CompiledBinding CreateFile}" />
+    <KeyBinding Gesture="Ctrl+O" Command="{CompiledBinding OpenFile}" />
+    <KeyBinding Gesture="Ctrl+S" Command="{CompiledBinding SaveFrame}" />
+    <KeyBinding Gesture="Ctrl+Shift+S" Command="{CompiledBinding SaveGIF}" />
+    <KeyBinding Gesture="Ctrl+E" Command="{CompiledBinding Export}" />
+    <KeyBinding Gesture="Ctrl+P" Command="{CompiledBinding SavePalette}" />
+    <KeyBinding Gesture="Space" Command="{CompiledBinding ToggleAnimationTimer}" />
+    <KeyBinding Gesture="Left" Command="{CompiledBinding PreviousFrame}" />
+    <KeyBinding Gesture="Right" Command="{CompiledBinding NextFrame}" />
+    <!-- Digit keys are named D0..D9 in the Key enum; "Ctrl+0" would not parse. -->
+    <KeyBinding Gesture="Ctrl+D0" Command="{CompiledBinding ZoomReset}" />
+    <KeyBinding Gesture="Ctrl+OemPlus" Command="{CompiledBinding ZoomIn}" />
+    <KeyBinding Gesture="Ctrl+Add" Command="{CompiledBinding ZoomIn}" />
+    <KeyBinding Gesture="Ctrl+OemMinus" Command="{CompiledBinding ZoomOut}" />
+    <KeyBinding Gesture="Ctrl+Subtract" Command="{CompiledBinding ZoomOut}" />
+  </Window.KeyBindings>
+
+  <!-- Window background: one flat surface, WinUI 3 "solid base" material. -->
+  <Panel Name="RootPanel" Background="{DynamicResource SolidBackgroundFillColorBaseBrush}">
+    <Grid RowDefinitions="40,46,*,52">
+
+      <!-- ============================ Caption ============================ -->
+      <Grid Grid.Row="0"
+            Name="CaptionBar"
+            Background="{DynamicResource WindowCaptionBackgroundBrush}"
+            PointerPressed="OnCaptionPressed">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="Auto" />
+          <ColumnDefinition Width="*" />
+          <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Grid.Column="0" Orientation="Horizontal"
+                    Margin="12,0,0,0" Spacing="8" VerticalAlignment="Center">
+          <Image Source="/Assets/app-icon.png" Width="16" Height="16"
+                 RenderOptions.BitmapInterpolationMode="HighQuality" />
+          <TextBlock Text="{CompiledBinding CaptionPrimary}"
+                     FontSize="12.5" FontWeight="SemiBold"
+                     Foreground="{DynamicResource WindowCaptionForegroundBrush}"
+                     VerticalAlignment="Center" />
+          <TextBlock Text="{CompiledBinding CaptionSecondary}"
+                     IsVisible="{CompiledBinding HasFile}"
+                     FontSize="12.5"
+                     Foreground="{DynamicResource TextFillColorTertiaryBrush}"
+                     VerticalAlignment="Center" />
+        </StackPanel>
+
+        <StackPanel Grid.Column="2" Orientation="Horizontal">
+          <Button Classes="caption" Theme="{StaticResource CaptionButton}"
+                  Click="OnMinimizeClick" IsEnabled="{CompiledBinding $parent[Window].CanResize}">
+            <Path Classes="glyph" Data="{StaticResource Glyph_Minimize}" />
+          </Button>
+          <Button Classes="caption" Theme="{StaticResource CaptionButton}"
+                  Click="OnMaximizeClick" IsEnabled="{CompiledBinding $parent[Window].CanResize}">
+            <Path Name="MaximizeGlyph" Classes="glyph" Data="{StaticResource Glyph_Maximize}" />
+          </Button>
+          <Button Classes="caption captionClose" Theme="{StaticResource CaptionCloseButton}"
+                  Click="OnCloseClick">
+            <Path Classes="glyph" Data="{StaticResource Glyph_Close}" />
+          </Button>
         </StackPanel>
       </Grid>
-      <StackPanel Grid.Column="1" IsVisible="{CompiledBinding CanShowSideBar}">
-        <StackPanel IsVisible="{CompiledBinding CanShowInfo}">
-          <Label Content="{CompiledBinding Lang.SpriteInfo}"/>
-          <Grid RowDefinitions="*,*,*,*,*" ColumnDefinitions="*,*,*,*">
-            <TextBlock Text="{CompiledBinding Lang.SpriteInfo_Frames}" Grid.Row="0" Grid.Column="0" />
-            <TextBlock Text="{CompiledBinding Frame}" Grid.Row="0" Grid.Column="1" />
-            <TextBlock Text="{CompiledBinding Lang.SpriteInfo_Format}" Grid.Row="0" Grid.Column="2" />
-            <TextBlock Text="{CompiledBinding Format}" Grid.Row="0" Grid.Column="3" />
-            <TextBlock Text="{CompiledBinding Lang.SpriteInfo_Width}" Grid.Row="1" Grid.Column="0" />
-            <TextBlock Text="{CompiledBinding Width}" Grid.Row="1" Grid.Column="1" />
-            <TextBlock Text="{CompiledBinding Lang.SpriteInfo_Sync}" Grid.Row="1" Grid.Column="2" />
-            <TextBlock Text="{CompiledBinding Sync}" Grid.Row="1" Grid.Column="3" />
-            <TextBlock Text="{CompiledBinding Lang.SpriteInfo_Height}" Grid.Row="2" Grid.Column="0" />
-            <TextBlock Text="{CompiledBinding Height}" Grid.Row="2" Grid.Column="1" />
-            <TextBlock Text="{CompiledBinding Lang.SpriteInfo_BoundRadius}" Grid.Row="2" Grid.Column="2" />
-            <TextBlock Text="{CompiledBinding BoundRadius}" Grid.Row="2" Grid.Column="3" />
-            <TextBlock Text="{CompiledBinding Lang.SpriteInfo_Type}" Grid.Row="3" Grid.Column="0" />
-            <TextBlock Text="{CompiledBinding Type}" Grid.Row="3" Grid.Column="1" />
-            <TextBlock Text="{CompiledBinding Lang.SpriteInfo_BeamLength}" Grid.Row="3" Grid.Column="2" />
-            <TextBlock Text="{CompiledBinding BeamLength}" Grid.Row="3" Grid.Column="3" />
-            <TextBlock Text="{CompiledBinding Lang.SpriteInfo_OriginX}" Grid.Row="4" Grid.Column="0" />
-            <TextBlock Text="{CompiledBinding OriginX}" Grid.Row="4" Grid.Column="1" />
-            <TextBlock Text="{CompiledBinding Lang.SpriteInfo_OriginY}" Grid.Row="4" Grid.Column="2" />
-            <TextBlock Text="{CompiledBinding OriginY}" Grid.Row="4" Grid.Column="3" />
+
+      <!-- ========================== Command bar ========================== -->
+      <Border Grid.Row="1"
+              Background="{DynamicResource SolidBackgroundFillColorBaseBrush}"
+              BorderBrush="{DynamicResource DividerStrokeColorDefaultBrush}"
+              BorderThickness="0,0,0,1">
+        <Grid Margin="8,0" ColumnDefinitions="*,Auto">
+          <!-- File actions -->
+          <ScrollViewer Grid.Column="0"
+                        HorizontalScrollBarVisibility="Hidden"
+                        VerticalScrollBarVisibility="Disabled">
+            <StackPanel Orientation="Horizontal" Spacing="2" VerticalAlignment="Center">
+              <Button Classes="command" Theme="{StaticResource CommandButton}" Click="OnNewClick"
+                      ToolTip.Tip="{CompiledBinding Lang.TaskBar_File_Create}">
+                <StackPanel Orientation="Horizontal" Spacing="8">
+                  <Path Classes="icon" Data="{StaticResource Icon_NewFile}" />
+                  <TextBlock Text="{CompiledBinding Lang.TaskBar_File_Create}" VerticalAlignment="Center" />
+                </StackPanel>
+              </Button>
+
+              <Button Classes="command" Theme="{StaticResource CommandButton}" Click="OnOpenClick"
+                      ToolTip.Tip="{CompiledBinding Lang.TaskBar_File_Open}">
+                <StackPanel Orientation="Horizontal" Spacing="8">
+                  <Path Classes="icon" Data="{StaticResource Icon_Open}" />
+                  <TextBlock Text="{CompiledBinding Lang.Action_Open}" VerticalAlignment="Center" />
+                </StackPanel>
+              </Button>
+
+              <Border Classes="dividerV" />
+
+              <Button Classes="command" Theme="{StaticResource CommandButton}" Click="OnSaveFrameClick"
+                      IsEnabled="{CompiledBinding HasSprite}"
+                      ToolTip.Tip="{CompiledBinding Lang.TaskBar_File_SaveFrame}">
+                <StackPanel Orientation="Horizontal" Spacing="8">
+                  <Path Classes="icon" Data="{StaticResource Icon_SaveImage}" />
+                  <TextBlock Text="{CompiledBinding Lang.Command_SaveImage}" VerticalAlignment="Center" />
+                </StackPanel>
+              </Button>
+
+              <Button Classes="command" Theme="{StaticResource CommandButton}" Click="OnSaveGifClick"
+                      IsEnabled="{CompiledBinding HasSprite}"
+                      ToolTip.Tip="{CompiledBinding Lang.TaskBar_File_SaveGIF}">
+                <StackPanel Orientation="Horizontal" Spacing="8">
+                  <Path Classes="icon" Data="{StaticResource Icon_SaveAnimate}" />
+                  <TextBlock Text="{CompiledBinding Lang.Command_SaveAnim}" VerticalAlignment="Center" />
+                </StackPanel>
+              </Button>
+
+              <Button Classes="command" Theme="{StaticResource CommandButton}" Click="OnExportClick"
+                      IsEnabled="{CompiledBinding HasSprite}"
+                      ToolTip.Tip="{CompiledBinding Lang.TaskBar_File_Export}">
+                <StackPanel Orientation="Horizontal" Spacing="8">
+                  <Path Classes="icon" Data="{StaticResource Icon_Export}" />
+                  <TextBlock Text="{CompiledBinding Lang.Command_Export}" VerticalAlignment="Center" />
+                </StackPanel>
+              </Button>
+
+              <Button Classes="command" Theme="{StaticResource CommandButton}" Click="OnSavePaletteClick"
+                      IsEnabled="{CompiledBinding HasSprite}"
+                      ToolTip.Tip="{CompiledBinding Lang.TaskBar_File_SavePalette}">
+                <StackPanel Orientation="Horizontal" Spacing="8">
+                  <Path Classes="icon" Data="{StaticResource Icon_SavePalette}" />
+                  <TextBlock Text="{CompiledBinding Lang.Command_SavePalette}" VerticalAlignment="Center" />
+                </StackPanel>
+              </Button>
+            </StackPanel>
+          </ScrollViewer>
+
+          <!-- View options: panel toggles as a small segmented control. -->
+          <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="2"
+                      VerticalAlignment="Center">
+            <Border Background="{DynamicResource ControlFillColorDefaultBrush}"
+                    BorderBrush="{DynamicResource ControlStrokeColorDefaultBrush}"
+                    BorderThickness="1" CornerRadius="6" Padding="2">
+              <StackPanel Orientation="Horizontal" Spacing="2">
+                <ToggleButton Classes="toolbar" Theme="{StaticResource ToolbarToggleButton}"
+                              IsChecked="{CompiledBinding ShowInfoPanel}"
+                              IsEnabled="{CompiledBinding HasSprite}"
+                              ToolTip.Tip="{CompiledBinding Lang.TaskBar_View_Information}">
+                  <Path Classes="icon" Data="{StaticResource Icon_Details}" />
+                </ToggleButton>
+                <ToggleButton Classes="toolbar" Theme="{StaticResource ToolbarToggleButton}"
+                              IsChecked="{CompiledBinding ShowPalettePanel}"
+                              IsEnabled="{CompiledBinding HasSprite}"
+                              ToolTip.Tip="{CompiledBinding Lang.TaskBar_View_Pallet}">
+                  <Path Classes="icon" Data="{StaticResource Icon_Palette}" />
+                </ToggleButton>
+              </StackPanel>
+            </Border>
+
+            <Border Classes="dividerV" />
+
+            <Button Classes="command" Theme="{StaticResource CommandButton}"
+                    ToolTip.Tip="{CompiledBinding Lang.TaskBar_View_Language}">
+              <StackPanel Orientation="Horizontal" Spacing="8">
+                <Path Classes="icon" Data="{StaticResource Icon_Globe}" />
+                <TextBlock Text="{CompiledBinding Lang.Command_Language}" VerticalAlignment="Center" />
+                <Path Classes="icon" Width="12" Height="12" Data="{StaticResource Icon_ChevronDown}" />
+              </StackPanel>
+              <Button.Flyout>
+                <MenuFlyout Placement="BottomEdgeAlignedRight">
+                  <MenuItem Header="简体中文" Command="{CompiledBinding ChangeLang}" CommandParameter="zh" />
+                  <MenuItem Header="English" Command="{CompiledBinding ChangeLang}" CommandParameter="en" />
+                </MenuFlyout>
+              </Button.Flyout>
+            </Button>
+
+            <Button Classes="command" Theme="{StaticResource CommandButton}" Click="OnAboutClick"
+                    ToolTip.Tip="{CompiledBinding Lang.TaskBar_Help_About}">
+              <StackPanel Orientation="Horizontal" Spacing="8">
+                <Path Classes="icon" Data="{StaticResource Icon_About}" />
+                <TextBlock Text="{CompiledBinding Lang.TaskBar_Help_About}" VerticalAlignment="Center" />
+              </StackPanel>
+            </Button>
+          </StackPanel>
+        </Grid>
+      </Border>
+
+      <!-- ============================= Body ============================= -->
+      <Grid Grid.Row="2" ColumnDefinitions="*,Auto">
+
+        <!-- Viewport: checkerboard so sprite transparency is readable. -->
+        <Border Grid.Column="0"
+                Name="Viewport"
+                Margin="8"
+                CornerRadius="8"
+                BorderThickness="1"
+                BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}"
+                Background="{DynamicResource CardBackgroundFillColorSecondaryBrush}"
+                ClipToBounds="True">
+          <Panel>
+            <!-- Checkerboard: only meaningful behind a sprite, so it stays out
+                 of the empty state where it would just add noise. -->
+            <Border IsVisible="{CompiledBinding HasSprite}"
+                    Background="{StaticResource ViewportCheckerBrush}" />
+
+            <ScrollViewer Name="ViewportScroll"
+                          HorizontalScrollBarVisibility="Auto"
+                          VerticalScrollBarVisibility="Auto"
+                          Padding="0">
+              <Panel MinWidth="{Binding $parent[ScrollViewer].Bounds.Width}"
+                     MinHeight="{Binding $parent[ScrollViewer].Bounds.Height}">
+                <Image Source="{CompiledBinding SPR}"
+                       IsVisible="{CompiledBinding HasSprite}"
+                       Width="{CompiledBinding SprViewerSize.Width}"
+                       Height="{CompiledBinding SprViewerSize.Height}"
+                       Stretch="Fill"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       RenderOptions.BitmapInterpolationMode="None" />
+              </Panel>
+            </ScrollViewer>
+
+            <!-- Empty state -->
+            <StackPanel IsVisible="{CompiledBinding !HasSprite}"
+                        HorizontalAlignment="Center" VerticalAlignment="Center"
+                        Spacing="6" MaxWidth="360">
+              <Viewbox Width="46" Height="46" Margin="0,0,0,4">
+                <Path Classes="icon" Width="20" Height="20"
+                      Data="{StaticResource Icon_SaveImage}"
+                      Stroke="{DynamicResource TextFillColorTertiaryBrush}" />
+              </Viewbox>
+              <TextBlock Classes="bodyStrong" FontSize="16" Margin="0,10,0,0" HorizontalAlignment="Center"
+                         Text="{CompiledBinding Lang.Empty_Title}" />
+              <TextBlock Classes="caption" TextAlignment="Center" TextWrapping="Wrap"
+                         Text="{CompiledBinding Lang.Empty_Subtitle}" />
+              <Button Content="{CompiledBinding Lang.Action_Open}"
+                      Classes="accent" Margin="0,14,0,0" MinWidth="140"
+                      HorizontalAlignment="Center"
+                      Click="OnOpenClick" />
+            </StackPanel>
+
+            <!-- Drop hint -->
+            <Border Name="DropHint"
+                    IsVisible="False"
+                    Margin="6"
+                    CornerRadius="6"
+                    BorderThickness="2"
+                    BorderBrush="{DynamicResource AccentFillColorDefaultBrush}"
+                    Background="#1A0078D4">
+              <TextBlock Classes="bodyStrong"
+                         HorizontalAlignment="Center" VerticalAlignment="Center"
+                         Text="{CompiledBinding Lang.Empty_Drop}" />
+            </Border>
+          </Panel>
+        </Border>
+
+        <!-- Side panel -->
+        <Border Grid.Column="1"
+                IsVisible="{CompiledBinding CanShowSideBar}"
+                Width="304"
+                Margin="0,8,8,8"
+                CornerRadius="8"
+                BorderThickness="1"
+                BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}"
+                Background="{DynamicResource CardBackgroundFillColorDefaultBrush}">
+          <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="0,4,0,8">
+            <StackPanel>
+
+              <!-- Sprite information -->
+              <StackPanel IsVisible="{CompiledBinding ShowInfoPanel}">
+                <StackPanel Orientation="Horizontal" Spacing="8" Margin="14,10,14,6">
+                  <Path Classes="icon" Width="16" Height="16" Data="{StaticResource Icon_Details}" />
+                  <TextBlock Classes="bodyStrong" Text="{CompiledBinding Lang.TaskBar_View_Information}"
+                             VerticalAlignment="Center" />
+                </StackPanel>
+
+                <StackPanel Margin="14,0,14,10">
+                  <Grid ColumnDefinitions="*,Auto" Height="26">
+                    <TextBlock Classes="fieldLabel" Text="{CompiledBinding Lang.SpriteInfo_Frames}" />
+                    <TextBlock Grid.Column="1" Classes="fieldValue" Text="{CompiledBinding Frame}" />
+                  </Grid>
+                  <Grid ColumnDefinitions="*,Auto" Height="26">
+                    <TextBlock Classes="fieldLabel" Text="{CompiledBinding Lang.SpriteInfo_Width}" />
+                    <TextBlock Grid.Column="1" Classes="fieldValue" Text="{CompiledBinding Width}" />
+                  </Grid>
+                  <Grid ColumnDefinitions="*,Auto" Height="26">
+                    <TextBlock Classes="fieldLabel" Text="{CompiledBinding Lang.SpriteInfo_Height}" />
+                    <TextBlock Grid.Column="1" Classes="fieldValue" Text="{CompiledBinding Height}" />
+                  </Grid>
+                  <Grid ColumnDefinitions="*,Auto" Height="26">
+                    <TextBlock Classes="fieldLabel" Text="{CompiledBinding Lang.SpriteInfo_Type}" />
+                    <TextBlock Grid.Column="1" Classes="fieldValue" Text="{CompiledBinding Type}" />
+                  </Grid>
+                  <Grid ColumnDefinitions="*,Auto" Height="26">
+                    <TextBlock Classes="fieldLabel" Text="{CompiledBinding Lang.SpriteInfo_Format}" />
+                    <TextBlock Grid.Column="1" Classes="fieldValue" Text="{CompiledBinding Format}" />
+                  </Grid>
+                  <Grid ColumnDefinitions="*,Auto" Height="26">
+                    <TextBlock Classes="fieldLabel" Text="{CompiledBinding Lang.SpriteInfo_Sync}" />
+                    <TextBlock Grid.Column="1" Classes="fieldValue" Text="{CompiledBinding Sync}" />
+                  </Grid>
+                  <Grid ColumnDefinitions="*,Auto" Height="26">
+                    <TextBlock Classes="fieldLabel" Text="{CompiledBinding Lang.SpriteInfo_BoundRadius}" />
+                    <TextBlock Grid.Column="1" Classes="fieldValue" Text="{CompiledBinding BoundRadius}" />
+                  </Grid>
+                  <Grid ColumnDefinitions="*,Auto" Height="26">
+                    <TextBlock Classes="fieldLabel" Text="{CompiledBinding Lang.SpriteInfo_BeamLength}" />
+                    <TextBlock Grid.Column="1" Classes="fieldValue" Text="{CompiledBinding BeamLength}" />
+                  </Grid>
+                  <Grid ColumnDefinitions="*,Auto" Height="26">
+                    <TextBlock Classes="fieldLabel" Text="{CompiledBinding Lang.SpriteInfo_OriginX}" />
+                    <TextBlock Grid.Column="1" Classes="fieldValue" Text="{CompiledBinding OriginX}" />
+                  </Grid>
+                  <Grid ColumnDefinitions="*,Auto" Height="26">
+                    <TextBlock Classes="fieldLabel" Text="{CompiledBinding Lang.SpriteInfo_OriginY}" />
+                    <TextBlock Grid.Column="1" Classes="fieldValue" Text="{CompiledBinding OriginY}" />
+                  </Grid>
+                </StackPanel>
+              </StackPanel>
+
+              <Border Classes="dividerH" Margin="14,0"
+                      IsVisible="{CompiledBinding ShowInfoPanel}" />
+
+              <!-- Palette -->
+              <StackPanel IsVisible="{CompiledBinding ShowPalettePanel}">
+                <Grid ColumnDefinitions="Auto,*,Auto" Margin="14,10,14,8">
+                  <Path Classes="icon" Width="16" Height="16" Data="{StaticResource Icon_Palette}" />
+                  <TextBlock Grid.Column="1" Classes="bodyStrong" Margin="8,0,0,0"
+                             Text="{CompiledBinding Lang.TaskBar_View_Pallet}"
+                             VerticalAlignment="Center" />
+                  <TextBlock Grid.Column="2" Classes="caption" VerticalAlignment="Center"
+                             Text="{CompiledBinding PaletteCountLabel}" />
+                </Grid>
+
+                <ItemsControl ItemsSource="{CompiledBinding PaletteSwatches}"
+                              Margin="14,0,14,6">
+                  <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                      <UniformGrid Columns="16" />
+                    </ItemsPanelTemplate>
+                  </ItemsControl.ItemsPanel>
+                  <ItemsControl.ItemTemplate>
+                    <DataTemplate x:DataType="media:SolidColorBrush">
+                      <Border Height="15" Margin="1"
+                              CornerRadius="2"
+                              Background="{Binding}"
+                              BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}"
+                              BorderThickness="1" />
+                    </DataTemplate>
+                  </ItemsControl.ItemTemplate>
+                </ItemsControl>
+              </StackPanel>
+            </StackPanel>
+          </ScrollViewer>
+        </Border>
+      </Grid>
+
+      <!-- ========================== Transport bar ========================== -->
+      <Border Grid.Row="3"
+              Background="{DynamicResource SolidBackgroundFillColorBaseBrush}"
+              BorderBrush="{DynamicResource DividerStrokeColorDefaultBrush}"
+              BorderThickness="0,1,0,0">
+        <Grid Margin="10,0" ColumnDefinitions="Auto,Auto,*,Auto" ColumnSpacing="10">
+
+          <!-- Playback -->
+          <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="4" VerticalAlignment="Center">
+            <Button Classes="transport" Theme="{StaticResource PlayButton}"
+                    Click="OnTogglePlayClick"
+                    IsEnabled="{CompiledBinding HasSprite}"
+                    ToolTip.Tip="{CompiledBinding Lang.Dock_PlayPause}">
+              <Panel>
+                <Path Classes="icon iconFilled" Data="{StaticResource Icon_Play}"
+                      IsVisible="{CompiledBinding !IsPlaying}" />
+                <Path Classes="icon iconFilled" Data="{StaticResource Icon_Stop}"
+                      IsVisible="{CompiledBinding IsPlaying}" />
+              </Panel>
+            </Button>
+            <ToggleButton Classes="toolbar" Theme="{StaticResource ToolbarToggleButton}"
+                          IsChecked="{CompiledBinding IsLoopPlay}"
+                          IsEnabled="{CompiledBinding HasSprite}"
+                          ToolTip.Tip="{CompiledBinding Lang.Dock_Loop}">
+              <Path Classes="icon" Data="{StaticResource Icon_Loop}" />
+            </ToggleButton>
+          </StackPanel>
+
+          <Border Grid.Column="1" Classes="dividerV" />
+
+          <!-- Frame scrubber -->
+          <Grid Grid.Column="2" ColumnDefinitions="*,Auto" ColumnSpacing="10">
+            <Slider Grid.Column="0"
+                    Name="FrameSlider"
+                    Theme="{StaticResource ThinSlider}"
+                    Minimum="0"
+                    Maximum="{CompiledBinding MaxFrame}"
+                    Value="{CompiledBinding FramePosition}"
+                    IsEnabled="{CompiledBinding HasSprite}"
+                    IsSnapToTickEnabled="True"
+                    TickFrequency="1"
+                    VerticalAlignment="Center" />
+            <TextBlock Grid.Column="1" Classes="caption"
+                       MinWidth="58" TextAlignment="Right"
+                       VerticalAlignment="Center"
+                       Text="{CompiledBinding FrameLabel}" />
           </Grid>
-        </StackPanel>
-        <Separator/>
-        <StackPanel IsVisible="{CompiledBinding CanShowPallet}">
-          <ColorView Palette="{CompiledBinding ColorPallet}" ColorModel="Rgba" IsAlphaVisible="False" IsAlphaEnabled="False" IsColorModelVisible="False" IsColorSpectrumVisible="False"></ColorView>
-        </StackPanel>
-      </StackPanel>
+
+          <!-- Zoom -->
+          <StackPanel Grid.Column="3" Orientation="Horizontal" Spacing="4" VerticalAlignment="Center">
+            <Button Classes="subtle" Theme="{StaticResource SubtleButton}"
+                    Click="OnZoomOutClick" IsEnabled="{CompiledBinding HasSprite}"
+                    ToolTip.Tip="{CompiledBinding Lang.Dock_ZoomOut}">
+              <Path Classes="icon" Data="{StaticResource Icon_ZoomOut}" />
+            </Button>
+            <Button Classes="subtle" Theme="{StaticResource SubtleButton}"
+                    Click="OnZoomResetClick" IsEnabled="{CompiledBinding HasSprite}"
+                    Width="64" ToolTip.Tip="{CompiledBinding Lang.Dock_ZoomReset}">
+              <TextBlock Classes="fieldValue" FontSize="12.5" Text="{CompiledBinding ZoomLabel}" />
+            </Button>
+            <Button Classes="subtle" Theme="{StaticResource SubtleButton}"
+                    Click="OnZoomInClick" IsEnabled="{CompiledBinding HasSprite}"
+                    ToolTip.Tip="{CompiledBinding Lang.Dock_ZoomIn}">
+              <Path Classes="icon" Data="{StaticResource Icon_ZoomIn}" />
+            </Button>
+            <Button Classes="subtle" Theme="{StaticResource SubtleButton}"
+                    Click="OnZoomFitClick" IsEnabled="{CompiledBinding HasSprite}"
+                    ToolTip.Tip="{CompiledBinding Lang.Dock_Fit}">
+              <Path Classes="icon" Data="{StaticResource Icon_Fit}" />
+            </Button>
+          </StackPanel>
+        </Grid>
+      </Border>
     </Grid>
-  </StackPanel>
+
+    <!-- Resize grips are added by WindowChrome.AddResizeGrips in the code behind. -->
+  </Panel>
 </Window>

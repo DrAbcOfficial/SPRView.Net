@@ -1,0 +1,186 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <!--
+    WinUI 3 design tokens.
+    Names and values mirror the Fluent 2 / WinUI 3 theme resource dictionary so the
+    same palette is used on Windows, macOS and Linux instead of the platform theme.
+  -->
+  <ResourceDictionary.ThemeDictionaries>
+
+    <!-- ============================ LIGHT ============================ -->
+    <ResourceDictionary x:Key="Light">
+      <!-- Surfaces -->
+      <SolidColorBrush x:Key="SolidBackgroundFillColorBaseBrush" Color="#F3F3F3" />
+      <SolidColorBrush x:Key="SolidBackgroundFillColorSecondaryBrush" Color="#EEEEEE" />
+      <SolidColorBrush x:Key="SolidBackgroundFillColorTertiaryBrush" Color="#F9F9F9" />
+      <SolidColorBrush x:Key="SolidBackgroundFillColorQuarternaryBrush" Color="#FFFFFF" />
+      <SolidColorBrush x:Key="LayerFillColorDefaultBrush" Color="#80FFFFFF" />
+      <SolidColorBrush x:Key="LayerFillColorAltBrush" Color="#00000000" />
+      <SolidColorBrush x:Key="SolidBackgroundFillColorTransparentBrush" Color="#00F3F3F3" />
+      <SolidColorBrush x:Key="SolidBackgroundFillColorBaseAltBrush" Color="#DADADA" />
+
+      <!-- Cards -->
+      <SolidColorBrush x:Key="CardBackgroundFillColorDefaultBrush" Color="#B3FFFFFF" />
+      <SolidColorBrush x:Key="CardBackgroundFillColorSecondaryBrush" Color="#80F6F6F6" />
+      <SolidColorBrush x:Key="CardStrokeColorDefaultBrush" Color="#0F000000" />
+      <SolidColorBrush x:Key="CardStrokeColorDefaultSolidBrush" Color="#EBEBEB" />
+
+      <!-- Controls -->
+      <SolidColorBrush x:Key="ControlFillColorDefaultBrush" Color="#B3FFFFFF" />
+      <SolidColorBrush x:Key="ControlFillColorSecondaryBrush" Color="#80F9F9F9" />
+      <SolidColorBrush x:Key="ControlFillColorTertiaryBrush" Color="#4DF9F9F9" />
+      <SolidColorBrush x:Key="ControlFillColorDisabledBrush" Color="#4DF9F9F9" />
+      <SolidColorBrush x:Key="ControlFillColorTransparentBrush" Color="#00FFFFFF" />
+      <SolidColorBrush x:Key="ControlStrokeColorDefaultBrush" Color="#0F000000" />
+      <SolidColorBrush x:Key="ControlStrokeColorSecondaryBrush" Color="#29000000" />
+      <SolidColorBrush x:Key="ControlStrokeColorOnAccentDefaultBrush" Color="#14FFFFFF" />
+      <SolidColorBrush x:Key="ControlStrokeColorOnAccentSecondaryBrush" Color="#37000000" />
+      <SolidColorBrush x:Key="ControlStrongStrokeColorDefaultBrush" Color="#72000000" />
+      <SolidColorBrush x:Key="ControlStrongFillColorDefaultBrush" Color="#72000000" />
+
+      <!-- Text -->
+      <SolidColorBrush x:Key="TextFillColorPrimaryBrush" Color="#E4000000" />
+      <SolidColorBrush x:Key="TextFillColorSecondaryBrush" Color="#9E000000" />
+      <SolidColorBrush x:Key="TextFillColorTertiaryBrush" Color="#72000000" />
+      <SolidColorBrush x:Key="TextFillColorDisabledBrush" Color="#5C000000" />
+      <SolidColorBrush x:Key="TextFillColorOnAccentPrimaryBrush" Color="#FFFFFFFF" />
+
+      <!-- Subtle interaction fills -->
+      <SolidColorBrush x:Key="SubtleFillColorTransparentBrush" Color="#00000000" />
+      <SolidColorBrush x:Key="SubtleFillColorSecondaryBrush" Color="#09000000" />
+      <SolidColorBrush x:Key="SubtleFillColorTertiaryBrush" Color="#06000000" />
+      <SolidColorBrush x:Key="SubtleFillColorDisabledBrush" Color="#00000000" />
+
+      <!-- Lines -->
+      <SolidColorBrush x:Key="DividerStrokeColorDefaultBrush" Color="#0F000000" />
+      <SolidColorBrush x:Key="SurfaceStrokeColorDefaultBrush" Color="#0F000000" />
+      <SolidColorBrush x:Key="FocusStrokeColorOuterBrush" Color="#E4000000" />
+      <SolidColorBrush x:Key="FocusStrokeColorInnerBrush" Color="#B3FFFFFF" />
+
+      <!-- Accent -->
+      <SolidColorBrush x:Key="AccentFillColorDefaultBrush" Color="#FF0078D4" />
+      <SolidColorBrush x:Key="AccentFillColorSecondaryBrush" Color="#E40078D4" />
+      <SolidColorBrush x:Key="AccentFillColorTertiaryBrush" Color="#CC0078D4" />
+      <SolidColorBrush x:Key="AccentFillColorDisabledBrush" Color="#37000000" />
+      <SolidColorBrush x:Key="AccentTextFillColorPrimaryBrush" Color="#FF003E92" />
+
+      <!-- System status -->
+      <SolidColorBrush x:Key="SystemFillColorCriticalBrush" Color="#C42B1C" />
+      <SolidColorBrush x:Key="SystemFillColorSuccessBrush" Color="#0F7B0F" />
+      <SolidColorBrush x:Key="SystemFillColorCautionBrush" Color="#9D5D00" />
+
+      <!-- Window chrome -->
+      <SolidColorBrush x:Key="WindowCaptionBackgroundBrush" Color="#F3F3F3" />
+      <SolidColorBrush x:Key="WindowCaptionForegroundBrush" Color="#E4000000" />
+      <SolidColorBrush x:Key="WindowCloseButtonHoverBrush" Color="#C42B1C" />
+      <SolidColorBrush x:Key="WindowCloseButtonPressedBrush" Color="#B22416" />
+      <SolidColorBrush x:Key="WindowCloseButtonForegroundHoverBrush" Color="#FFFFFFFF" />
+
+      <!-- Viewport checkerboard (sprite transparency) -->
+      <SolidColorBrush x:Key="ViewportCheckerColorBrush" Color="#1F000000" />
+      <SolidColorBrush x:Key="ViewportBackgroundBrush" Color="#FFFFFFFF" />
+    </ResourceDictionary>
+
+    <!-- ============================ DARK ============================= -->
+    <ResourceDictionary x:Key="Dark">
+      <!-- Surfaces -->
+      <SolidColorBrush x:Key="SolidBackgroundFillColorBaseBrush" Color="#202020" />
+      <SolidColorBrush x:Key="SolidBackgroundFillColorSecondaryBrush" Color="#1C1C1C" />
+      <SolidColorBrush x:Key="SolidBackgroundFillColorTertiaryBrush" Color="#282828" />
+      <SolidColorBrush x:Key="SolidBackgroundFillColorQuarternaryBrush" Color="#2C2C2C" />
+      <SolidColorBrush x:Key="LayerFillColorDefaultBrush" Color="#4C3A3A3A" />
+      <SolidColorBrush x:Key="LayerFillColorAltBrush" Color="#0DFFFFFF" />
+      <SolidColorBrush x:Key="SolidBackgroundFillColorTransparentBrush" Color="#00202020" />
+      <SolidColorBrush x:Key="SolidBackgroundFillColorBaseAltBrush" Color="#0A0A0A" />
+
+      <!-- Cards -->
+      <SolidColorBrush x:Key="CardBackgroundFillColorDefaultBrush" Color="#0DFFFFFF" />
+      <SolidColorBrush x:Key="CardBackgroundFillColorSecondaryBrush" Color="#08FFFFFF" />
+      <SolidColorBrush x:Key="CardStrokeColorDefaultBrush" Color="#12FFFFFF" />
+      <SolidColorBrush x:Key="CardStrokeColorDefaultSolidBrush" Color="#2D2D2D" />
+
+      <!-- Controls -->
+      <SolidColorBrush x:Key="ControlFillColorDefaultBrush" Color="#0FFFFFFF" />
+      <SolidColorBrush x:Key="ControlFillColorSecondaryBrush" Color="#15FFFFFF" />
+      <SolidColorBrush x:Key="ControlFillColorTertiaryBrush" Color="#0BFFFFFF" />
+      <SolidColorBrush x:Key="ControlFillColorDisabledBrush" Color="#0BFFFFFF" />
+      <SolidColorBrush x:Key="ControlFillColorTransparentBrush" Color="#00FFFFFF" />
+      <SolidColorBrush x:Key="ControlStrokeColorDefaultBrush" Color="#12FFFFFF" />
+      <SolidColorBrush x:Key="ControlStrokeColorSecondaryBrush" Color="#18FFFFFF" />
+      <SolidColorBrush x:Key="ControlStrokeColorOnAccentDefaultBrush" Color="#14FFFFFF" />
+      <SolidColorBrush x:Key="ControlStrokeColorOnAccentSecondaryBrush" Color="#37000000" />
+      <SolidColorBrush x:Key="ControlStrongStrokeColorDefaultBrush" Color="#72000000" />
+      <SolidColorBrush x:Key="ControlStrongFillColorDefaultBrush" Color="#72000000" />
+
+      <!-- Text -->
+      <SolidColorBrush x:Key="TextFillColorPrimaryBrush" Color="#FFFFFFFF" />
+      <SolidColorBrush x:Key="TextFillColorSecondaryBrush" Color="#C5FFFFFF" />
+      <SolidColorBrush x:Key="TextFillColorTertiaryBrush" Color="#87FFFFFF" />
+      <SolidColorBrush x:Key="TextFillColorDisabledBrush" Color="#5DFFFFFF" />
+      <SolidColorBrush x:Key="TextFillColorOnAccentPrimaryBrush" Color="#FF000000" />
+
+      <!-- Subtle interaction fills -->
+      <SolidColorBrush x:Key="SubtleFillColorTransparentBrush" Color="#00000000" />
+      <SolidColorBrush x:Key="SubtleFillColorSecondaryBrush" Color="#0FFFFFFF" />
+      <SolidColorBrush x:Key="SubtleFillColorTertiaryBrush" Color="#0AFFFFFF" />
+      <SolidColorBrush x:Key="SubtleFillColorDisabledBrush" Color="#00FFFFFF" />
+
+      <!-- Lines -->
+      <SolidColorBrush x:Key="DividerStrokeColorDefaultBrush" Color="#15FFFFFF" />
+      <SolidColorBrush x:Key="SurfaceStrokeColorDefaultBrush" Color="#757575" />
+      <SolidColorBrush x:Key="FocusStrokeColorOuterBrush" Color="#FFFFFFFF" />
+      <SolidColorBrush x:Key="FocusStrokeColorInnerBrush" Color="#B3000000" />
+
+      <!-- Accent -->
+      <SolidColorBrush x:Key="AccentFillColorDefaultBrush" Color="#FF60CDFF" />
+      <SolidColorBrush x:Key="AccentFillColorSecondaryBrush" Color="#E460CDFF" />
+      <SolidColorBrush x:Key="AccentFillColorTertiaryBrush" Color="#CC60CDFF" />
+      <SolidColorBrush x:Key="AccentFillColorDisabledBrush" Color="#28FFFFFF" />
+      <SolidColorBrush x:Key="AccentTextFillColorPrimaryBrush" Color="#FF99EBFF" />
+
+      <!-- System status -->
+      <SolidColorBrush x:Key="SystemFillColorCriticalBrush" Color="#FF99A4" />
+      <SolidColorBrush x:Key="SystemFillColorSuccessBrush" Color="#6CCB5F" />
+      <SolidColorBrush x:Key="SystemFillColorCautionBrush" Color="#FCE100" />
+
+      <!-- Window chrome -->
+      <SolidColorBrush x:Key="WindowCaptionBackgroundBrush" Color="#202020" />
+      <SolidColorBrush x:Key="WindowCaptionForegroundBrush" Color="#FFFFFFFF" />
+      <SolidColorBrush x:Key="WindowCloseButtonHoverBrush" Color="#C42B1C" />
+      <SolidColorBrush x:Key="WindowCloseButtonPressedBrush" Color="#B22416" />
+      <SolidColorBrush x:Key="WindowCloseButtonForegroundHoverBrush" Color="#FFFFFFFF" />
+
+      <!-- Viewport checkerboard (sprite transparency) -->
+      <SolidColorBrush x:Key="ViewportCheckerColorBrush" Color="#1FFFFFFF" />
+      <SolidColorBrush x:Key="ViewportBackgroundBrush" Color="#1E1E1E" />
+    </ResourceDictionary>
+  </ResourceDictionary.ThemeDictionaries>
+
+  <!-- ===================== Geometry / metrics ====================== -->
+  <CornerRadius x:Key="ControlCornerRadius">4</CornerRadius>
+  <CornerRadius x:Key="OverlayCornerRadius">8</CornerRadius>
+  <CornerRadius x:Key="SmallCornerRadius">2</CornerRadius>
+
+  <x:Double x:Key="ControlHeight">32</x:Double>
+  <x:Double x:Key="CaptionHeight">40</x:Double>
+
+  <!-- Text style ramp -->
+  <x:Double x:Key="CaptionFontSize">12</x:Double>
+  <x:Double x:Key="BodyFontSize">14</x:Double>
+  <x:Double x:Key="SubtitleFontSize">20</x:Double>
+
+  <!--
+    Checkerboard used behind the sprite so alpha is visible on every platform.
+    Drawn as a tiled 8px pattern instead of a bitmap so it stays crisp at any DPI.
+  -->
+  <DrawingBrush x:Key="ViewportCheckerBrush" TileMode="Tile" Stretch="None"
+                DestinationRect="0,0,16,16" SourceRect="0,0,16,16">
+    <DrawingBrush.Drawing>
+      <GeometryDrawing Brush="{DynamicResource ViewportCheckerColorBrush}">
+        <GeometryDrawing.Geometry>
+          <StreamGeometry>M0,0 H8 V8 H0 Z M8,8 H16 V16 H8 Z</StreamGeometry>
+        </GeometryDrawing.Geometry>
+      </GeometryDrawing>
+    </DrawingBrush.Drawing>
+  </DrawingBrush>
+</ResourceDictionary>

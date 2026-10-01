@@ -25,12 +25,40 @@ src/
     ├─ Rendering/   帧解码、图像合成与量化
     └─ Native/      C ABI 导出（sprview_core.h），可发布为原生共享库
   SPRView.Net/                           Avalonia 跨平台查看器
+    ├─ Themes/      WinUI 3 设计令牌、矢量图标、控件主题
+    ├─ Window/      四个窗口，以及标题栏与缩放边框
+    ├─ ViewModel/   查看器 / 新建 / 本地化状态
+    └─ Storage/     实例级的文档与调色板状态
   SPRView.Net.CLI/                       命令行工具
   SPRView.Net.Thumbnailer/               sprview-thumbnailer 可执行程序
 platform/
   linux/    XDG thumbnailer 入口、MIME 类型、安装脚本
   macos/    Quick Look 扩展源码（Swift）+ 安装脚本
   windows/  Explorer 缩略图扩展（C++20 COM）+ 注册脚本
+tools/
+  UiSnapshot/  离屏渲染所有窗口为 PNG，用于界面评审
+```
+
+## 🎨 界面
+
+界面只使用一套设计语言 —— WinUI 3 / Fluent 2 —— 而不跟随宿主主题，
+因此三个平台渲染结果一致：
+
+- `Themes/Tokens.axaml` 中的**设计令牌**沿用 Fluent 2 的资源命名
+  （`SolidBackgroundFillColorBaseBrush`、`TextFillColorPrimaryBrush`、
+  `AccentFillColorDefaultBrush` 等），并分别提供亮色与暗色表；
+  应用跟随系统主题，两种主题下对比度都正确。
+- `Themes/Icons.axaml` 中的**图标**是手绘 `StreamGeometry`，基于 20×20 网格。
+  不使用 emoji，也不使用平台图标字体 —— 因为它们并非处处可用。
+- **窗口外框**由应用自绘：标题栏、命令栏与缩放边框都来自
+  `Window/WindowChrome.cs`，因此不会在各系统上变成原生标题栏。
+- **布局**为：标题栏、命令栏、棋盘格画布、可折叠侧栏、底部控制条。
+  小尺寸精灵自动以整数倍缩放适应窗口，像素画保持锐利。
+
+`tools/UiSnapshot` 可离屏渲染每个窗口的亮/暗主题，便于在无桌面环境下评审：
+
+```sh
+dotnet run --project tools/UiSnapshot -- <输出目录> [file.spr] [语言]
 ```
 
 `SPRView.Net.Core` 是 GoldSrc sprite 格式的唯一实现。GUI、CLI 和缩略图程序
@@ -82,9 +110,13 @@ dotnet publish src/SPRView.Net.Core -c Release -r <rid> -p:NativeLib=Shared -p:P
 
 # 🖼️ 截图
 
-|1|2|
+|查看器|新建精灵图|
 |--|--|
-|<img src="readme/20240803003123.png" width="360"/>|<img src="readme//20240803003207.png" width="360"/>|
+|<img src="readme/main-light.png" width="420"/>|<img src="readme/createnew-light.png" width="420"/>|
+
+|暗色主题|空状态|
+|--|--|
+|<img src="readme/main-dark.png" width="420"/>|<img src="readme/empty-light.png" width="420"/>|
 
 
 # 第三方库:

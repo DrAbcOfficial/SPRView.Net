@@ -13,40 +13,62 @@ public partial class CreateNewViewModel
     public int Export_Height { get; set; } = 64;
 
     private int m_iProgress = 0;
-    public int Progress { get => m_iProgress; set { m_iProgress = value; OnPropertyChanged(nameof(Progress)); } }
+    public int Progress
+    {
+        get => m_iProgress;
+        set
+        {
+            m_iProgress = value;
+            OnPropertyChanged(nameof(Progress));
+            OnPropertyChanged(nameof(IsExporting));
+        }
+    }
+
+    /// <summary>The progress bar only appears while an export is running.</summary>
+    public bool IsExporting => m_iProgress is > 0 and < 200;
 
     public bool SaveValid => m_aryImagePaths.Count > 0;
 
-    public async void SaveToSpr()
+    public async Task SaveToSpr()
     {
         if (Export_Width % 2 == 1 || Export_Height % 2 == 1)
         {
-            var box = MessageBoxWindow.CreateMessageBox(Lang!.CreateNew_Export_NotSQRTWarning, null, Lang.Shared_OK, Lang.Shared_Cancel);
-            box.Position = new Avalonia.PixelPoint(Parent.Position.X + (int)Parent.Width / 2, Parent.Position.Y + (int)Parent.Height / 2);
-            await box.ShowDialog(Parent);
+            var warn = MessageBoxWindow.CreateMessageBox(
+                Lang!.CreateNew_Export_NotSQRTWarning, null, Lang.Shared_OK, Lang.Shared_Cancel);
+            warn.Position = MainWindowViewModel.CenteredOver(Parent, warn);
+            await warn.ShowDialog(Parent);
         }
+
         Progress = 0;
-        FilePickerFileType Sprites = new("GoldSrc Sprites")
-        {
-            Patterns = ["*.spr"],
-            AppleUniformTypeIdentifiers = ["public.sprite"],
-            MimeTypes = ["sprite/*"]
-        };
         var files = await Parent.StorageProvider.SaveFilePickerAsync(new FilePickerSaveOptions
         {
-            Title = Lang?.FileManager_OpenSprite,
-            FileTypeChoices = [Sprites]
+            Title = Lang?.CreateNew_Title,
+            DefaultExtension = "spr",
+            FileTypeChoices = [MainWindowViewModel.SpriteFileType]
         });
-        if (files != null)
+        if (files == null)
+            return;
+
+        try
         {
             Progress = 0;
             await using Stream fs = await files.OpenWriteAsync();
             SprDocument.Save([.. m_aryImagePaths], fs, Export_Width, Export_Height,
                 (SpriteFormat)Format, (SpriteType)Type, (SpriteSynchron)Sync, BeamLength, UnPackAnimate);
             Progress = 200;
-            var box = MessageBoxWindow.CreateMessageBox("☑︎💾", null, Lang!.Shared_OK, Lang.Shared_Cancel);
-            box.Position = new Avalonia.PixelPoint(Parent.Position.X + (int)Parent.Width / 2, Parent.Position.Y + (int)Parent.Height / 2);
-            await box.ShowDialog(Parent);
+
+            var done = MessageBoxWindow.CreateMessageBox(
+                Lang!.CreateNew_Export_Done, Lang.Shared_OK, Lang.Shared_OK);
+            done.Position = MainWindowViewModel.CenteredOver(Parent, done);
+            await done.ShowDialog(Parent);
+            Parent.Close();
+        }
+        catch (Exception e)
+        {
+            Progress = 0;
+            var failed = MessageBoxWindow.CreateMessageBox(e.ToString(), Lang!.Error_Title, Lang.Shared_OK);
+            failed.Position = MainWindowViewModel.CenteredOver(Parent, failed);
+            await failed.ShowDialog(Parent);
         }
     }
 }

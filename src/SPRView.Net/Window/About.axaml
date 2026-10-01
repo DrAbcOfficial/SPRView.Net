@@ -3,41 +3,73 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        x:Class="SPRView.Net.AboutWindow"
-        SizeToContent="WidthAndHeight"
-        CanResize="False"
-        TransparencyLevelHint="AcrylicBlur"
-        ExtendClientAreaToDecorationsHint="True"
-        Background="#20FFFFFF"
-        mc:Ignorable="d" d:DesignWidth="450" d:DesignHeight="450">
-  <Panel Width="400" Height="250">
-    <DockPanel>
-      <Label> ✨ SPRView.Net   - Dr.Abc</Label>
-    </DockPanel>
-    <Border Margin="10,30,10,10" Background="#20FFFFFF" BorderThickness="2" BorderBrush="Gray">
-      <Grid>
-        <Grid.RowDefinitions>
-          <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-          <ColumnDefinition Width="*" />
-          <ColumnDefinition Width="2*" />
-        </Grid.ColumnDefinitions>
-        <Panel Grid.Row="0" Grid.Column="0">
-          <Image Source="avares://SPRView.Net/Assets/icon.ico" Width="90" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,30,0,0"/>
-        </Panel>
-        <StackPanel Grid.Row="0" Grid.Column="1">
-          <Label FontSize="25" Margin="0,20,0,0">✨SPRView.Net</Label>
-          <Separator/>
-          <Label>- Dr.Abc❤</Label>
-          <HyperlinkButton NavigateUri="https://github.com/DrAbcOfficial/SPRView.Net">- Source Code</HyperlinkButton>
-          <Label>🙏🏻:</Label>
-          <HyperlinkButton NavigateUri="https://avaloniaui.net/">· Avalonia</HyperlinkButton>
-          <HyperlinkButton NavigateUri="https://github.com/SixLabors/ImageSharp">
-            · ImageSharp
+    xmlns:vm="using:SPRView.Net.ViewModel"
+    x:Class="SPRView.Net.AboutWindow"
+    x:DataType="vm:LangViewModel"
+    Title="SPRView.Net"
+    Width="420"
+    SizeToContent="Height"
+    CanResize="False"
+    ShowInTaskbar="False"
+    Icon="/Assets/icon.ico"
+    Background="{DynamicResource SolidBackgroundFillColorBaseBrush}"
+    ExtendClientAreaToDecorationsHint="True"
+    ExtendClientAreaTitleBarHeightHint="36"
+    WindowDecorations="None"
+    WindowStartupLocation="CenterOwner"
+    mc:Ignorable="d" d:DesignWidth="420">
+
+  <Panel Name="RootPanel" Background="{DynamicResource SolidBackgroundFillColorBaseBrush}">
+    <Grid RowDefinitions="36,Auto">
+
+      <Grid Grid.Row="0"
+            Name="CaptionBar"
+            Background="{DynamicResource WindowCaptionBackgroundBrush}"
+            PointerPressed="OnCaptionPressed">
+        <TextBlock Text="{CompiledBinding About_Title}" FontSize="12" Margin="12,0,0,0"
+                   Foreground="{DynamicResource WindowCaptionForegroundBrush}"
+                   VerticalAlignment="Center" />
+        <Button Classes="caption captionClose" Theme="{StaticResource CaptionCloseButton}"
+                HorizontalAlignment="Right" Click="OnCloseClick">
+          <Path Classes="glyph" Data="{StaticResource Glyph_Close}" />
+        </Button>
+      </Grid>
+
+      <StackPanel Grid.Row="1" Margin="24,20,24,24" Spacing="16">
+
+        <StackPanel Orientation="Horizontal" Spacing="14">
+          <Image Source="/Assets/app-icon.png" Width="56" Height="56"
+                 RenderOptions.BitmapInterpolationMode="HighQuality"
+                 VerticalAlignment="Top" />
+          <StackPanel Spacing="2" VerticalAlignment="Center">
+            <TextBlock Classes="subtitle" Text="SPRView.Net" />
+            <TextBlock Classes="caption" Text="{CompiledBinding About_Tagline}" />
+            <TextBlock Classes="caption" Text="Dr.Abc" />
+          </StackPanel>
+        </StackPanel>
+
+        <Border Classes="dividerH" />
+
+        <StackPanel Spacing="2">
+          <TextBlock Classes="caption" Text="{CompiledBinding About_BuiltWith}" Margin="0,0,0,4" />
+          <HyperlinkButton NavigateUri="https://avaloniaui.net/" Padding="0" MinHeight="0">
+            <TextBlock Classes="body" FontSize="13" Text="Avalonia UI" />
+          </HyperlinkButton>
+          <HyperlinkButton NavigateUri="https://github.com/SixLabors/ImageSharp" Padding="0" MinHeight="0">
+            <TextBlock Classes="body" FontSize="13" Text="SixLabors.ImageSharp" />
           </HyperlinkButton>
         </StackPanel>
-      </Grid>
-    </Border>
+
+        <Border Classes="dividerH" />
+
+        <Button Theme="{StaticResource CommandButton}" HorizontalAlignment="Left"
+                HorizontalContentAlignment="Left" Click="OnSourceCodeClick">
+          <StackPanel Orientation="Horizontal" Spacing="8">
+            <Path Classes="icon" Width="16" Height="16" Data="{StaticResource Icon_ExternalLink}" />
+            <TextBlock Text="{CompiledBinding About_SourceCode}" VerticalAlignment="Center" />
+          </StackPanel>
+        </Button>
+      </StackPanel>
+    </Grid>
   </Panel>
 </Window>

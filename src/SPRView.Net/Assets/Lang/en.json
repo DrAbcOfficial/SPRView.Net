@@ -14,12 +14,36 @@
   "TaskBar_View_Information": "Information",
   "TaskBar_View_Pallet": "Pallet",
   "TaskBar_View_Language": "Language",
+  "Palette_Colors": "{0} colors",
   "TaskBar_Help": "_Help",
   "TaskBar_Help_About": "About",
 
-  "Dock_Frame": "Frame:",
+  "Action_Open": "Open",
+  "Command_SaveImage": "Image",
+  "Command_SaveAnim": "Animation",
+  "Command_Export": "Frames",
+  "Command_SavePalette": "Palette",
+  "Command_Language": "Language",
 
-  "SpriteInfo": "SPR Info:",
+  "Dock_Frame": "Frame:",
+  "Dock_PlayPause": "Play / Pause",
+  "Dock_Loop": "Loop",
+  "Dock_ZoomIn": "Zoom in",
+  "Dock_ZoomOut": "Zoom out",
+  "Dock_ZoomReset": "Reset zoom",
+  "Dock_Fit": "Fit to window",
+
+  "Empty_Title": "No sprite open",
+  "Empty_Subtitle": "Open a .spr file, or drop one anywhere in this window.",
+  "Empty_Drop": "Release to open",
+
+  "Error_Title": "Something went wrong",
+
+  "About_Title": "About",
+  "About_Tagline": "GoldSrc sprite viewer",
+  "About_BuiltWith": "Built with",
+  "About_SourceCode": "Source code",
+
   "SpriteInfo_Frames": "Frames Lenght:",
   "SpriteInfo_Width": "Width:",
   "SpriteInfo_Height": "Height:",
@@ -38,6 +62,7 @@
   "FileManager_SavePalette": "Save Palette",
 
   "CreateNew_Title": "Create New Sprite",
+  "CreateNew_Frames": "Frames",
   "CreateNew_AddImage_Title": "Select Images",
   "CreateNew_Tab_Property": "Property",
   "CreateNew_Tab_Preview": "Preview",
@@ -69,5 +94,6 @@
   "CreateNew_Export_Width": "Export Width",
   "CreateNew_Export_Height": "Export Height",
   "CreateNew_Export_Save": "Export!",
-  "CreateNew_Export_NotSQRTWarning": "The size you set cannot be divided by 2\nand it may not work in some versions of engine."
+  "CreateNew_Export_NotSQRTWarning": "The size you set cannot be divided by 2\nand it may not work in some versions of engine.",
+  "CreateNew_Export_Done": "Sprite exported successfully."
 }

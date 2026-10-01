@@ -1,0 +1,158 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <!-- Global WinUI 3 styling on top of the Fluent theme. -->
+
+  <!-- ========================== Typography ========================== -->
+  <Style Selector="TextBlock.caption">
+    <Setter Property="FontSize" Value="12" />
+    <Setter Property="Foreground" Value="{DynamicResource TextFillColorSecondaryBrush}" />
+  </Style>
+  <Style Selector="TextBlock.body">
+    <Setter Property="FontSize" Value="14" />
+    <Setter Property="Foreground" Value="{DynamicResource TextFillColorPrimaryBrush}" />
+  </Style>
+  <Style Selector="TextBlock.bodyStrong">
+    <Setter Property="FontSize" Value="14" />
+    <Setter Property="FontWeight" Value="SemiBold" />
+    <Setter Property="Foreground" Value="{DynamicResource TextFillColorPrimaryBrush}" />
+  </Style>
+  <Style Selector="TextBlock.subtitle">
+    <Setter Property="FontSize" Value="20" />
+    <Setter Property="FontWeight" Value="SemiBold" />
+    <Setter Property="Foreground" Value="{DynamicResource TextFillColorPrimaryBrush}" />
+  </Style>
+  <Style Selector="TextBlock.pageTitle">
+    <Setter Property="FontSize" Value="18" />
+    <Setter Property="FontWeight" Value="SemiBold" />
+    <Setter Property="Foreground" Value="{DynamicResource TextFillColorPrimaryBrush}" />
+  </Style>
+  <Style Selector="TextBlock.fieldLabel">
+    <Setter Property="FontSize" Value="12" />
+    <Setter Property="Foreground" Value="{DynamicResource TextFillColorSecondaryBrush}" />
+    <Setter Property="VerticalAlignment" Value="Center" />
+  </Style>
+  <Style Selector="TextBlock.fieldValue">
+    <Setter Property="FontSize" Value="12" />
+    <Setter Property="Foreground" Value="{DynamicResource TextFillColorPrimaryBrush}" />
+    <Setter Property="VerticalAlignment" Value="Center" />
+  </Style>
+
+  <!-- ============================ Icons ============================ -->
+  <!-- Authored on a 20x20 grid, Stretch=None keeps a 1:1 pixel mapping. -->
+  <Style Selector="Path.icon">
+    <Setter Property="Width" Value="20" />
+    <Setter Property="Height" Value="20" />
+    <Setter Property="Stretch" Value="None" />
+    <Setter Property="StrokeThickness" Value="1.5" />
+    <Setter Property="StrokeLineCap" Value="Round" />
+    <Setter Property="StrokeJoin" Value="Round" />
+    <Setter Property="Stroke" Value="{DynamicResource TextFillColorPrimaryBrush}" />
+    <Setter Property="Fill" Value="{x:Null}" />
+    <Setter Property="HorizontalAlignment" Value="Center" />
+    <Setter Property="VerticalAlignment" Value="Center" />
+  </Style>
+  <Style Selector="Path.icon.iconFilled">
+    <Setter Property="Fill" Value="{DynamicResource TextFillColorPrimaryBrush}" />
+    <Setter Property="StrokeThickness" Value="1.8" />
+  </Style>
+
+  <!-- Caption glyphs: 10x10, 1px hairline, matching the native WinUI chrome. -->
+  <Style Selector="Path.glyph">
+    <Setter Property="Width" Value="10" />
+    <Setter Property="Height" Value="10" />
+    <Setter Property="Stretch" Value="None" />
+    <Setter Property="StrokeThickness" Value="1" />
+    <Setter Property="Stroke" Value="{DynamicResource WindowCaptionForegroundBrush}" />
+    <Setter Property="Fill" Value="{x:Null}" />
+    <Setter Property="HorizontalAlignment" Value="Center" />
+    <Setter Property="VerticalAlignment" Value="Center" />
+  </Style>
+  <Style Selector="Button.captionClose:pointerover Path.glyph">
+    <Setter Property="Stroke" Value="{DynamicResource WindowCloseButtonForegroundHoverBrush}" />
+  </Style>
+  <Style Selector="Button.captionClose:pressed Path.glyph">
+    <Setter Property="Stroke" Value="{DynamicResource WindowCloseButtonForegroundHoverBrush}" />
+  </Style>
+
+  <!-- Icon inside a disabled button follows the disabled text colour. -->
+  <Style Selector="Button:disabled Path.icon">
+    <Setter Property="Stroke" Value="{DynamicResource TextFillColorDisabledBrush}" />
+  </Style>
+  <Style Selector="Button:disabled Path.icon.iconFilled">
+    <Setter Property="Fill" Value="{DynamicResource TextFillColorDisabledBrush}" />
+  </Style>
+  <Style Selector="ToggleButton:disabled Path.icon">
+    <Setter Property="Stroke" Value="{DynamicResource TextFillColorDisabledBrush}" />
+  </Style>
+  <Style Selector="ToggleButton:disabled Path.icon.iconFilled">
+    <Setter Property="Fill" Value="{DynamicResource TextFillColorDisabledBrush}" />
+  </Style>
+
+  <!-- Checked toolbar toggles light the glyph up in the accent colour, as WinUI does. -->
+  <Style Selector="ToggleButton.toolbar:checked Path.icon">
+    <Setter Property="Stroke" Value="{DynamicResource AccentTextFillColorPrimaryBrush}" />
+  </Style>
+  <Style Selector="ToggleButton.toolbar:checked Path.icon.iconFilled">
+    <Setter Property="Fill" Value="{DynamicResource AccentTextFillColorPrimaryBrush}" />
+  </Style>
+  <!-- The transport bar uses a solid accent fill, so its glyph stays on-accent. -->
+  <Style Selector="ToggleButton.transport:checked Path.icon">
+    <Setter Property="Stroke" Value="{DynamicResource TextFillColorOnAccentPrimaryBrush}" />
+  </Style>
+  <Style Selector="ToggleButton.transport:checked Path.icon.iconFilled">
+    <Setter Property="Fill" Value="{DynamicResource TextFillColorOnAccentPrimaryBrush}" />
+  </Style>
+  <Style Selector="Button.transport Path.icon">
+    <Setter Property="Stroke" Value="{DynamicResource TextFillColorOnAccentPrimaryBrush}" />
+  </Style>
+  <Style Selector="Button.transport Path.icon.iconFilled">
+    <Setter Property="Fill" Value="{DynamicResource TextFillColorOnAccentPrimaryBrush}" />
+  </Style>
+
+  <!-- ============================ Surface ============================ -->
+  <Style Selector="Border.card">
+    <Setter Property="Background" Value="{DynamicResource CardBackgroundFillColorDefaultBrush}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource CardStrokeColorDefaultBrush}" />
+    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="CornerRadius" Value="8" />
+  </Style>
+  <Style Selector="Border.dividerH">
+    <Setter Property="Height" Value="1" />
+    <Setter Property="Background" Value="{DynamicResource DividerStrokeColorDefaultBrush}" />
+  </Style>
+  <Style Selector="Border.dividerV">
+    <Setter Property="Width" Value="1" />
+    <Setter Property="Background" Value="{DynamicResource DividerStrokeColorDefaultBrush}" />
+    <Setter Property="Margin" Value="4,6" />
+  </Style>
+
+  <!-- ======================== Fluent theme tuning ======================== -->
+  <Style Selector="Button">
+    <Setter Property="FontSize" Value="14" />
+  </Style>
+  <Style Selector="RepeatButton">
+    <Setter Property="FontSize" Value="14" />
+  </Style>
+
+  <Style Selector="ListBox.imageList">
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="Padding" Value="0" />
+    <Setter Property="BorderThickness" Value="0" />
+  </Style>
+  <Style Selector="ListBox.imageList ListBoxItem">
+    <Setter Property="Padding" Value="8,6" />
+    <Setter Property="MinHeight" Value="0" />
+    <Setter Property="Margin" Value="0,1" />
+    <Setter Property="CornerRadius" Value="4" />
+  </Style>
+
+  <Style Selector="TabControl.section TabItem">
+    <Setter Property="FontSize" Value="14" />
+    <Setter Property="MinHeight" Value="36" />
+    <Setter Property="Padding" Value="14,0" />
+  </Style>
+
+  <Style Selector="Slider">
+    <Setter Property="MinHeight" Value="28" />
+  </Style>
+</Styles>

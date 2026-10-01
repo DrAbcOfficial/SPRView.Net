@@ -1,0 +1,57 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <!--
+    Vector icon set, drawn as StreamGeometry so glyphs are identical on Windows,
+    macOS and Linux. Platform icon fonts (Segoe Fluent Icons / SF Symbols) are
+    deliberately avoided: they are not available everywhere.
+
+    Geometry is authored on a 20x20 grid with a 2px safe margin; the matching
+    style classes set Stretch=None so no scaling blur is introduced.
+    The 10x10 caption glyphs mirror the native WinUI caption metrics.
+  -->
+
+  <!-- ==================== Window caption glyphs (10x10) ==================== -->
+  <StreamGeometry x:Key="Glyph_Minimize">M0.5,5 H9.5</StreamGeometry>
+  <StreamGeometry x:Key="Glyph_Maximize">M0.5,0.5 H9.5 V9.5 H0.5 Z</StreamGeometry>
+  <StreamGeometry x:Key="Glyph_Restore">M2.5,0.5 H9.5 V7.5 H2.5 Z M0.5,2.5 H7.5 V9.5 H0.5 Z</StreamGeometry>
+  <StreamGeometry x:Key="Glyph_Close">M0.5,0.5 L9.5,9.5 M9.5,0.5 L0.5,9.5</StreamGeometry>
+
+  <!-- ============================ File ============================ -->
+  <StreamGeometry x:Key="Icon_NewFile">M2.5,10 A7.5,7.5 0 1 1 17.5,10 A7.5,7.5 0 1 1 2.5,10 M10,6.6 V13.4 M6.6,10 H13.4</StreamGeometry>
+  <StreamGeometry x:Key="Icon_Open">M2.5,7 A2.5,2.5 0 0 1 5,4.5 H7 A2,2 0 0 1 8.4,5.1 L9.4,6.2 H15 A2.5,2.5 0 0 1 17.5,8.7 V13 A2.5,2.5 0 0 1 15,15.5 H5 A2.5,2.5 0 0 1 2.5,13 Z</StreamGeometry>
+  <StreamGeometry x:Key="Icon_SaveImage">M3.5,4.5 H16.5 A1.5,1.5 0 0 1 18,6 V14 A1.5,1.5 0 0 1 16.5,15.5 H3.5 A1.5,1.5 0 0 1 2,14 V6 A1.5,1.5 0 0 1 3.5,4.5 Z M13.6,7.2 A1.3,1.3 0 1 1 13.6,9.8 A1.3,1.3 0 1 1 13.6,7.2 M2,12.6 L6.4,8.4 L9.8,11.8 L12.2,9.6 L15,12.4</StreamGeometry>
+  <StreamGeometry x:Key="Icon_SavePalette">M4.2,6.4 H15.8 A1.2,1.2 0 0 1 17,7.6 V14.4 A1.2,1.2 0 0 1 15.8,15.6 H4.2 A1.2,1.2 0 0 1 3,14.4 V7.6 A1.2,1.2 0 0 1 4.2,6.4 Z M3,11.6 H17 M7.2,6.4 V15.6 M12.8,6.4 V15.6</StreamGeometry>
+  <StreamGeometry x:Key="Icon_Details">M3,4.6 H17 M3,10 H11.6 M3,15.4 H17 M14.2,13.1 A2.4,2.4 0 1 1 14.2,8.3 A2.4,2.4 0 1 1 14.2,13.1 Z</StreamGeometry>
+  <StreamGeometry x:Key="Icon_About">M2.5,10 A7.5,7.5 0 1 1 17.5,10 A7.5,7.5 0 1 1 2.5,10 M8.2,8.1 A1.9,1.9 0 0 1 11.9,8.7 C11.9,10.1 10.1,10.4 10.1,11.6 V11.9 M10.1,14.4 V14.9</StreamGeometry>
+  <StreamGeometry x:Key="Icon_Refresh">M16.4,10 A6.4,6.4 0 1 1 14.4,5.5 M14.9,2.6 V5.9 H11.6</StreamGeometry>
+  <StreamGeometry x:Key="Icon_SaveAnimate">M4,4.5 H16 A1.5,1.5 0 0 1 17.5,6 V14 A1.5,1.5 0 0 1 16,15.5 H4 A1.5,1.5 0 0 1 2.5,14 V6 A1.5,1.5 0 0 1 4,4.5 Z M8.2,7.3 L13.1,10 L8.2,12.7 Z</StreamGeometry>
+  <StreamGeometry x:Key="Icon_Export">M10,3 V12.6 M6.2,8.9 L10,12.7 L13.8,8.9 M3.5,14.5 V15 A1.6,1.6 0 0 0 5.1,16.6 H14.9 A1.6,1.6 0 0 0 16.5,15 V14.5</StreamGeometry>
+  <StreamGeometry x:Key="Icon_Palette">M5.2,4 H7.3 A1.2,1.2 0 0 1 8.5,5.2 V7.3 A1.2,1.2 0 0 1 7.3,8.5 H5.2 A1.2,1.2 0 0 1 4,7.3 V5.2 A1.2,1.2 0 0 1 5.2,4 Z M12.7,4 H14.8 A1.2,1.2 0 0 1 16,5.2 V7.3 A1.2,1.2 0 0 1 14.8,8.5 H12.7 A1.2,1.2 0 0 1 11.5,7.3 V5.2 A1.2,1.2 0 0 1 12.7,4 Z M5.2,11.5 H7.3 A1.2,1.2 0 0 1 8.5,12.7 V14.8 A1.2,1.2 0 0 1 7.3,16 H5.2 A1.2,1.2 0 0 1 4,14.8 V12.7 A1.2,1.2 0 0 1 5.2,11.5 Z M12.7,11.5 H14.8 A1.2,1.2 0 0 1 16,12.7 V14.8 A1.2,1.2 0 0 1 14.8,16 H12.7 A1.2,1.2 0 0 1 11.5,14.8 V12.7 A1.2,1.2 0 0 1 12.7,11.5 Z</StreamGeometry>
+  <StreamGeometry x:Key="Icon_Close">M5.2,5.2 L14.8,14.8 M14.8,5.2 L5.2,14.8</StreamGeometry>
+
+  <!-- ============================ Panels ============================ -->
+  <StreamGeometry x:Key="Icon_Info">M2.5,10 A7.5,7.5 0 1 1 17.5,10 A7.5,7.5 0 1 1 2.5,10 M10,9.2 V13.9 M10,6.4 V6.9</StreamGeometry>
+  <StreamGeometry x:Key="Icon_Globe">M2.5,10 A7.5,7.5 0 1 1 17.5,10 A7.5,7.5 0 1 1 2.5,10 M2.5,10 H17.5 M10,2.5 C6.4,5.8 6.4,14.2 10,17.5 M10,2.5 C13.6,5.8 13.6,14.2 10,17.5</StreamGeometry>
+  <StreamGeometry x:Key="Icon_Settings">M3,6.5 H17 M3,13.5 H17 M7.4,4.3 V8.7 M12.6,11.3 V15.7</StreamGeometry>
+  <StreamGeometry x:Key="Icon_ExternalLink">M8.5,4 H5 A1.5,1.5 0 0 0 3.5,5.5 V15 A1.5,1.5 0 0 0 5,16.5 H14.5 A1.5,1.5 0 0 0 16,15 V11.5 M11.5,3.5 H16.5 V8.5 M16.5,3.5 L10,10</StreamGeometry>
+
+  <!-- ========================== Transport ========================== -->
+  <StreamGeometry x:Key="Icon_Play">M6.6,4.6 L15.4,10 L6.6,15.4 Z</StreamGeometry>
+  <StreamGeometry x:Key="Icon_Stop">M6.4,6.4 H13.6 V13.6 H6.4 Z</StreamGeometry>
+  <StreamGeometry x:Key="Icon_Loop">M16.2,10.4 A6.2,6.2 0 1 1 12.36,4.67 M10.9,2.77 L12.36,4.67 L9.98,4.99</StreamGeometry>
+  <StreamGeometry x:Key="Icon_ZoomIn">M3.5,9 A5.5,5.5 0 1 1 14.5,9 A5.5,5.5 0 1 1 3.5,9 M13.2,13.2 L16.8,16.8 M9,6.7 V11.3 M6.7,9 H11.3</StreamGeometry>
+  <StreamGeometry x:Key="Icon_ZoomOut">M3.5,9 A5.5,5.5 0 1 1 14.5,9 A5.5,5.5 0 1 1 3.5,9 M13.2,13.2 L16.8,16.8 M6.7,9 H11.3</StreamGeometry>
+  <StreamGeometry x:Key="Icon_Fit">M3,7.2 V5.2 A2.2,2.2 0 0 1 5.2,3 H7.2 M12.8,3 H14.8 A2.2,2.2 0 0 1 17,5.2 V7.2 M17,12.8 V14.8 A2.2,2.2 0 0 1 14.8,17 H12.8 M7.2,17 H5.2 A2.2,2.2 0 0 1 3,14.8 V12.8</StreamGeometry>
+
+  <!-- ========================= List editing ========================= -->
+  <StreamGeometry x:Key="Icon_Add">M10,4.5 V15.5 M4.5,10 H15.5</StreamGeometry>
+  <StreamGeometry x:Key="Icon_Remove">M4.5,10 H15.5</StreamGeometry>
+  <StreamGeometry x:Key="Icon_MoveUp">M10,15.5 V4.8 M5.6,9.2 L10,4.8 L14.4,9.2</StreamGeometry>
+  <StreamGeometry x:Key="Icon_MoveDown">M10,4.5 V15.2 M5.6,10.8 L10,15.2 L14.4,10.8</StreamGeometry>
+  <StreamGeometry x:Key="Icon_Trash">M5.4,6.2 H14.6 M8.3,6.2 V4.7 A0.7,0.7 0 0 1 9,4 H11 A0.7,0.7 0 0 1 11.7,4.7 V6.2 M6.4,6.2 L7.15,15.1 A1.3,1.3 0 0 0 8.45,16.3 H11.55 A1.3,1.3 0 0 0 12.85,15.1 L13.6,6.2</StreamGeometry>
+
+  <!-- ============================ Chrome ============================ -->
+  <StreamGeometry x:Key="Icon_ChevronDown">M6,8.4 L10,12.4 L14,8.4</StreamGeometry>
+  <StreamGeometry x:Key="Icon_ChevronRight">M7.8,5.2 L12.6,10 L7.8,14.8</StreamGeometry>
+  <StreamGeometry x:Key="Icon_Check">M5,10.4 L8.6,14 L15,6.6</StreamGeometry>
+</ResourceDictionary>

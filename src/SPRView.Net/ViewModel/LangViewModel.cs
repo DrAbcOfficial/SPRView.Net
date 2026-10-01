@@ -32,13 +32,13 @@ public class LangViewModel : INotifyPropertyChanged
     public string TaskBar_View_Information { get => field; set { field = value; OnPropertyChanged(nameof(TaskBar_View_Information)); } } = "Information";
     public string TaskBar_View_Pallet { get => field; set { field = value; OnPropertyChanged(nameof(TaskBar_View_Pallet)); } } = "Pallet";
     public string TaskBar_View_Language { get => field; set { field = value; OnPropertyChanged(nameof(TaskBar_View_Language)); } } = "Language";
+    public string Palette_Colors { get => field; set { field = value; OnPropertyChanged(nameof(Palette_Colors)); } } = "{0} colors";
 
     public string TaskBar_Help { get => field; set { field = value; OnPropertyChanged(nameof(TaskBar_Help)); } } = "Help";
     public string TaskBar_Help_About { get => field; set { field = value; OnPropertyChanged(nameof(TaskBar_Help_About)); } } = "About";
 
     public string Dock_Frame { get => field; set { field = value; OnPropertyChanged(nameof(Dock_Frame)); } } = "Frame:";
 
-    public string SpriteInfo { get => field; set { field = value; OnPropertyChanged(nameof(SpriteInfo)); } } = "Sprite Info:";
     public string SpriteInfo_Frames { get => field; set { field = value; OnPropertyChanged(nameof(SpriteInfo_Frames)); } } = "Frames:";
     public string SpriteInfo_Width { get => field; set { field = value; OnPropertyChanged(nameof(SpriteInfo_Width)); } } = "Width:";
     public string SpriteInfo_Height { get => field; set { field = value; OnPropertyChanged(nameof(SpriteInfo_Height)); } } = "Height:";
@@ -50,6 +50,36 @@ public class LangViewModel : INotifyPropertyChanged
     public string SpriteInfo_OriginX { get => field; set { field = value; OnPropertyChanged(nameof(SpriteInfo_OriginX)); } } = "OriginX:";
     public string SpriteInfo_OriginY { get => field; set { field = value; OnPropertyChanged(nameof(SpriteInfo_OriginY)); } } = "OriginY:";
 
+    // Command bar shortcuts. The menu texts above are kept verbatim because they
+    // are also the labels of the file dialogs; these are the shorter toolbar forms.
+    public string Action_Open { get => field; set { field = value; OnPropertyChanged(nameof(Action_Open)); } } = "Open";
+    public string Command_SaveImage { get => field; set { field = value; OnPropertyChanged(nameof(Command_SaveImage)); } } = "Image";
+    public string Command_SaveAnim { get => field; set { field = value; OnPropertyChanged(nameof(Command_SaveAnim)); } } = "Animation";
+    public string Command_Export { get => field; set { field = value; OnPropertyChanged(nameof(Command_Export)); } } = "Frames";
+    public string Command_SavePalette { get => field; set { field = value; OnPropertyChanged(nameof(Command_SavePalette)); } } = "Palette";
+    public string Command_Language { get => field; set { field = value; OnPropertyChanged(nameof(Command_Language)); } } = "Language";
+
+    // Transport bar
+    public string Dock_PlayPause { get => field; set { field = value; OnPropertyChanged(nameof(Dock_PlayPause)); } } = "Play / Pause";
+    public string Dock_Loop { get => field; set { field = value; OnPropertyChanged(nameof(Dock_Loop)); } } = "Loop";
+    public string Dock_ZoomIn { get => field; set { field = value; OnPropertyChanged(nameof(Dock_ZoomIn)); } } = "Zoom in";
+    public string Dock_ZoomOut { get => field; set { field = value; OnPropertyChanged(nameof(Dock_ZoomOut)); } } = "Zoom out";
+    public string Dock_ZoomReset { get => field; set { field = value; OnPropertyChanged(nameof(Dock_ZoomReset)); } } = "Reset zoom";
+    public string Dock_Fit { get => field; set { field = value; OnPropertyChanged(nameof(Dock_Fit)); } } = "Fit to window";
+
+    // Empty state
+    public string Empty_Title { get => field; set { field = value; OnPropertyChanged(nameof(Empty_Title)); } } = "No sprite open";
+    public string Empty_Subtitle { get => field; set { field = value; OnPropertyChanged(nameof(Empty_Subtitle)); } } = "Open a .spr file, or drop one anywhere in this window.";
+    public string Empty_Drop { get => field; set { field = value; OnPropertyChanged(nameof(Empty_Drop)); } } = "Release to open";
+
+    public string Error_Title { get => field; set { field = value; OnPropertyChanged(nameof(Error_Title)); } } = "Something went wrong";
+
+    // About dialog
+    public string About_Title { get => field; set { field = value; OnPropertyChanged(nameof(About_Title)); } } = "About";
+    public string About_Tagline { get => field; set { field = value; OnPropertyChanged(nameof(About_Tagline)); } } = "GoldSrc sprite viewer";
+    public string About_BuiltWith { get => field; set { field = value; OnPropertyChanged(nameof(About_BuiltWith)); } } = "Built with";
+    public string About_SourceCode { get => field; set { field = value; OnPropertyChanged(nameof(About_SourceCode)); } } = "Source code";
+
     public string Shared_OK { get; set; } = "OK";
     public string Shared_Cancel { get; set; } = "Cancel";
 
@@ -60,6 +90,7 @@ public class LangViewModel : INotifyPropertyChanged
     public string FileManager_SavePalette { get; set; } = "Save Palette";
 
     public string CreateNew_Title { get; set; } = "Create New";
+    public string CreateNew_Frames { get; set; } = "Frames";
     public string CreateNew_AddImage_Title { get; set; } = "Select Images";
     public string CreateNew_Tab_Property { get; set; } = "Property";
     public string CreateNew_Tab_Preview { get; set; } = "Preview";
@@ -92,6 +123,7 @@ public class LangViewModel : INotifyPropertyChanged
     public string CreateNew_Export_Height { get; set; } = "Export Height";
     public string CreateNew_Export_Save { get; set; } = "Export!";
     public string CreateNew_Export_NotSQRTWarning { get; set; } = "The size you set cannot be divided by 2, and it may not work in some versions of engine.";
+    public string CreateNew_Export_Done { get; set; } = "Sprite exported successfully.";
 }
 
 /// <summary>

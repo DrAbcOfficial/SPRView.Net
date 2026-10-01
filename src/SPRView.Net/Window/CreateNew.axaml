@@ -4,97 +4,280 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:vm="using:SPRView.Net.ViewModel"
-        x:Class="SPRView.Net.CreateNewWindow"
-        x:DataType="vm:CreateNewViewModel"
-        SizeToContent="WidthAndHeight"
-        CanResize="False"
-        TransparencyLevelHint="AcrylicBlur"
-        ExtendClientAreaToDecorationsHint="True"
-        Background="#60FFFFFF"
-        mc:Ignorable="d" d:DesignWidth="450" d:DesignHeight="450">
-  <StackPanel MinHeight="450" MinWidth="600">
-    <DockPanel VerticalAlignment="Top" HorizontalAlignment="Left">
-      <Menu DockPanel.Dock="Top">
-        <MenuItem>
-          <MenuItem.Header>
-            <Image Source="/Assets/icon.ico" Height="16" Width="16"/>
-          </MenuItem.Header>
-        </MenuItem>
-        <Label Content="{CompiledBinding Lang.CreateNew_Title}"/>
-      </Menu>
-    </DockPanel>
-    <Grid ColumnDefinitions="2*,*">
-      <StackPanel Grid.Column="0">
-        <ListBox ItemsSource="{CompiledBinding ImagePaths}" SelectedIndex="{CompiledBinding PathSelected}" Background="#20FFFFFF" Width="380" Height="410" SelectionMode="AlwaysSelected,Single"/>
-      </StackPanel>
-      <StackPanel Grid.Column="1" Margin="10,0,10,0">
-        <TabControl>
-          <TabItem Header="{CompiledBinding Lang.CreateNew_Tab_Property}">
-            <StackPanel>
-              <UniformGrid>
-                <Button Content="{CompiledBinding Lang.CreateNew_AddImage}" Command="{CompiledBinding AddImage}" MinWidth="150"/>
-                <RepeatButton Content="{CompiledBinding Lang.CreateNew_MoveUpImage}" Command="{CompiledBinding MoveupImage}" MinWidth="150"/>
-                <Button Content="{CompiledBinding Lang.CreateNew_RemoveImage}" Command="{CompiledBinding RemoveImage}" MinWidth="150"/>
-                <RepeatButton Content="{CompiledBinding Lang.CreateNew_MoveDownImage}" Command="{CompiledBinding MovedownImage}" MinWidth="150"/>
-              </UniformGrid>
-              <TextBlock Margin="0 5" Text="{CompiledBinding Lang.CreateNew_Type}"/>
-              <ComboBox SelectedIndex="{CompiledBinding Type}" MinWidth="300">
-                <ComboBoxItem Content="{CompiledBinding Lang.CreateNew_Type_ParallelUpright}"/>
-                <ComboBoxItem Content="{CompiledBinding Lang.CreateNew_Type_FacingUpright}"/>
-                <ComboBoxItem Content="{CompiledBinding Lang.CreateNew_Type_Parallel}"/>
-                <ComboBoxItem Content="{CompiledBinding Lang.CreateNew_Type_Oriented}"/>
-                <ComboBoxItem Content="{CompiledBinding Lang.CreateNew_Type_ParallelOriented}"/>
-              </ComboBox>
-              <TextBlock Margin="0 5" Text="{CompiledBinding Lang.CreateNew_Format}"/>
-              <ComboBox SelectedIndex="{CompiledBinding Format}" MinWidth="300">
-                <ComboBoxItem Content="{CompiledBinding Lang.CreateNew_Format_Normal}"/>
-                <ComboBoxItem Content="{CompiledBinding Lang.CreateNew_Format_Additive}"/>
-                <ComboBoxItem Content="{CompiledBinding Lang.CreateNew_Format_IndexAlpha}"/>
-                <ComboBoxItem Content="{CompiledBinding Lang.CreateNew_Format_AlphaTest}"/>
-              </ComboBox>
-              <TextBlock Margin="0 5" Text="{CompiledBinding Lang.CreateNew_Sync}"/>
-              <ComboBox SelectedIndex="{CompiledBinding Sync}" MinWidth="300">
-                <ComboBoxItem Content="{CompiledBinding Lang.CreateNew_Sync_Sync}"/>
-                <ComboBoxItem Content="{CompiledBinding Lang.CreateNew_Sync_Random}"/>
-              </ComboBox>
-              <Panel Margin="0 5">
-                <TextBlock Text="{CompiledBinding Lang.CreateNew_BeamLength}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                <TextBlock Foreground="DarkKhaki" Margin="0 5" FontStyle="Italic" Text="{CompiledBinding Lang.CreateNew_BeamLength_Watermaker}" HorizontalAlignment="Right" VerticalAlignment="Center"/>
-              </Panel>
-              <NumericUpDown Value="{CompiledBinding BeamLength}" Minimum="0" Maximum="2147483647" FormatString="0.00" MinWidth="300"/>
-              <CheckBox IsChecked="{CompiledBinding UnPackAnimate}" Content="{CompiledBinding Lang.CreateNew_UnpackAnimate}"/>
-            </StackPanel>
-          </TabItem>
-          <TabItem Header="{CompiledBinding Lang.CreateNew_Tab_Preview}">
-            <StackPanel MinWidth="300">
-              <Grid ColumnDefinitions="*,*" MinHeight="140">
-                <Border BorderBrush="Gray" BorderThickness="1" Grid.Column="0">
-                  <Image Source="{CompiledBinding PreviewImage}" Width="140" Height="140" Stretch="Fill"/>
-                </Border>
-                <StackPanel Grid.Column="1" MinWidth="140" Margin="2,0,0,0">
-                  <TextBlock Text="{CompiledBinding Lang.CreateNew_Export_Frame}" Margin="2 2"/>
-                  <NumericUpDown Value="{CompiledBinding Preview_Frame}" Minimum="0" Maximum="{CompiledBinding Preview_MaxFrame}" FormatString="0"/>
-                  <TextBlock Margin="2 2" Text="{CompiledBinding Lang.CreateNew_PlaySpeed}"/>
-                  <NumericUpDown Value="{CompiledBinding PlaySpeed}" Minimum="0" FormatString="0" ToolTip.Tip="{CompiledBinding Lang.CreateNew_PlaySpeed_WaterMarker}"/>
-                  <Button Content="{CompiledBinding Lang.CreateNew_Export_Play}" Command="{CompiledBinding StartPreview}" Margin="0,2,0,0" MinWidth="140"/>
+    x:Class="SPRView.Net.CreateNewWindow"
+    x:DataType="vm:CreateNewViewModel"
+    Title="{CompiledBinding Lang.CreateNew_Title}"
+    Width="760" Height="560"
+    MinWidth="680" MinHeight="480"
+    Icon="/Assets/icon.ico"
+    Background="{DynamicResource SolidBackgroundFillColorBaseBrush}"
+    ExtendClientAreaToDecorationsHint="True"
+    ExtendClientAreaTitleBarHeightHint="40"
+    WindowDecorations="None"
+    WindowStartupLocation="CenterOwner"
+    mc:Ignorable="d" d:DesignWidth="760" d:DesignHeight="560">
+
+  <Panel Name="RootPanel" Background="{DynamicResource SolidBackgroundFillColorBaseBrush}">
+    <Grid RowDefinitions="40,*,Auto">
+
+      <!-- ============================ Caption ============================ -->
+      <Grid Grid.Row="0"
+            Name="CaptionBar"
+            Background="{DynamicResource WindowCaptionBackgroundBrush}"
+            PointerPressed="OnCaptionPressed">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="Auto" />
+          <ColumnDefinition Width="*" />
+          <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Grid.Column="0" Orientation="Horizontal"
+                    Margin="12,0,0,0" Spacing="8" VerticalAlignment="Center">
+          <Image Source="/Assets/app-icon.png" Width="16" Height="16"
+                 RenderOptions.BitmapInterpolationMode="HighQuality" />
+          <TextBlock Text="{CompiledBinding Lang.CreateNew_Title}"
+                     FontSize="12.5" FontWeight="SemiBold"
+                     Foreground="{DynamicResource WindowCaptionForegroundBrush}"
+                     VerticalAlignment="Center" />
+        </StackPanel>
+
+        <StackPanel Grid.Column="2" Orientation="Horizontal">
+          <Button Classes="caption captionClose" Theme="{StaticResource CaptionCloseButton}"
+                  Click="OnCloseClick">
+            <Path Classes="glyph" Data="{StaticResource Glyph_Close}" />
+          </Button>
+        </StackPanel>
+      </Grid>
+
+      <!-- ============================= Body ============================= -->
+      <Grid Grid.Row="1" Margin="16,12,16,0" ColumnDefinitions="300,*" ColumnSpacing="16">
+
+        <!-- Image list -->
+        <Border Grid.Column="0"
+                CornerRadius="8"
+                BorderThickness="1"
+                BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}"
+                Background="{DynamicResource CardBackgroundFillColorDefaultBrush}">
+          <Grid RowDefinitions="Auto,*,Auto,Auto">
+            <Grid Grid.Row="0" ColumnDefinitions="*,Auto" Margin="14,12,10,0">
+              <TextBlock Classes="bodyStrong" Text="{CompiledBinding Lang.CreateNew_Frames}"
+                         VerticalAlignment="Center" />
+              <TextBlock Grid.Column="1" Classes="caption"
+                         Text="{CompiledBinding ImageCountLabel}"
+                         VerticalAlignment="Center" />
+            </Grid>
+
+            <ListBox Grid.Row="1"
+                     Classes="imageList"
+                     Margin="10,8,10,4"
+                     ItemsSource="{CompiledBinding Entries}"
+                     SelectedIndex="{CompiledBinding PathSelected}"
+                     SelectionMode="AlwaysSelected,Single">
+              <ListBox.ItemTemplate>
+                <DataTemplate x:DataType="vm:ImageEntry">
+                  <Grid ColumnDefinitions="24,*" ColumnSpacing="6">
+                    <TextBlock Grid.Column="0" Classes="caption" FontSize="11"
+                               Text="{Binding Index}" TextAlignment="Right"
+                               VerticalAlignment="Center" />
+                    <TextBlock Grid.Column="1" Classes="body" FontSize="13"
+                               Text="{Binding Name}" TextTrimming="CharacterEllipsis"
+                               ToolTip.Tip="{Binding Path}" VerticalAlignment="Center" />
+                  </Grid>
+                </DataTemplate>
+              </ListBox.ItemTemplate>
+            </ListBox>
+
+            <Border Grid.Row="2" Classes="dividerH" Margin="10,0" />
+
+            <!-- List actions -->
+            <WrapPanel Grid.Row="3" Margin="10,8,10,10" ItemSpacing="6" LineSpacing="6">
+              <Button Theme="{StaticResource CommandButton}" Click="OnAddImageClick"
+                      ToolTip.Tip="{CompiledBinding Lang.CreateNew_AddImage}">
+                <StackPanel Orientation="Horizontal" Spacing="6">
+                  <Path Classes="icon" Width="16" Height="16" Data="{StaticResource Icon_Add}" />
+                  <TextBlock Text="{CompiledBinding Lang.CreateNew_AddImage}" VerticalAlignment="Center" />
                 </StackPanel>
-              </Grid>
-              <Grid ColumnDefinitions="*,2*" Margin="0,10">
-                <TextBlock Text="{CompiledBinding Lang.CreateNew_Export_Width}" Grid.Column="0"/>
-                <NumericUpDown Value="{CompiledBinding Export_Width}" FormatString="0" Grid.Column="1"/>
-              </Grid>
-              <Grid ColumnDefinitions="*,2*" Margin="0,10">
-                <TextBlock Text="{CompiledBinding Lang.CreateNew_Export_Height}" Grid.Column="0"/>
-                <NumericUpDown Value="{CompiledBinding Export_Height}" FormatString="0" Grid.Column="1"/>
-              </Grid>
-              <ProgressBar Margin="0,10" MinHeight="25" Value="{CompiledBinding Progress}" Minimum="0" Maximum="200"/>
-              <Button MinWidth="300" MinHeight="60" Margin="0,2" Command="{CompiledBinding SaveToSpr}" IsEnabled="{CompiledBinding SaveValid}">
-                <TextBlock Text="{CompiledBinding Lang.CreateNew_Export_Save}" FontSize="24" FontStretch="Expanded" VerticalAlignment="Center" HorizontalAlignment="Center"/>
               </Button>
-            </StackPanel>
-          </TabItem>
-        </TabControl>
-      </StackPanel>
+              <Button Theme="{StaticResource CommandButton}" Click="OnRemoveImageClick"
+                      ToolTip.Tip="{CompiledBinding Lang.CreateNew_RemoveImage}">
+                <StackPanel Orientation="Horizontal" Spacing="6">
+                  <Path Classes="icon" Width="16" Height="16" Data="{StaticResource Icon_Trash}" />
+                  <TextBlock Text="{CompiledBinding Lang.CreateNew_RemoveImage}" VerticalAlignment="Center" />
+                </StackPanel>
+              </Button>
+              <Button Theme="{StaticResource CommandButton}" Click="OnMoveUpClick"
+                      ToolTip.Tip="{CompiledBinding Lang.CreateNew_MoveUpImage}">
+                <Path Classes="icon" Width="16" Height="16" Data="{StaticResource Icon_MoveUp}" />
+              </Button>
+              <Button Theme="{StaticResource CommandButton}" Click="OnMoveDownClick"
+                      ToolTip.Tip="{CompiledBinding Lang.CreateNew_MoveDownImage}">
+                <Path Classes="icon" Width="16" Height="16" Data="{StaticResource Icon_MoveDown}" />
+              </Button>
+            </WrapPanel>
+          </Grid>
+        </Border>
+
+        <!-- Properties and preview -->
+        <Border Grid.Column="1"
+                CornerRadius="8"
+                BorderThickness="1"
+                BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}"
+                Background="{DynamicResource CardBackgroundFillColorDefaultBrush}">
+          <TabControl Classes="section" Padding="4,0,0,0">
+            <TabItem Header="{CompiledBinding Lang.CreateNew_Tab_Property}">
+              <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="16,10,16,16">
+                <StackPanel Spacing="14">
+
+                  <StackPanel Spacing="4">
+                    <TextBlock Classes="caption" Text="{CompiledBinding Lang.CreateNew_Type}" />
+                    <ComboBox HorizontalAlignment="Stretch" SelectedIndex="{CompiledBinding Type}">
+                      <ComboBoxItem Content="{CompiledBinding Lang.CreateNew_Type_ParallelUpright}" />
+                      <ComboBoxItem Content="{CompiledBinding Lang.CreateNew_Type_FacingUpright}" />
+                      <ComboBoxItem Content="{CompiledBinding Lang.CreateNew_Type_Parallel}" />
+                      <ComboBoxItem Content="{CompiledBinding Lang.CreateNew_Type_Oriented}" />
+                      <ComboBoxItem Content="{CompiledBinding Lang.CreateNew_Type_ParallelOriented}" />
+                    </ComboBox>
+                  </StackPanel>
+
+                  <StackPanel Spacing="4">
+                    <TextBlock Classes="caption" Text="{CompiledBinding Lang.CreateNew_Format}" />
+                    <ComboBox HorizontalAlignment="Stretch" SelectedIndex="{CompiledBinding Format}">
+                      <ComboBoxItem Content="{CompiledBinding Lang.CreateNew_Format_Normal}" />
+                      <ComboBoxItem Content="{CompiledBinding Lang.CreateNew_Format_Additive}" />
+                      <ComboBoxItem Content="{CompiledBinding Lang.CreateNew_Format_IndexAlpha}" />
+                      <ComboBoxItem Content="{CompiledBinding Lang.CreateNew_Format_AlphaTest}" />
+                    </ComboBox>
+                  </StackPanel>
+
+                  <StackPanel Spacing="4">
+                    <TextBlock Classes="caption" Text="{CompiledBinding Lang.CreateNew_Sync}" />
+                    <ComboBox HorizontalAlignment="Stretch" SelectedIndex="{CompiledBinding Sync}">
+                      <ComboBoxItem Content="{CompiledBinding Lang.CreateNew_Sync_Sync}" />
+                      <ComboBoxItem Content="{CompiledBinding Lang.CreateNew_Sync_Random}" />
+                    </ComboBox>
+                  </StackPanel>
+
+                  <StackPanel Spacing="4">
+                    <Grid ColumnDefinitions="*,Auto">
+                      <TextBlock Classes="caption" Text="{CompiledBinding Lang.CreateNew_BeamLength}" />
+                      <TextBlock Grid.Column="1" Classes="caption" FontStyle="Italic"
+                                 Foreground="{DynamicResource TextFillColorTertiaryBrush}"
+                                 Text="{CompiledBinding Lang.CreateNew_BeamLength_Watermaker}" />
+                    </Grid>
+                    <NumericUpDown Value="{CompiledBinding BeamLength}" Minimum="0"
+                                   Maximum="2147483647" FormatString="0.00"
+                                   HorizontalAlignment="Stretch" />
+                  </StackPanel>
+
+                  <Border Classes="dividerH" />
+
+                  <CheckBox IsChecked="{CompiledBinding UnPackAnimate}"
+                            Content="{CompiledBinding Lang.CreateNew_UnpackAnimate}" />
+                </StackPanel>
+              </ScrollViewer>
+            </TabItem>
+
+            <TabItem Header="{CompiledBinding Lang.CreateNew_Tab_Preview}">
+              <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="16,10,16,16">
+                <StackPanel Spacing="14">
+
+                  <!-- Preview surface + playback -->
+                  <Grid ColumnDefinitions="Auto,*" ColumnSpacing="16">
+                    <Border Grid.Column="0"
+                            Width="180" Height="180"
+                            CornerRadius="6"
+                            BorderThickness="1"
+                            BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}"
+                            Background="{StaticResource ViewportCheckerBrush}"
+                            ClipToBounds="True">
+                      <Image Source="{CompiledBinding PreviewImage}"
+                             Stretch="Uniform"
+                             Margin="6"
+                             RenderOptions.BitmapInterpolationMode="None" />
+                    </Border>
+
+                    <StackPanel Grid.Column="1" Spacing="10" VerticalAlignment="Center">
+                      <StackPanel Spacing="4">
+                        <TextBlock Classes="caption" Text="{CompiledBinding Lang.CreateNew_Export_Frame}" />
+                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                          <Slider Grid.Column="0"
+                                  Minimum="0"
+                                  Maximum="{CompiledBinding Preview_MaxFrame}"
+                                  Value="{CompiledBinding Preview_Frame}"
+                                  IsSnapToTickEnabled="True"
+                                  TickFrequency="1" />
+                          <TextBlock Grid.Column="1" Classes="caption"
+                                     MinWidth="48" TextAlignment="Right"
+                                     VerticalAlignment="Center"
+                                     Text="{CompiledBinding PreviewFrameLabel}" />
+                        </Grid>
+                      </StackPanel>
+
+                      <StackPanel Spacing="4">
+                        <TextBlock Classes="caption" Text="{CompiledBinding Lang.CreateNew_PlaySpeed}" />
+                        <NumericUpDown Value="{CompiledBinding PlaySpeed}" Minimum="1"
+                                       FormatString="0" HorizontalAlignment="Stretch"
+                                       ToolTip.Tip="{CompiledBinding Lang.CreateNew_PlaySpeed_WaterMarker}" />
+                      </StackPanel>
+
+                      <Button Theme="{StaticResource CommandButton}"
+                              HorizontalAlignment="Left"
+                              HorizontalContentAlignment="Left"
+                              Click="OnPlayPreviewClick">
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                          <Path Classes="icon" Width="16" Height="16" Data="{StaticResource Icon_Play}" />
+                          <TextBlock Text="{CompiledBinding Lang.CreateNew_Export_Play}"
+                                     VerticalAlignment="Center" />
+                        </StackPanel>
+                      </Button>
+                    </StackPanel>
+                  </Grid>
+
+                  <Border Classes="dividerH" />
+
+                  <Grid ColumnDefinitions="*,*" ColumnSpacing="16">
+                    <StackPanel Grid.Column="0" Spacing="4">
+                      <TextBlock Classes="caption" Text="{CompiledBinding Lang.CreateNew_Export_Width}" />
+                      <NumericUpDown Value="{CompiledBinding Export_Width}" Minimum="1"
+                                     FormatString="0" HorizontalAlignment="Stretch" />
+                    </StackPanel>
+                    <StackPanel Grid.Column="1" Spacing="4">
+                      <TextBlock Classes="caption" Text="{CompiledBinding Lang.CreateNew_Export_Height}" />
+                      <NumericUpDown Value="{CompiledBinding Export_Height}" Minimum="1"
+                                     FormatString="0" HorizontalAlignment="Stretch" />
+                    </StackPanel>
+                  </Grid>
+                </StackPanel>
+              </ScrollViewer>
+            </TabItem>
+          </TabControl>
+        </Border>
+      </Grid>
+
+      <!-- ========================== Action bar =========================== -->
+      <Border Grid.Row="2"
+              Margin="0,12,0,0"
+              Padding="16,12"
+              Background="{DynamicResource SolidBackgroundFillColorSecondaryBrush}"
+              BorderBrush="{DynamicResource DividerStrokeColorDefaultBrush}"
+              BorderThickness="0,1,0,0">
+        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="16">
+          <ProgressBar Grid.Column="0"
+                       VerticalAlignment="Center"
+                       Height="4"
+                       Minimum="0" Maximum="200"
+                       Value="{CompiledBinding Progress}"
+                       IsVisible="{CompiledBinding IsExporting}" />
+          <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="8">
+            <Button Content="{CompiledBinding Lang.Shared_Cancel}" MinWidth="96"
+                    Click="OnCancelClick" />
+            <Button Content="{CompiledBinding Lang.CreateNew_Export_Save}"
+                    Classes="accent" MinWidth="140"
+                    IsEnabled="{CompiledBinding SaveValid}"
+                    Click="OnSaveClick" />
+          </StackPanel>
+        </Grid>
+      </Border>
     </Grid>
-  </StackPanel>
+  </Panel>
 </Window>

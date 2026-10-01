@@ -1,0 +1,86 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <!--
+    WinUI 3 slider: a 4px track with a 20px round thumb filled in the accent
+    colour. The Fluent theme draws a much thicker bar, which reads as heavy
+    next to the compact command bar.
+
+    The full track is painted behind the Track control and the filled part sits
+    inside the decrease button, whose width the Track already sizes to the
+    value fraction - no template converter needed.
+  -->
+  <ControlTheme x:Key="ThinSlider" TargetType="Slider">
+    <Setter Property="Orientation" Value="Horizontal" />
+    <Setter Property="MinHeight" Value="20" />
+    <Setter Property="Template">
+      <ControlTemplate>
+        <Panel Name="Root" VerticalAlignment="Center">
+          <!-- Unfilled track. The inset matches the thumb radius so the thumb
+               sits fully inside the control at both ends of its travel. -->
+          <Border Height="4" CornerRadius="2"
+                  Margin="10,0"
+                  Background="{DynamicResource ControlStrongFillColorDefaultBrush}"
+                  VerticalAlignment="Center" />
+
+          <Track Name="PART_Track"
+                 Minimum="{TemplateBinding Minimum}"
+                 Maximum="{TemplateBinding Maximum}"
+                 Value="{TemplateBinding Value}"
+                 Orientation="{TemplateBinding Orientation}"
+                 Margin="10,0"
+                 VerticalAlignment="Center">
+            <Track.DecreaseButton>
+              <RepeatButton Name="PART_DecreaseButton"
+                            Background="Transparent" BorderThickness="0"
+                            Focusable="False" IsTabStop="False">
+                <RepeatButton.Template>
+                  <ControlTemplate>
+                    <Border Height="4" CornerRadius="2"
+                            Background="{DynamicResource AccentFillColorDefaultBrush}"
+                            VerticalAlignment="Center" />
+                  </ControlTemplate>
+                </RepeatButton.Template>
+              </RepeatButton>
+            </Track.DecreaseButton>
+            <Track.IncreaseButton>
+              <RepeatButton Name="PART_IncreaseButton"
+                            Background="Transparent" BorderThickness="0"
+                            Focusable="False" IsTabStop="False">
+                <RepeatButton.Template>
+                  <ControlTemplate>
+                    <Border Background="Transparent" Height="20" />
+                  </ControlTemplate>
+                </RepeatButton.Template>
+              </RepeatButton>
+            </Track.IncreaseButton>
+            <Thumb Name="thumb" Width="20" Height="20" Cursor="Hand">
+              <Thumb.Template>
+                <ControlTemplate>
+                  <Grid>
+                    <!-- The ring keeps the thumb separated from the track. -->
+                    <Ellipse Fill="{DynamicResource SolidBackgroundFillColorBaseBrush}" />
+                    <Ellipse Name="Knob" Width="12" Height="12"
+                             Fill="{DynamicResource AccentFillColorDefaultBrush}" />
+                  </Grid>
+                </ControlTemplate>
+              </Thumb.Template>
+            </Thumb>
+          </Track>
+        </Panel>
+      </ControlTemplate>
+    </Setter>
+
+    <Style Selector="^:disabled /template/ Border">
+      <Setter Property="Background" Value="{DynamicResource ControlFillColorDisabledBrush}" />
+    </Style>
+    <Style Selector="^:disabled /template/ Ellipse#Knob">
+      <Setter Property="Fill" Value="{DynamicResource ControlFillColorDisabledBrush}" />
+    </Style>
+    <Style Selector="^:pointerover /template/ Ellipse#Knob">
+      <Setter Property="Fill" Value="{DynamicResource AccentFillColorSecondaryBrush}" />
+    </Style>
+    <Style Selector="^:pressed /template/ Ellipse#Knob">
+      <Setter Property="Fill" Value="{DynamicResource AccentFillColorTertiaryBrush}" />
+    </Style>
+  </ControlTheme>
+</ResourceDictionary>

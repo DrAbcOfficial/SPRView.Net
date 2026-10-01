@@ -1,11 +1,26 @@
 <Application
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             x:Class="SPRView.Net.App"
-             RequestedThemeVariant="Default">
-  <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
+    x:Class="SPRView.Net.App"
+    RequestedThemeVariant="Default">
+  <!--
+    "Default" follows the OS light/dark setting. Both variants are authored in
+    Themes/Tokens.axaml so the app looks the same on all three platforms instead
+    of depending on the platform theme.
+  -->
+  <Application.Resources>
+    <ResourceDictionary>
+      <ResourceDictionary.MergedDictionaries>
+        <ResourceInclude Source="avares://SPRView.Net/Themes/Tokens.axaml" />
+        <ResourceInclude Source="avares://SPRView.Net/Themes/Icons.axaml" />
+        <ResourceInclude Source="avares://SPRView.Net/Themes/ControlThemes.axaml" />
+        <ResourceInclude Source="avares://SPRView.Net/Themes/SliderTheme.axaml" />
+      </ResourceDictionary.MergedDictionaries>
+    </ResourceDictionary>
+  </Application.Resources>
+
   <Application.Styles>
     <FluentTheme />
-    <StyleInclude Source="avares://Avalonia.Controls.ColorPicker/Themes/Fluent/Fluent.xaml" />
+    <StyleInclude Source="avares://SPRView.Net/Themes/Styles.axaml" />
   </Application.Styles>
 </Application>

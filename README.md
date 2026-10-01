@@ -26,12 +26,44 @@ src/
     ├─ Rendering/   frame decoding, image composition & quantization
     └─ Native/      C ABI exports (sprview_core.h) for NativeAOT shared lib
   SPRView.Net/                           Avalonia cross platform viewer
+    ├─ Themes/      WinUI 3 design tokens, vector icons, control themes
+    ├─ Window/      the four windows, caption and resize chrome
+    ├─ ViewModel/   viewer / create-new / localization state
+    └─ Storage/     per instance document and palette state
   SPRView.Net.CLI/                       command line tool
   SPRView.Net.Thumbnailer/               sprview-thumbnailer executable
 platform/
   linux/    XDG thumbnailer entry, mime type, install scripts
   macos/    Quick Look extension sources (Swift) + install script
   windows/  Explorer shell extension (C++20 COM) + register scripts
+tools/
+  UiSnapshot/  renders every window headlessly to PNG for layout review
+```
+
+## 🎨 Interface
+
+The viewer is built on one design language — WinUI 3 / Fluent 2 — rather than
+the host theme, so the three platforms render identically:
+
+- **Design tokens** in `Themes/Tokens.axaml` mirror the Fluent 2 resource
+  names (`SolidBackgroundFillColorBaseBrush`, `TextFillColorPrimaryBrush`,
+  `AccentFillColorDefaultBrush`, …) with a light and a dark table; the app
+  follows the OS theme and gets correct contrast in both.
+- **Icons** in `Themes/Icons.axaml` are hand-drawn `StreamGeometry` on a 20×20
+  grid. No emoji and no platform icon fonts, because neither is available
+  everywhere.
+- **Chrome** is app-drawn: the caption, the command bar and the resize grips
+  come from `Window/WindowChrome.cs`, so the window looks the same instead of
+  picking up the native title bar on each OS.
+- **Layout** is a caption, a command bar, a checkerboard canvas, a collapsible
+  side panel and a transport bar. Small sprites are auto-fitted on whole-number
+  zoom steps, so pixel art stays sharp.
+
+`tools/UiSnapshot` renders every window off screen in both themes, which is how
+the layout is reviewed without a desktop session:
+
+```sh
+dotnet run --project tools/UiSnapshot -- <output dir> [file.spr] [lang]
 ```
 
 `SPRView.Net.Core` is the single implementation of the GoldSrc sprite format.
@@ -89,9 +121,13 @@ If you need, I recommend the following repositories:
 
 # 🖼️ Screenshot
 
-|1|2|
+|Viewer|Create new|
 |--|--|
-|<img src="readme/20240803003123.png" width="360"/>|<img src="readme//20240803003207.png" width="360"/>|
+|<img src="readme/main-light.png" width="420"/>|<img src="readme/createnew-light.png" width="420"/>|
+
+|Dark theme|Empty state|
+|--|--|
+|<img src="readme/main-dark.png" width="420"/>|<img src="readme/empty-light.png" width="420"/>|
 
 
 # This repository used:

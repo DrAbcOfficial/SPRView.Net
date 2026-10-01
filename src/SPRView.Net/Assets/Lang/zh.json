@@ -14,12 +14,36 @@
   "TaskBar_View_Information": "信息",
   "TaskBar_View_Pallet": "调色板",
   "TaskBar_View_Language": "语言",
+  "Palette_Colors": "{0} 色",
   "TaskBar_Help": "_帮助",
   "TaskBar_Help_About": "关于",
 
-  "Dock_Frame": "帧:",
+  "Action_Open": "打开",
+  "Command_SaveImage": "图像",
+  "Command_SaveAnim": "动图",
+  "Command_Export": "序列帧",
+  "Command_SavePalette": "色板",
+  "Command_Language": "语言",
 
-  "SpriteInfo": "SPR信息:",
+  "Dock_Frame": "帧:",
+  "Dock_PlayPause": "播放 / 暂停",
+  "Dock_Loop": "循环",
+  "Dock_ZoomIn": "放大",
+  "Dock_ZoomOut": "缩小",
+  "Dock_ZoomReset": "恢复 100%",
+  "Dock_Fit": "适应窗口",
+
+  "Empty_Title": "未打开精灵图",
+  "Empty_Subtitle": "打开一个 .spr 文件，或将文件拖入此窗口。",
+  "Empty_Drop": "松开以打开",
+
+  "Error_Title": "出错了",
+
+  "About_Title": "关于",
+  "About_Tagline": "GoldSrc 精灵图查看器",
+  "About_BuiltWith": "基于以下项目构建",
+  "About_SourceCode": "源代码",
+
   "SpriteInfo_Frames": "帧数:",
   "SpriteInfo_Width": "宽度:",
   "SpriteInfo_Height": "高度:",
@@ -38,6 +62,7 @@
   "FileManager_SavePalette": "导出调色板",
 
   "CreateNew_Title": "新建精灵图",
+  "CreateNew_Frames": "帧列表",
   "CreateNew_AddImage_Title": "选择添加的图片",
   "CreateNew_Tab_Property": "属性设置",
   "CreateNew_Tab_Preview": "预览导出",
@@ -69,5 +94,6 @@
   "CreateNew_Export_Width": "导出长度",
   "CreateNew_Export_Height": "导出宽度",
   "CreateNew_Export_Save": "导出保存！",
-  "CreateNew_Export_NotSQRTWarning": "你设置的尺寸不能被2整除\n可能无法在某些版本的引擎里使用"
+  "CreateNew_Export_NotSQRTWarning": "你设置的尺寸不能被2整除\n可能无法在某些版本的引擎里使用",
+  "CreateNew_Export_Done": "精灵图已导出。"
 }
