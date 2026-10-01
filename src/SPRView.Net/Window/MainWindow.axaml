@@ -8,15 +8,15 @@
     x:Class="SPRView.Net.MainWindow"
     x:DataType="vm:MainWindowViewModel"
     Title="SPRView.Net"
-    Width="840" Height="560"
-    MinWidth="660" MinHeight="440"
+    Width="720" Height="560"
+    MinWidth="600" MinHeight="440"
     Icon="/Assets/icon.ico"
     Background="{DynamicResource SolidBackgroundFillColorBaseBrush}"
     ExtendClientAreaToDecorationsHint="True"
     ExtendClientAreaTitleBarHeightHint="32"
     WindowDecorations="None"
     WindowStartupLocation="CenterScreen"
-    mc:Ignorable="d" d:DesignWidth="840" d:DesignHeight="560"
+    mc:Ignorable="d" d:DesignWidth="720" d:DesignHeight="560"
     DragDrop.AllowDrop="True">
 
   <Window.KeyBindings>

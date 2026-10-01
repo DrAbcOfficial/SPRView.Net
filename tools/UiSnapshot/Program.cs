@@ -6,6 +6,7 @@ using Avalonia.Media.Imaging;
 using Avalonia.Styling;
 using Avalonia.Themes.Fluent;
 using Avalonia.Threading;
+using Avalonia.Layout;
 using Avalonia.VisualTree;
 using SPRView.Net;
 using SPRView.Net.Core;
@@ -141,10 +142,16 @@ internal static class Program
         }
         if (window.Content is Control root)
         {
+            int index = 0;
             foreach (var descendant in root.GetVisualDescendants().OfType<ScrollViewer>())
-                Console.WriteLine($"  [{tag}] ScrollViewer bounds={descendant.Bounds} " +
-                                  $"extent={descendant.Extent} viewport={descendant.Viewport} " +
-                                  $"clip={descendant.ClipToBounds}");
+            {
+                bool overflow = descendant.Extent.Width > descendant.Viewport.Width + 0.5;
+                Console.WriteLine($"  [{tag}] ScrollViewer#{index++} " +
+                                  $"width={descendant.Bounds.Width:F0} " +
+                                  $"extent={descendant.Extent.Width:F0} " +
+                                  $"viewport={descendant.Viewport.Width:F0} " +
+                                  (overflow ? "OVERFLOW" : "fits"));
+            }
         }
     }
 
@@ -173,7 +180,7 @@ internal static class Program
 
         Console.WriteLine($"  diag: HasSprite={vm.HasSprite} SPR={vm.SPR?.PixelSize} " +
                           $"viewer={vm.SprViewerSize} sidebar={vm.CanShowSideBar} frames={vm.MaxFrame}");
-        Dump($"main-{suffix}.png", window, 840, 560);
+        Dump($"main-{suffix}.png", window, 720, 560);
 
         // Third pass: transparency off, so the stored pixels show through.
         var rawWindow = new MainWindow();
@@ -187,7 +194,7 @@ internal static class Program
             rawVm.ShowSidePanel = true;
             rawVm.ApplyTransparency = false;
         }
-        Dump($"main-raw-{suffix}.png", rawWindow, 840, 560);
+        Dump($"main-raw-{suffix}.png", rawWindow, 720, 560);
 
         // Second pass: both side panels open.
         var window2 = new MainWindow();
@@ -201,7 +208,7 @@ internal static class Program
             SprDocument sprite = SprDocument.Load(stream);
             vm2.LoadSprite(sprite, Path.GetFileName(_sprPath));
         }
-        Dump($"main-panels-{suffix}.png", window2, 840, 560);
+        Dump($"main-panels-{suffix}.png", window2, 720, 560);
 
         // Wide pass: reports the command bar's natural width for the
         // responsive-collapse threshold.
@@ -210,6 +217,37 @@ internal static class Program
         wideWindow.DataContext = wideVm;
         Dump($"main-wide-{suffix}.png", wideWindow, 1280, 700);
         DumpTree(wideWindow, "wide");
+
+        // Sweep: find where the labelled command bar stops fitting.
+        if (Environment.GetEnvironmentVariable("SPRVIEW_SWEEP") == "1")
+        {
+            foreach (int sweepWidth in new[] { 700, 720, 740, 760, 780, 800, 820, 850, 900 })
+            {
+                var sweepWindow = new MainWindow();
+                var sweepVm = new MainWindowViewModel(sweepWindow) { Lang = LangLoader.Load(_lang) };
+                sweepWindow.DataContext = sweepVm;
+                sweepWindow.Width = sweepWidth;
+                sweepWindow.Height = 560;
+                // Force labelled mode to measure the requirement itself.
+                sweepVm.ShowCommandLabels = true;
+                sweepWindow.Show();
+                Pump();
+                var scroll = sweepWindow.Content is Control r
+                    ? r.GetVisualDescendants().OfType<ScrollViewer>().FirstOrDefault()
+                    : null;
+                // The inner panel reports its natural width even when the
+                // ScrollViewer stretches it, which is what decides clipping.
+                double natural = scroll?.Content is Layoutable inner
+                    ? inner.DesiredSize.Width
+                    : 0;
+                double available = scroll?.Viewport.Width ?? 0;
+                Console.WriteLine($"  [sweep] w={sweepWidth} " +
+                                  $"labels={sweepVm.ShowCommandLabels} " +
+                                  $"natural={natural:F0} available={available:F0} " +
+                                  (natural > available + 0.5 ? "CLIPPED" : "fits"));
+                sweepWindow.Close();
+            }
+        }
 
         // Fifth pass: information collapsed, palette taking the whole panel.
         var collapsedWindow = new MainWindow();
@@ -224,7 +262,7 @@ internal static class Program
             collapsedVm.LoadSprite(sprite, Path.GetFileName(_sprPath));
             collapsedVm.IsInfoExpanded = false;
         }
-        Dump($"main-collapsed-{suffix}.png", collapsedWindow, 840, 560);
+        Dump($"main-collapsed-{suffix}.png", collapsedWindow, 720, 560);
 
         // Fourth pass: at the minimum window size.
         var narrowWindow = new MainWindow();
@@ -238,7 +276,7 @@ internal static class Program
             SprDocument sprite = SprDocument.Load(stream);
             narrowVm.LoadSprite(sprite, Path.GetFileName(_sprPath));
         }
-        Dump($"main-min-{suffix}.png", narrowWindow, 660, 440);
+        Dump($"main-min-{suffix}.png", narrowWindow, 600, 440);
         DumpTree(narrowWindow, "min");
 
         // Empty state: the storage is process wide, so clear it for this pass.
@@ -247,7 +285,7 @@ internal static class Program
         var window3 = new MainWindow();
         var vm3 = new MainWindowViewModel(window3) { Lang = LangLoader.Load(_lang) };
         window3.DataContext = vm3;
-        Dump($"main-empty-{suffix}.png", window3, 840, 560);
+        Dump($"main-empty-{suffix}.png", window3, 720, 560);
     }
 
     private static void RenderCreateNew(string suffix)

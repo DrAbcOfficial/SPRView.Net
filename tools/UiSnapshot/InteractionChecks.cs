@@ -190,6 +190,18 @@ internal static class InteractionChecks
         vm.IsInfoExpanded = true;
         Settle();
 
+        // The command bar opens on icons and only spells labels out once the
+        // window is wide enough that they cannot clip.
+        Expect(!vm.ShowCommandLabels, "the command bar starts on icons");
+        Expect(MainWindowViewModel.CommandLabelsMinWidth > 0, "the threshold is defined");
+
+        window.Width = 900;
+        Settle();
+        Expect(vm.ShowCommandLabels, "a wide window spells the labels out");
+        window.Width = 720;
+        Settle();
+        Expect(!vm.ShowCommandLabels, "narrowing it goes back to icons");
+
         // Panel toggles are plain properties the command bar binds to.
         vm.ShowPalettePanel = true;
         Settle();

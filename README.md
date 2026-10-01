@@ -60,7 +60,8 @@ the host theme, so the three platforms render identically:
   whole window; the leftmost command bar toggle brings it back. Inside it the
   information and palette sections collapse from their own headers, so a 256
   colour palette can take the whole panel when the metadata is not what you are
-  looking at. Small sprites are auto-fitted on whole-number
+  looking at. The command bar itself starts on icons and only spells its labels
+  out once the window is wide enough that they cannot clip. Small sprites are auto-fitted on whole-number
   zoom steps, so pixel art stays sharp.
 - **Transparency** is applied per the sprite format by default. The toggle in
   the command bar turns that off to show the frames exactly as the file stores

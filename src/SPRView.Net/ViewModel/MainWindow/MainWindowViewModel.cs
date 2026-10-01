@@ -159,7 +159,7 @@ public partial class MainWindowViewModel : INotifyPropertyChanged
         return new Bitmap(memoryStream);
     }
 
-    private bool m_bShowCommandLabels = true;
+    private bool m_bShowCommandLabels;
 
     /// <summary>
     /// Whether the command bar spells out its labels.
@@ -180,8 +180,14 @@ public partial class MainWindowViewModel : INotifyPropertyChanged
         }
     }
 
-    /// <summary>Width under which the command bar drops its labels, in DIPs.</summary>
-    public const double CommandLabelsMinWidth = 760;
+    /// <summary>
+    /// Width under which the command bar drops its labels, in DIPs.
+    ///
+    /// Measured rather than guessed: with labels the button row wants 550px and
+    /// the view group plus margins take another 237, so anything below 790
+    /// clips. The default window sits well under it and starts on icons.
+    /// </summary>
+    public const double CommandLabelsMinWidth = 790;
 
     private bool m_bApplyTransparency = true;
 
