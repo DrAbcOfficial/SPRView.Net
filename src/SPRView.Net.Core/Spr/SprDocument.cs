@@ -54,7 +54,7 @@ public sealed class SprDocument
         if (paths.Count == 0)
             throw new ArgumentException("No input images", nameof(imagePaths));
 
-        var (palette, orderedColors, frames) = SpriteComposer.Compose(paths, width, height, format, unpackAnimated);
+        var (palette, frames) = SpriteComposer.Compose(paths, width, height, format, unpackAnimated);
         SprHeader header = new()
         {
             Type = type,
@@ -65,6 +65,6 @@ public sealed class SprDocument
             BeamLength = beamLength,
             Synchronization = sync
         };
-        SprWriter.Write(output, header, orderedColors, frames);
+        SprWriter.Write(output, header, palette, frames);
     }
 }

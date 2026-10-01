@@ -1,5 +1,3 @@
-using SixLabors.ImageSharp.PixelFormats;
-
 namespace SPRView.Net.Core;
 
 /// <summary>
@@ -10,7 +8,7 @@ internal static class SprWriter
     public static void Write(
         Stream output,
         SprHeader header,
-        List<SixLabors.ImageSharp.PixelFormats.Rgba32> orderedColors,
+        SprPalette palette,
         List<(int Width, int Height, byte[] IndexedData)> frames)
     {
         using BinaryWriter writer = new(output, System.Text.Encoding.UTF8, leaveOpen: true);
@@ -28,36 +26,29 @@ internal static class SprWriter
         writer.Write(header.BeamLength);
         writer.Write((int)header.Synchronization);
 
-        WritePalette(writer, orderedColors, header.Format == SpriteFormat.AlphaTest);
+        WritePalette(writer, palette);
 
         foreach (var (width, height, indexedData) in frames)
             WriteFrame(writer, width, height, indexedData);
     }
 
     /// <summary>
-    /// The palette is written in color order; AlphaTest documents pad the file
-    /// palette up to 256 entries so the transparency color lands on index 255.
+    /// Writes every palette entry.
+    ///
+    /// The entry count always matches the bytes that follow: declaring fewer
+    /// entries than were written would leave a reader parsing frame data from
+    /// inside the padding. The palette handed in is already laid out the way the
+    /// format expects, including the transparency key on index 255.
     /// </summary>
-    private static void WritePalette(BinaryWriter writer, List<Rgba32> orderedColors, bool isAlphaTest)
+    private static void WritePalette(BinaryWriter writer, SprPalette palette)
     {
-        writer.Write((short)orderedColors.Count);
-        foreach (Rgba32 color in orderedColors)
+        writer.Write((short)palette.Length);
+        for (int i = 0; i < palette.Length; i++)
         {
+            var color = palette[i];
             writer.Write(color.R);
             writer.Write(color.G);
             writer.Write(color.B);
-        }
-        if (orderedColors.Count < 256 && isAlphaTest)
-        {
-            for (int i = orderedColors.Count; i < 255; i++)
-            {
-                writer.Write((byte)0);
-                writer.Write((byte)0);
-                writer.Write((byte)0);
-            }
-            writer.Write((byte)0);
-            writer.Write((byte)0);
-            writer.Write((byte)255);
         }
     }
 

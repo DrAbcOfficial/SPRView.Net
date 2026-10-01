@@ -51,23 +51,53 @@ internal static class SprReader
         return palette;
     }
 
+    /// <summary>
+    /// Reads the frame table.
+    ///
+    /// A frame that cannot exist - a non positive size, or a pixel block running
+    /// past the end of the stream - ends the table instead of failing the whole
+    /// document. Sprite files in the wild do carry malformed trailing entries:
+    /// misc/wei.spr from Sven Co-op declares 22 frames but its last one is 0x0,
+    /// and the 21 frames before it are perfectly viewable. Refusing the file
+    /// would hide everything that is intact.
+    /// </summary>
     private static List<SprFrame> ReadFrames(BinaryReader reader, SprHeader header, SprPalette palette)
     {
         List<SprFrame> frames = [];
+        long remaining = reader.BaseStream.Length - reader.BaseStream.Position;
+
         for (int i = 0; i < header.NumberOfFrames; i++)
         {
+            // The frame descriptor is five ints; anything shorter is a cut tail.
+            if (remaining < 20)
+                break;
+
             int group = reader.ReadInt32();
             int originX = reader.ReadInt32();
             int originY = reader.ReadInt32();
             int width = reader.ReadInt32();
             int height = reader.ReadInt32();
+            remaining -= 20;
+
             if (width <= 0 || height <= 0)
-                throw new InvalidDataException($"Frame {i} has invalid dimensions {width}x{height}");
-            byte[] data = reader.ReadBytes(width * height);
-            if (data.Length < width * height)
-                throw new InvalidDataException($"Frame {i} data is truncated");
-            frames.Add(new SprFrame(data, palette, width, height, originX, originY, group));
+                break;
+
+            // Compared as a long: a corrupt size can overflow an int product.
+            long pixelCount = (long)width * height;
+            if (pixelCount > remaining)
+                break;
+
+            frames.Add(new SprFrame(reader.ReadBytes((int)pixelCount), palette, header.Format,
+                width, height, originX, originY, group));
+            remaining -= pixelCount;
         }
+
+        if (frames.Count == 0)
+            throw new InvalidDataException("Sprite contains no readable frames");
+
+        // Keep the header honest: the CLI and the C ABI expose this count, and a
+        // declared-but-unreadable tail would make consumers index past the frames.
+        header.NumberOfFrames = (uint)frames.Count;
         return frames;
     }
 }

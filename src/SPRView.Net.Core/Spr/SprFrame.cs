@@ -9,11 +9,14 @@ namespace SPRView.Net.Core;
 public sealed class SprFrame
 {
     private readonly SprPalette _palette;
+    private readonly SpriteFormat _format;
 
-    internal SprFrame(byte[] indexedData, SprPalette palette, int width, int height, int originX, int originY, int group)
+    internal SprFrame(byte[] indexedData, SprPalette palette, SpriteFormat format,
+        int width, int height, int originX, int originY, int group)
     {
         IndexedData = indexedData;
         _palette = palette;
+        _format = format;
         Width = width;
         Height = height;
         OriginX = originX;
@@ -31,11 +34,12 @@ public sealed class SprFrame
     public int Group { get; set; }
 
     /// <summary>
-    /// Decode this frame into a full color image using the document palette.
+    /// Decode this frame into a full color image using the document palette and
+    /// the transparency rule of the sprite format.
     /// </summary>
     public Image<Rgba32> Decode()
     {
-        return FrameDecoder.Decode(IndexedData, _palette, Width, Height);
+        return FrameDecoder.Decode(IndexedData, _palette, Width, Height, _format);
     }
 
     /// <summary>
@@ -43,6 +47,6 @@ public sealed class SprFrame
     /// </summary>
     public byte[] DecodeToRgba()
     {
-        return FrameDecoder.DecodeToRgba(IndexedData, _palette, Width, Height);
+        return FrameDecoder.DecodeToRgba(IndexedData, _palette, Width, Height, _format);
     }
 }
