@@ -5,12 +5,16 @@ on:
     tags:
     - 'v*'
   # Allows dispatching the build matrix from the Actions tab or `gh workflow
-  # run` for CI verification; release steps are tag guarded, so a manual run
-  # on a branch only compiles.
+  # run` for CI verification; the release job is tag guarded, so a manual run
+  # on a branch only builds and uploads run artifacts.
   workflow_dispatch:
 
 jobs:
 
+  # Build and package on every target, in parallel. These jobs never touch the
+  # release: they hand their archive to the run as an artifact. Publishing is a
+  # separate job, which is what keeps five parallel jobs from racing to create
+  # the same release.
   build:
 
     strategy:
@@ -37,9 +41,6 @@ jobs:
             runner: ubuntu-24.04-arm
 
     runs-on: ${{ matrix.runner }}
-
-    permissions:
-      contents: write
 
     steps:
     - name: Checkout
@@ -69,53 +70,60 @@ jobs:
           files: ./build
           dest: SPRView.Net-${{ matrix.os }}-${{ matrix.arch }}.zip
 
+    # Packed per platform rather than once at the end: the archive has to keep
+    # the executable bits Unix expects, and artifact upload does not preserve
+    # file modes.
     - name: Tarball All
       if: matrix.os != 'windows'
       run: tar -czvf ./SPRView.Net-${{ matrix.os }}-${{ matrix.arch }}.tar.gz ./build
 
-    # The five platform jobs run in parallel and all publish into one release,
-    # so creating it is a race: whichever loses fails with "already_exists". The
-    # gh CLI is used instead of action-gh-release because it can be made
-    # idempotent, and the tag is passed explicitly, since the action otherwise
-    # looks it up as "refs/tags/vX" and never finds it.
-    #
-    - name: Publish to release (Unix)
-      if: matrix.os != 'windows' && startsWith(github.ref, 'refs/tags/')
-      shell: bash
+    - name: Upload archive
+      uses: actions/upload-artifact@v4
+      with:
+          name: SPRView.Net-${{ matrix.os }}-${{ matrix.arch }}
+          path: SPRView.Net-${{ matrix.os }}-${{ matrix.arch }}.*
+          # A build that produced nothing is a failure, not an empty release.
+          if-no-files-found: error
+          retention-days: 7
+
+  # Collects what the matrix produced and publishes it as one release, so the
+  # release is created exactly once and always carries every platform.
+  release:
+    needs: build
+    # Only a tag publishes. A manual dispatch stops after the builds, which is
+    # what makes this workflow usable for verifying a branch.
+    if: startsWith(github.ref, 'refs/tags/')
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+
+    steps:
+    - name: Download every archive
+      uses: actions/download-artifact@v4
+      with:
+          # One directory holding all five, since they are published together.
+          merge-multiple: true
+          path: dist
+
+    - name: Publish release
       env:
           GH_TOKEN: ${{ github.token }}
+          # No checkout in this job, so gh is told which repository to act on
+          # rather than inferring it from a git remote that is not there.
+          GH_REPO: ${{ github.repository }}
           TAG: ${{ github.ref_name }}
-          ARTIFACT: SPRView.Net-${{ matrix.os }}-${{ matrix.arch }}.tar.gz
       run: |
           set -euo pipefail
-          # A release left in draft by an earlier run is visible to `view` but
-          # not published, so it is repaired rather than skipped: upload into it
-          # and then release it.
-          if ! gh release view "$TAG" >/dev/null 2>&1; then
-            # --verify-tag keeps a missing tag a hard error. A failure here most
-            # likely means another job created it first, which is fine.
-            gh release create "$TAG" --title "SPRView.Net $TAG" --verify-tag || true
-          fi
-          gh release upload "$TAG" "$ARTIFACT" --clobber || true
-          if [ "$(gh release view "$TAG" --json isDraft --jq .isDraft)" = "true" ]; then
+          ls -l dist
+          # A re-run can find the release already present from an earlier
+          # attempt, so that case uploads into it instead of failing. --clobber
+          # replaces an asset from the previous attempt.
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            gh release upload "$TAG" dist/* --clobber
             gh release edit "$TAG" --draft=false
+          else
+            gh release create "$TAG" dist/* \
+              --title "SPRView.Net $TAG" \
+              --verify-tag
           fi
-
-    - name: Publish to release (Windows)
-      if: matrix.os == 'windows' && startsWith(github.ref, 'refs/tags/')
-      shell: pwsh
-      env:
-          GH_TOKEN: ${{ github.token }}
-          TAG: ${{ github.ref_name }}
-          ARTIFACT: SPRView.Net-${{ matrix.os }}-${{ matrix.arch }}.zip
-      run: |
-          # A draft left behind by an earlier run is visible to `view` but not
-          # published, so it is repaired rather than skipped.
-          if (-not (gh release view $env:TAG 2>$null)) {
-            gh release create $env:TAG --title "SPRView.Net $env:TAG" --verify-tag
-            if ($LASTEXITCODE -ne 0) { Write-Host "another job created it first" }
-          }
-          gh release upload $env:TAG $env:ARTIFACT --clobber
-          if ($LASTEXITCODE -ne 0) { Write-Host "upload failed, likely a concurrent job" }
-          $draft = gh release view $env:TAG --json isDraft --jq .isDraft
-          if ($draft -eq 'true') { gh release edit $env:TAG --draft=false }
