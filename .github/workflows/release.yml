@@ -73,22 +73,39 @@ jobs:
       if: matrix.os != 'windows'
       run: tar -czvf ./SPRView.Net-${{ matrix.os }}-${{ matrix.arch }}.tar.gz ./build
 
-    - name: Create Release Unix
+    # The five platform jobs run in parallel and all publish into one release,
+    # so creating it is a race: whichever loses fails with "already_exists". The
+    # gh CLI is used instead of action-gh-release because it can be made
+    # idempotent, and the tag is passed explicitly, since the action otherwise
+    # looks it up as "refs/tags/vX" and never finds it.
+    #
+    - name: Publish to release (Unix)
       if: matrix.os != 'windows' && startsWith(github.ref, 'refs/tags/')
-      uses: softprops/action-gh-release@v1
-      with:
-          # github.ref is "refs/tags/vX", which produced titles like
-          # "SPRView.Net-refs/tags/vX"; the version alone is what belongs here.
-          name: SPRView.Net ${{ github.ref_name }}
-          files: |
-            ./SPRView.Net-${{ matrix.os }}-${{ matrix.arch }}.tar.gz
+      shell: bash
+      env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ github.ref_name }}
+          ARTIFACT: SPRView.Net-${{ matrix.os }}-${{ matrix.arch }}.tar.gz
+      run: |
+          set -euo pipefail
+          if ! gh release view "$TAG" >/dev/null 2>&1; then
+            # --verify-tag keeps a missing tag a hard error, and a failure here
+            # most likely means another job won the race, which is fine.
+            gh release create "$TAG" --title "SPRView.Net $TAG" --verify-tag || true
+          fi
+          gh release upload "$TAG" "$ARTIFACT" --clobber
 
-    - name: Create Release Win
+    - name: Publish to release (Windows)
       if: matrix.os == 'windows' && startsWith(github.ref, 'refs/tags/')
-      uses: softprops/action-gh-release@v1
-      with:
-          # github.ref is "refs/tags/vX", which produced titles like
-          # "SPRView.Net-refs/tags/vX"; the version alone is what belongs here.
-          name: SPRView.Net ${{ github.ref_name }}
-          files: |
-            SPRView.Net-${{ matrix.os }}-${{ matrix.arch }}.zip
+      shell: pwsh
+      env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ github.ref_name }}
+          ARTIFACT: SPRView.Net-${{ matrix.os }}-${{ matrix.arch }}.zip
+      run: |
+          if (-not (gh release view $env:TAG 2>$null)) {
+            gh release create $env:TAG --title "SPRView.Net $env:TAG" --verify-tag
+            if ($LASTEXITCODE -ne 0) { Write-Host "another job created it first" }
+          }
+          gh release upload $env:TAG $env:ARTIFACT --clobber
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
