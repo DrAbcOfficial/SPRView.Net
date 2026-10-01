@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
+  <mime-type type="application/x-spr">
+    <comment>GoldSrc sprite</comment>
+    <comment xml:lang="zh_CN">GoldSrc 精灵图</comment>
+    <glob pattern="*.spr"/>
+    <magic priority="50">
+      <match type="little32" offset="0" value="1347634249"/>
+    </magic>
+  </mime-type>
+</mime-info>
