@@ -45,4 +45,14 @@
     <AssemblyMetadata Include="BuildTime" Value="$(BuildTime)" />
   </ItemGroup>
 
+  <!--
+    Machine readable license, so the terms travel with the binaries and show up
+    in the assembly. This covers this repository's own code only; the
+    dependencies keep their own licenses, see LICENSE-NOTICE.md.
+  -->
+  <PropertyGroup>
+    <PackageLicenseExpression>LGPL-3.0-or-later</PackageLicenseExpression>
+    <Copyright>Copyright (C) 2024-2026 Dr.Abc</Copyright>
+  </PropertyGroup>
+
 </Project>

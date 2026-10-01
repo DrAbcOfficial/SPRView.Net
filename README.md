@@ -3,6 +3,7 @@
 
 Yet another sprite viewer for the Half-Life series games (Counter-Strike, Sven Co-op, etc.)
 
+![License](https://img.shields.io/badge/license-LGPL--3.0--or--later-blue?style=for-the-badge)
 ![Release](https://img.shields.io/github/v/release/DrAbcOfficial/SPRView.Net?style=for-the-badge)
 ![Downloads](https://img.shields.io/github/downloads/DrAbcOfficial/SPRView.Net/total?style=for-the-badge)
 ![Repo Size](https://img.shields.io/github/repo-size/DrAbcOfficial/SPRView.Net?style=for-the-badge)
@@ -172,6 +173,17 @@ If you need, I recommend the following repositories:
 - [HL-Texture-Tools](https://github.com/yuraj11/HL-Texture-Tools)
 - [WadMaker](https://github.com/pwitvoet/wadmaker)
 
+
+# 📄 License
+
+This project's own code is **LGPL-3.0-or-later**. See
+[LICENSE-NOTICE.md](LICENSE-NOTICE.md) for exactly what that covers, and what it
+does not: the dependencies keep their own terms, and one of them
+(SixLabors.ImageSharp) is not a plain permissive license.
+
+[LICENSE](LICENSE) holds the LGPL-3.0 text and
+[LICENSE.GPL-3.0.txt](LICENSE.GPL-3.0.txt) the GPL-3.0 text the LGPL
+incorporates, both unmodified as published by the FSF.
 
 # This repository used:
 

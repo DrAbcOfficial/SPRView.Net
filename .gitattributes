@@ -4,6 +4,15 @@
 * text=auto
 
 ###############################################################################
+# License texts are kept exactly as the FSF publishes them, byte for byte.
+# "-text" opts them out of line ending conversion in both directions, so no
+# checkout, editor round trip or re-add can rewrite them; "diff" keeps them in
+# readable diffs rather than being treated as opaque. See LICENSE-NOTICE.md.
+###############################################################################
+/LICENSE             -text diff
+/LICENSE.GPL-3.0.txt -text diff
+
+###############################################################################
 # Set default behavior for command prompt diff.
 #
 # This is need for earlier builds of msysgit that does not have it on by

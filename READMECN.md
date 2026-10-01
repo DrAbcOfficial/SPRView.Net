@@ -3,6 +3,7 @@
 
 是的又是一个 Half-Life 系列游戏（Counter-Strike、Sven Co-op 等）的 spr 查看器
 
+![License](https://img.shields.io/badge/license-LGPL--3.0--or--later-blue?style=for-the-badge)
 ![Release](https://img.shields.io/github/v/release/DrAbcOfficial/SPRView.Net?style=for-the-badge)
 ![Downloads](https://img.shields.io/github/downloads/DrAbcOfficial/SPRView.Net/total?style=for-the-badge)
 ![Repo Size](https://img.shields.io/github/repo-size/DrAbcOfficial/SPRView.Net?style=for-the-badge)
@@ -152,6 +153,15 @@ SPRView.Net.CLI create      <images> <w> <h> <out> [-t type] [-f format]
 - [HL-Texture-Tools](https://github.com/yuraj11/HL-Texture-Tools)
 - [WadMaker](https://github.com/pwitvoet/wadmaker)
 
+
+# 📄 许可证
+
+本仓库自身的代码采用 **LGPL-3.0-or-later**。具体覆盖范围见
+[LICENSE-NOTICE.md](LICENSE-NOTICE.md)：依赖项保留各自的许可证，
+其中 SixLabors.ImageSharp 并非简单的宽松许可证，请留意。
+
+[LICENSE](LICENSE) 为 LGPL-3.0 正文，[LICENSE.GPL-3.0.txt](LICENSE.GPL-3.0.txt)
+为其所并入的 GPL-3.0 正文，两者均为 FSF 发布的未修改原文。
 
 # 第三方库:
 
