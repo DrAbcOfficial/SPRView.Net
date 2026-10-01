@@ -49,13 +49,18 @@ Copy-Item (Join-Path $coreOut "sprview_core.*") $build -Force
 switch ($os)
 {
     "windows" {
-        $comDir = Join-Path $build "com-provider"
-        dotnet publish (Join-Path $repo "src\SPRView.Net.ThumbnailProvider.Windows\SPRView.Net.ThumbnailProvider.Windows.csproj") -c Release -r $rid -o $comDir
+        # The Explorer shell extension is an independent C++20 project built
+        # with CMake (uses the MSVC toolchain shipped with Visual Studio).
+        $cppSource = Join-Path $repo "platform\windows\thumbnail-provider"
+        $cppBuild = Join-Path $build "thumbnail-provider-build"
+        cmake -S $cppSource -B $cppBuild -A x64
         if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-        Copy-Item (Join-Path $comDir "sprview-thumbnailer-win.dll") $build -Force
+        cmake --build $cppBuild --config Release
+        if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+        Copy-Item (Join-Path $cppBuild "Release\sprview-thumbnailer-win.dll") $build -Force
         Copy-Item (Join-Path $repo "platform\windows\install.ps1") $build -Force
         Copy-Item (Join-Path $repo "platform\windows\uninstall.ps1") $build -Force
-        Remove-Item $comDir -Recurse -Force
+        Remove-Item $cppBuild -Recurse -Force
     }
     "ubuntu" {
         $target = Join-Path $build "thumbnailer-linux"

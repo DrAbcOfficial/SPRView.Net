@@ -28,11 +28,10 @@ src/
   SPRView.Net/                           Avalonia cross platform viewer
   SPRView.Net.CLI/                       command line tool
   SPRView.Net.Thumbnailer/               sprview-thumbnailer executable
-  SPRView.Net.ThumbnailProvider.Windows/ Explorer shell extension (NativeAOT COM)
 platform/
   linux/    XDG thumbnailer entry, mime type, install scripts
   macos/    Quick Look extension sources (Swift) + install script
-  windows/  shell extension register/unregister scripts
+  windows/  Explorer shell extension (C++20 COM) + register scripts
 ```
 
 `SPRView.Net.Core` is the single implementation of the GoldSrc sprite format.
@@ -44,6 +43,11 @@ dotnet publish src/SPRView.Net.Core -c Release -r <rid> -p:NativeLib=Shared -p:P
 # -> sprview_core.dll / .so / .dylib, see src/SPRView.Net.Core/Native/sprview_core.h
 ```
 
+All three platform thumbnail providers sit under `platform/` and share that
+C ABI: the Windows Explorer extension is an independent C++20 project that
+loads `sprview_core.dll` at runtime, and the macOS QuickLook extension calls
+the same library (or shells out to `sprview-thumbnailer`).
+
 # 🖼️ Thumbnail providers
 
 Double-click viewing is not the only way to see a sprite any more — file
@@ -51,7 +55,10 @@ manager thumbnails are supported on all three platforms:
 
 - **Windows** — run `install.ps1 -DllPath .\sprview-thumbnailer-win.dll`
   from the release archive to register the Explorer thumbnail handler for
-  `.spr` (HKCU, no admin needed); `uninstall.ps1` removes it.
+  `.spr` (HKCU, no admin needed); `uninstall.ps1` removes it. The extension
+  is a C++20 COM dll; see
+  [thumbnail-provider/README.md](platform/windows/thumbnail-provider/README.md)
+  to build it.
 - **Linux (XDG)** — `sudo ./thumbnailer-linux/install.sh` installs the
   `sprview-thumbnailer` binary plus the XDG thumbnailer entry and the
   `application/x-spr` mime type; `--user` installs to `~/.local` instead.

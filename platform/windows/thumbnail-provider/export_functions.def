@@ -1,0 +1,6 @@
+LIBRARY sprview-thumbnailer-win
+EXPORTS
+    DllGetClassObject
+    DllCanUnloadNow
+    DllRegisterServer
+    DllUnregisterServer

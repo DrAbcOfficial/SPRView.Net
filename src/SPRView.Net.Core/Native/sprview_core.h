@@ -29,6 +29,10 @@
 extern "C" {
 #endif
 
+/* ABI revision expected by consumers; sprview_abi_version() reports what the
+ * loaded library implements. Bump both together on any breaking change. */
+#define SPRVIEW_ABI_VERSION 1
+
 typedef void* spr_handle; /* opaque document handle, 0 == invalid */
 
 typedef struct spr_info
