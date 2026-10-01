@@ -134,6 +134,25 @@ internal static class InteractionChecks
         // command bar, so a long palette can use the whole panel.
         vm.ShowPalettePanel = true;
         Settle();
+
+        // The panel is the outer control and starts collapsed.
+        Expect(!vm.ShowSidePanel, "the side panel starts collapsed");
+        Expect(!vm.CanShowSideBar, "nothing shows on the right until it is asked for");
+        Expect(!vm.SectionTogglesEnabled, "the section toggles grey out with the panel");
+
+        var panelToggle = window.FindControl<ToggleButton>("SidePanelToggle");
+        Expect(panelToggle != null, "the command bar exposes the side panel toggle");
+        if (panelToggle != null)
+        {
+            Expect(panelToggle.IsChecked == false, "the toggle shows the collapsed state");
+            panelToggle.IsChecked = true;
+            Settle();
+            Expect(vm.ShowSidePanel && vm.CanShowSideBar, "the toggle opens the panel");
+            Expect(vm.SectionTogglesEnabled, "opening the panel enables the section toggles");
+            Expect(vm.ShowInfoPanel, "the section choice is remembered");
+            Expect(vm.ShowPalettePanel, "the palette choice is remembered");
+        }
+
         Expect(vm.IsInfoExpanded && vm.IsPaletteExpanded, "both sections start expanded");
         Expect(vm.ShowInfoDivider, "the divider shows while both sections are open");
 

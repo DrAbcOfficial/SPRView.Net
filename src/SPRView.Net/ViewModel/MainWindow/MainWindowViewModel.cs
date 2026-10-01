@@ -74,6 +74,7 @@ public partial class MainWindowViewModel : INotifyPropertyChanged
         OnPropertyChanged(nameof(CaptionSecondary));
         OnPropertyChanged(nameof(HasFile));
         OnPropertyChanged(nameof(CanShowSideBar));
+        OnPropertyChanged(nameof(SectionTogglesEnabled));
         OnPropertyChanged(nameof(NowFrame));
         OnPropertyChanged(nameof(FrameLabel));
         UpdateOriginXY();
@@ -304,6 +305,36 @@ public partial class MainWindowViewModel : INotifyPropertyChanged
         }
     }
 
+    private bool m_bShowSidePanel;
+
+    /// <summary>
+    /// Whether the side panel is on screen at all.
+    ///
+    /// Starts collapsed: the sprite is what this viewer is for, so metadata and
+    /// the palette only take space once they are asked for. The section toggles
+    /// choose what goes inside the panel; this decides whether there is a panel.
+    /// </summary>
+    public bool ShowSidePanel
+    {
+        get => m_bShowSidePanel;
+        set
+        {
+            if (m_bShowSidePanel == value)
+                return;
+            m_bShowSidePanel = value;
+            OnPropertyChanged(nameof(ShowSidePanel));
+            OnPropertyChanged(nameof(CanShowSideBar));
+            OnPropertyChanged(nameof(SectionTogglesEnabled));
+            OnPropertyChanged(nameof(ShowInfoDivider));
+        }
+    }
+
+    /// <summary>
+    /// The section toggles only have a visible effect while the panel is open,
+    /// so they grey out with it instead of silently doing nothing.
+    /// </summary>
+    public bool SectionTogglesEnabled => m_bShowSidePanel && HasSprite;
+
     private bool m_bShowInfoPanel = true;
     public bool ShowInfoPanel
     {
@@ -366,9 +397,11 @@ public partial class MainWindowViewModel : INotifyPropertyChanged
     }
 
     /// <summary>The rule between the two sections only earns its space when both are open.</summary>
-    public bool ShowInfoDivider => m_bShowInfoPanel && m_bShowPalettePanel && m_bIsInfoExpanded;
+    public bool ShowInfoDivider =>
+        m_bShowSidePanel && m_bShowInfoPanel && m_bShowPalettePanel && m_bIsInfoExpanded;
 
-    public bool CanShowSideBar => (m_bShowInfoPanel || m_bShowPalettePanel) && HasSprite;
+    public bool CanShowSideBar =>
+        m_bShowSidePanel && (m_bShowInfoPanel || m_bShowPalettePanel) && HasSprite;
 
     /// <summary>
     /// Palette of the loaded sprite as brushes, laid out 16 per row like the

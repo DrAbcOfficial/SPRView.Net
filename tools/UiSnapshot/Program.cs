@@ -184,6 +184,7 @@ internal static class Program
             using FileStream stream = File.OpenRead(_sprPath);
             SprDocument sprite = SprDocument.Load(stream);
             rawVm.LoadSprite(sprite, Path.GetFileName(_sprPath));
+            rawVm.ShowSidePanel = true;
             rawVm.ApplyTransparency = false;
         }
         Dump($"main-raw-{suffix}.png", rawWindow, 840, 560);
@@ -192,6 +193,7 @@ internal static class Program
         var window2 = new MainWindow();
         var vm2 = new MainWindowViewModel(window2) { Lang = LangLoader.Load(_lang) };
         window2.DataContext = vm2;
+        vm2.ShowSidePanel = true;
         vm2.ShowPalettePanel = true;
         if (_sprPath != null && File.Exists(_sprPath))
         {
@@ -213,6 +215,7 @@ internal static class Program
         var collapsedWindow = new MainWindow();
         var collapsedVm = new MainWindowViewModel(collapsedWindow) { Lang = LangLoader.Load(_lang) };
         collapsedWindow.DataContext = collapsedVm;
+        collapsedVm.ShowSidePanel = true;
         collapsedVm.ShowPalettePanel = true;
         if (_sprPath != null && File.Exists(_sprPath))
         {
@@ -227,6 +230,7 @@ internal static class Program
         var narrowWindow = new MainWindow();
         var narrowVm = new MainWindowViewModel(narrowWindow) { Lang = LangLoader.Load(_lang) };
         narrowWindow.DataContext = narrowVm;
+        narrowVm.ShowSidePanel = true;
         narrowVm.ShowPalettePanel = true;
         if (_sprPath != null && File.Exists(_sprPath))
         {

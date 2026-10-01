@@ -163,15 +163,22 @@
                     BorderBrush="{DynamicResource ControlStrokeColorDefaultBrush}"
                     BorderThickness="1" CornerRadius="6" Padding="2">
               <StackPanel Orientation="Horizontal" Spacing="2">
+                <ToggleButton Name="SidePanelToggle"
+                              Classes="toolbar" Theme="{StaticResource ToolbarToggleButton}"
+                              IsChecked="{CompiledBinding ShowSidePanel}"
+                              IsEnabled="{CompiledBinding HasSprite}"
+                              ToolTip.Tip="{CompiledBinding Lang.Dock_SidePanel}">
+                  <Path Classes="icon" Data="{StaticResource Icon_SidePanel}" />
+                </ToggleButton>
                 <ToggleButton Classes="toolbar" Theme="{StaticResource ToolbarToggleButton}"
                               IsChecked="{CompiledBinding ShowInfoPanel}"
-                              IsEnabled="{CompiledBinding HasSprite}"
+                              IsEnabled="{CompiledBinding SectionTogglesEnabled}"
                               ToolTip.Tip="{CompiledBinding Lang.TaskBar_View_Information}">
                   <Path Classes="icon" Data="{StaticResource Icon_Details}" />
                 </ToggleButton>
                 <ToggleButton Classes="toolbar" Theme="{StaticResource ToolbarToggleButton}"
                               IsChecked="{CompiledBinding ShowPalettePanel}"
-                              IsEnabled="{CompiledBinding HasSprite}"
+                              IsEnabled="{CompiledBinding SectionTogglesEnabled}"
                               ToolTip.Tip="{CompiledBinding Lang.TaskBar_View_Pallet}">
                   <Path Classes="icon" Data="{StaticResource Icon_Palette}" />
                 </ToggleButton>
