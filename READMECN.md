@@ -11,7 +11,7 @@
 ----
 # ✅开始
 
--  从 [release](https://github.com/DrAbcOfficial/SPRView.Net/releases)获得预先编译的二进制文件，仅提供x64架构。所有产物均以 <img src="https://raw.githubusercontent.com/dotnet/brand/main/logo/dotnet-logo.svg" width="24"/> NativeAOT 编译为原生代码，无需安装 .NET 运行时
+-  从 [release](https://github.com/DrAbcOfficial/SPRView.Net/releases)获得预先编译的二进制文件：macOS/Linux 提供 x64 与 arm64，Windows 提供 x64。所有产物均以 <img src="https://raw.githubusercontent.com/dotnet/brand/main/logo/dotnet-logo.svg" width="24"/> NativeAOT 编译为原生代码，无需安装 .NET 运行时
 -  从源码构建需要 [.NET 10 SDK](https://dotnet.microsoft.com/download/dotnet/10.0)（Linux 上还需要 `clang` 和 `zlib1g-dev`）
 
 ----

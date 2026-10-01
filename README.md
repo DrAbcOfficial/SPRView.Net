@@ -12,7 +12,7 @@ Yet another Sprite viewer for half-life series game (counter-strike, sven co-op,
 # ✅Getting Start
 
 - [中文](READMECN.md)
--  Grab prebuild binary from [release](https://github.com/DrAbcOfficial/SPRView.Net/releases), x64 only — everything is published with <img src="https://raw.githubusercontent.com/dotnet/brand/main/logo/dotnet-logo.svg" width="24"/> NativeAOT, no .NET runtime install needed
+-  Grab prebuild binaries from [release](https://github.com/DrAbcOfficial/SPRView.Net/releases) — x64 and arm64 for macOS/Linux, x64 for Windows — everything is published with <img src="https://raw.githubusercontent.com/dotnet/brand/main/logo/dotnet-logo.svg" width="24"/> NativeAOT, no .NET runtime install needed
 -  To build from source you need the [.NET 10 SDK](https://dotnet.microsoft.com/download/dotnet/10.0) (plus `clang` and `zlib1g-dev` on Linux)
 
 ----

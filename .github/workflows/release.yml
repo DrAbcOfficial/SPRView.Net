@@ -10,11 +10,29 @@ jobs:
   build:
 
     strategy:
+      # One failed architecture must not cancel the other parallel builds.
+      fail-fast: false
       matrix:
-        os: [ubuntu, windows, macos]
-        arch: [x64]
+        include:
+          # Windows ships x64 only: the Explorer shell extension is a x64
+          # in-proc COM server.
+          - os: windows
+            arch: x64
+            runner: windows-latest
+          - os: macos
+            arch: x64
+            runner: macos-15-intel
+          - os: macos
+            arch: arm64
+            runner: macos-15
+          - os: ubuntu
+            arch: x64
+            runner: ubuntu-latest
+          - os: ubuntu
+            arch: arm64
+            runner: ubuntu-24.04-arm
 
-    runs-on: ${{ matrix.os }}-latest
+    runs-on: ${{ matrix.runner }}
 
     permissions:
       contents: write
