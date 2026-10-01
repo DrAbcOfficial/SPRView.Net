@@ -79,6 +79,8 @@ public class LangViewModel : INotifyPropertyChanged
     public string About_Tagline { get => field; set { field = value; OnPropertyChanged(nameof(About_Tagline)); } } = "GoldSrc sprite viewer";
     public string About_BuiltWith { get => field; set { field = value; OnPropertyChanged(nameof(About_BuiltWith)); } } = "Built with";
     public string About_SourceCode { get => field; set { field = value; OnPropertyChanged(nameof(About_SourceCode)); } } = "Source code";
+    public string About_BuildTime { get => field; set { field = value; OnPropertyChanged(nameof(About_BuildTime)); } } = "Built {0}";
+    public string About_Version { get => field; set { field = value; OnPropertyChanged(nameof(About_Version)); } } = "Version {0}";
 
     public string Shared_OK { get; set; } = "OK";
     public string Shared_Cancel { get; set; } = "Cancel";

@@ -34,6 +34,7 @@ internal static class InteractionChecks
             return 1;
         }
 
+        CheckBuildInfo();
         CheckMainWindow(sprPath);
         CheckExtremeSizes(sprPath);
         CheckDragAndDrop(sprPath);
@@ -233,6 +234,34 @@ internal static class InteractionChecks
     }
 
     /// <summary>
+    /// The About dialog reports a version from version.txt and the build time
+    /// baked into the assembly. Both are read through reflection metadata, which
+    /// a trimmer is free to strip, so the values are asserted rather than
+    /// assumed: a fallback here would show up as a placeholder in the dialog.
+    /// </summary>
+    private static void CheckBuildInfo()
+    {
+        string version = BuildInfo.Version;
+        string buildTime = BuildInfo.BuildTime;
+
+        Expect(!string.IsNullOrWhiteSpace(version), $"a version is embedded ({version})");
+        Expect(version != "0.0.0-dev",
+            "the version came from version.txt rather than the fallback");
+        Expect(!string.IsNullOrWhiteSpace(buildTime), $"a build time is embedded ({buildTime})");
+
+        // The build time is written as "yyyy-MM-dd HH:mm:ss"; anything else means
+        // the MSBuild expression changed shape.
+        Expect(DateTime.TryParse(buildTime, out _),
+            "the build time parses, so the MSBuild format is still the one expected");
+
+        var about = new AboutViewModel(LangLoader.Load("en"));
+        Expect(about.VersionLabel.Contains(version), "the dialog shows the version");
+        Expect(about.BuildTimeLabel.Contains(buildTime), "the dialog shows the build time");
+        Expect(about.Lang.About_Version.Contains("{0}") && about.Lang.About_BuildTime.Contains("{0}"),
+            "both captions carry the format placeholder, or the values would be dropped");
+    }
+
+    /// <summary>
     /// Shrinks the window to absurd sizes and checks the layout holds.
     ///
     /// Sizes well under the declared minimum are requested on purpose: the
@@ -375,8 +404,17 @@ internal static class InteractionChecks
         window.Show();
         Settle();
 
+        // This check drives the image list, which needs loose image files. When
+        // the caller passed a real game sprite there are none next to it, so the
+        // group is skipped rather than failing on an empty list.
         string dir = Path.GetDirectoryName(sprPath)!;
         string[] frames = Directory.GetFiles(dir, "frame*.png").OrderBy(f => f).ToArray();
+        if (frames.Length < 3)
+        {
+            Console.WriteLine($"  skip create-new list checks: need frame*.png beside {sprPath}");
+            window.Close();
+            return;
+        }
         vm.SetImages(frames);
         Settle();
 

@@ -247,7 +247,7 @@ public partial class MainWindowViewModel
     public async void About()
     {
         var about = new AboutWindow();
-        about.DataContext = Lang;
+        about.DataContext = new AboutViewModel(Lang!);
         await about.ShowDialog(Parent);
     }
 

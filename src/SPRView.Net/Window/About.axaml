@@ -5,7 +5,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:vm="using:SPRView.Net.ViewModel"
     x:Class="SPRView.Net.AboutWindow"
-    x:DataType="vm:LangViewModel"
+    x:DataType="vm:AboutViewModel"
     Title="SPRView.Net"
     Width="400"
     SizeToContent="Height"
@@ -26,7 +26,7 @@
             Name="CaptionBar"
             Background="{DynamicResource WindowCaptionBackgroundBrush}"
             PointerPressed="OnCaptionPressed">
-        <TextBlock Text="{CompiledBinding About_Title}" FontSize="12" Margin="12,0,0,0"
+        <TextBlock Text="{CompiledBinding Lang.About_Title}" FontSize="12" Margin="12,0,0,0"
                    Foreground="{DynamicResource WindowCaptionForegroundBrush}"
                    VerticalAlignment="Center" />
         <Button Classes="caption captionClose" Theme="{StaticResource CaptionCloseButton}"
@@ -43,7 +43,9 @@
                  VerticalAlignment="Top" />
           <StackPanel Spacing="2" VerticalAlignment="Center">
             <TextBlock Classes="subtitle" Text="SPRView.Net" />
-            <TextBlock Classes="caption" Text="{CompiledBinding About_Tagline}" />
+            <TextBlock Classes="caption" Text="{CompiledBinding Lang.About_Tagline}" />
+            <TextBlock Classes="caption" Text="{CompiledBinding VersionLabel}" />
+            <TextBlock Classes="caption" Text="{CompiledBinding BuildTimeLabel}" />
             <TextBlock Classes="caption" Text="Dr.Abc" />
           </StackPanel>
         </StackPanel>
@@ -51,7 +53,7 @@
         <Border Classes="dividerH" />
 
         <StackPanel Spacing="2">
-          <TextBlock Classes="caption" Text="{CompiledBinding About_BuiltWith}" Margin="0,0,0,4" />
+          <TextBlock Classes="caption" Text="{CompiledBinding Lang.About_BuiltWith}" Margin="0,0,0,4" />
           <HyperlinkButton NavigateUri="https://avaloniaui.net/" Padding="0" MinHeight="0">
             <TextBlock Classes="body" FontSize="13" Text="Avalonia UI" />
           </HyperlinkButton>
@@ -66,7 +68,7 @@
                 HorizontalContentAlignment="Left" Click="OnSourceCodeClick">
           <StackPanel Orientation="Horizontal" Spacing="8">
             <Path Classes="icon" Width="16" Height="16" Data="{StaticResource Icon_ExternalLink}" />
-            <TextBlock Text="{CompiledBinding About_SourceCode}" VerticalAlignment="Center" />
+            <TextBlock Text="{CompiledBinding Lang.About_SourceCode}" VerticalAlignment="Center" />
           </StackPanel>
         </Button>
       </StackPanel>

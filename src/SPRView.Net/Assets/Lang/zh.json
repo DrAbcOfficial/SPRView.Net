@@ -43,6 +43,8 @@
   "About_Tagline": "GoldSrc 精灵图查看器",
   "About_BuiltWith": "基于以下项目构建",
   "About_SourceCode": "源代码",
+  "About_Version": "版本 {0}",
+  "About_BuildTime": "构建于 {0}",
 
   "SpriteInfo_Frames": "帧数:",
   "SpriteInfo_Width": "宽度:",

@@ -43,6 +43,8 @@
   "About_Tagline": "GoldSrc sprite viewer",
   "About_BuiltWith": "Built with",
   "About_SourceCode": "Source code",
+  "About_Version": "Version {0}",
+  "About_BuildTime": "Built {0}",
 
   "SpriteInfo_Frames": "Frames Lenght:",
   "SpriteInfo_Width": "Width:",

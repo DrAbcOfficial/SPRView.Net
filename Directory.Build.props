@@ -9,4 +9,40 @@
     <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
 
+  <!--
+    The release version lives in version.txt at the repository root, so the
+    viewer, the CLI, the thumbnailer and the release scripts all report the same
+    number and there is exactly one place to bump it. The file is read while the
+    build runs, so the value ends up baked into each binary rather than being
+    looked up from a sidecar file at run time.
+
+    Edit version.txt to change the version; the format is a plain version
+    string, matching the date based release tags, e.g. "20261001".
+  -->
+  <PropertyGroup>
+    <VersionFile>$(MSBuildThisFileDirectory)version.txt</VersionFile>
+    <Version Condition="Exists('$(VersionFile)')">$([System.IO.File]::ReadAllText('$(VersionFile)').Trim())</Version>
+    <Version Condition="'$(Version)' == ''">0.0.0-dev</Version>
+  </PropertyGroup>
+
+  <!--
+    Build time, recorded as assembly metadata next to the version so the About
+    dialog can report what produced the binary.
+
+    A timestamp is by definition not reproducible, and rewriting it changes the
+    generated assembly info, which makes the project recompile on every build.
+    Pass -p:IncludeBuildTime=false when a byte for byte reproducible build
+    matters; the version is still recorded in that case.
+  -->
+  <PropertyGroup>
+    <IncludeBuildTime Condition="'$(IncludeBuildTime)' == ''">true</IncludeBuildTime>
+    <BuildTime Condition="'$(IncludeBuildTime)' == 'true'">$([System.DateTime]::Now.ToString('yyyy-MM-dd HH:mm:ss'))</BuildTime>
+    <BuildTime Condition="'$(BuildTime)' == ''">unknown</BuildTime>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <AssemblyMetadata Include="ReleaseVersion" Value="$(Version)" />
+    <AssemblyMetadata Include="BuildTime" Value="$(BuildTime)" />
+  </ItemGroup>
+
 </Project>

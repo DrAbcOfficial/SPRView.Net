@@ -58,6 +58,9 @@ tools/
   可让 256 色色板占满整个侧栏。命令栏默认只显示图标，窗口足够宽时才
   展开文字标签，避免裁切。
   小尺寸精灵自动以整数倍缩放适应窗口，像素画保持锐利。
+- **版本号**统一由仓库根目录的 `version.txt` 提供。MSBuild 在编译期把它与
+  编译时间一并写入二进制，关于页面再从程序集中读回，因此单文件发布版本
+  也能显示自身来源。需要可重现构建时传 `-p:IncludeBuildTime=false`。
 - **透明背景**默认按精灵图格式的规则剔除。命令栏的开关可关闭此行为，
   按文件存储的像素原样显示（包含背景），便于查看作者在画面下实际绘制了什么。
 
@@ -120,9 +123,9 @@ dotnet publish src/SPRView.Net.Core -c Release -r <rid> -p:NativeLib=Shared -p:P
 |--|--|
 |<img src="readme/main-light.png" width="420"/>|<img src="readme/createnew-light.png" width="420"/>|
 
-|暗色主题|空状态|
+|暗色主题|关于|
 |--|--|
-|<img src="readme/main-dark.png" width="420"/>|<img src="readme/empty-light.png" width="420"/>|
+|<img src="readme/main-dark.png" width="420"/>|<img src="readme/about-light.png" width="280"/>|
 
 
 # 第三方库:

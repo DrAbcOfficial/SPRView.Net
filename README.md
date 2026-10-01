@@ -63,6 +63,11 @@ the host theme, so the three platforms render identically:
   looking at. The command bar itself starts on icons and only spells its labels
   out once the window is wide enough that they cannot clip. Small sprites are auto-fitted on whole-number
   zoom steps, so pixel art stays sharp.
+- **Versioning** is one file: `version.txt` at the repository root. MSBuild
+  bakes it, together with the build timestamp, into every binary, and the About
+  dialog reads them back from the assembly, so a published single file build
+  still reports where it came from. Pass `-p:IncludeBuildTime=false` for a
+  reproducible build.
 - **Transparency** is applied per the sprite format by default. The toggle in
   the command bar turns that off to show the frames exactly as the file stores
   them, background and all, which is what you want when checking what an artist
@@ -134,9 +139,9 @@ If you need, I recommend the following repositories:
 |--|--|
 |<img src="readme/main-light.png" width="420"/>|<img src="readme/createnew-light.png" width="420"/>|
 
-|Dark theme|Empty state|
+|Dark theme|About|
 |--|--|
-|<img src="readme/main-dark.png" width="420"/>|<img src="readme/empty-light.png" width="420"/>|
+|<img src="readme/main-dark.png" width="420"/>|<img src="readme/about-light.png" width="280"/>|
 
 
 # This repository used:

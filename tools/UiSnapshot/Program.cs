@@ -324,7 +324,7 @@ internal static class Program
     private static void RenderAbout(string suffix)
     {
         var window = new AboutWindow();
-        window.DataContext = LangLoader.Load(_lang);
+        window.DataContext = new AboutViewModel(LangLoader.Load(_lang));
         Dump($"about-{suffix}.png", window, 400, 300);
     }
 
