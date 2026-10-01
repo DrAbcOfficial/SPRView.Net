@@ -26,7 +26,6 @@ public class LangViewModel : INotifyPropertyChanged
     public string TaskBar_File_SaveGIF { get => field; set { field = value; OnPropertyChanged(nameof(TaskBar_File_SaveGIF)); } } = "Save GIF";
     public string TaskBar_File_SavePalette { get => field; set { field = value; OnPropertyChanged(nameof(TaskBar_File_SavePalette)); } } = "Save Palette";
     public string TaskBar_File_Export { get => field; set { field = value; OnPropertyChanged(nameof(TaskBar_File_Export)); } } = "Export";
-    public string TaskBar_File_Exit { get => field; set { field = value; OnPropertyChanged(nameof(TaskBar_File_Exit)); } } = "Exit";
 
     public string TaskBar_View { get => field; set { field = value; OnPropertyChanged(nameof(TaskBar_View)); } } = "View";
     public string TaskBar_View_Information { get => field; set { field = value; OnPropertyChanged(nameof(TaskBar_View_Information)); } } = "Information";
@@ -37,7 +36,6 @@ public class LangViewModel : INotifyPropertyChanged
     public string TaskBar_Help { get => field; set { field = value; OnPropertyChanged(nameof(TaskBar_Help)); } } = "Help";
     public string TaskBar_Help_About { get => field; set { field = value; OnPropertyChanged(nameof(TaskBar_Help_About)); } } = "About";
 
-    public string Dock_Frame { get => field; set { field = value; OnPropertyChanged(nameof(Dock_Frame)); } } = "Frame:";
 
     public string SpriteInfo_Frames { get => field; set { field = value; OnPropertyChanged(nameof(SpriteInfo_Frames)); } } = "Frames:";
     public string SpriteInfo_Width { get => field; set { field = value; OnPropertyChanged(nameof(SpriteInfo_Width)); } } = "Width:";
@@ -57,7 +55,6 @@ public class LangViewModel : INotifyPropertyChanged
     public string Command_SaveAnim { get => field; set { field = value; OnPropertyChanged(nameof(Command_SaveAnim)); } } = "Animation";
     public string Command_Export { get => field; set { field = value; OnPropertyChanged(nameof(Command_Export)); } } = "Frames";
     public string Command_SavePalette { get => field; set { field = value; OnPropertyChanged(nameof(Command_SavePalette)); } } = "Palette";
-    public string Command_Language { get => field; set { field = value; OnPropertyChanged(nameof(Command_Language)); } } = "Language";
 
     // Transport bar
     public string Dock_PlayPause { get => field; set { field = value; OnPropertyChanged(nameof(Dock_PlayPause)); } } = "Play / Pause";

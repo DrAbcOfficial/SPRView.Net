@@ -7,17 +7,17 @@
     CanResize="False"
     ShowInTaskbar="False"
     SizeToContent="Height"
-    Width="420"
-    MaxHeight="560"
+    Width="400"
+    MaxHeight="520"
     Background="{DynamicResource SolidBackgroundFillColorBaseBrush}"
     ExtendClientAreaToDecorationsHint="True"
-    ExtendClientAreaTitleBarHeightHint="36"
+    ExtendClientAreaTitleBarHeightHint="32"
     WindowDecorations="None"
     WindowStartupLocation="CenterOwner"
     mc:Ignorable="d" d:DesignWidth="420">
 
   <Panel Name="RootPanel" Background="{DynamicResource SolidBackgroundFillColorBaseBrush}">
-    <Grid RowDefinitions="36,Auto,Auto">
+    <Grid RowDefinitions="32,Auto,Auto">
 
       <Grid Grid.Row="0"
             Name="CaptionBar"
@@ -35,8 +35,8 @@
       </Grid>
 
       <!-- Content: scrolls when an exception trace is long. -->
-      <ScrollViewer Grid.Row="1" Margin="24,20,24,0"
-                    MaxHeight="380"
+      <ScrollViewer Grid.Row="1" Margin="20,16,20,0"
+                    MaxHeight="340"
                     VerticalScrollBarVisibility="Auto">
         <TextBlock Name="Message"
                    Classes="body"
@@ -47,7 +47,7 @@
 
       <!-- Action row, right aligned like a ContentDialog. -->
       <StackPanel Grid.Row="2" Orientation="Horizontal" Spacing="8"
-                  HorizontalAlignment="Right" Margin="24,20,24,20">
+                  HorizontalAlignment="Right" Margin="20,16,20,16">
         <Button Name="Cancel" Content="Cancel" MinWidth="96" Click="Button_Click" />
         <Button Name="OK" Content="OK" MinWidth="96" Classes="accent"
                 IsDefault="True" Click="Button_Click" />

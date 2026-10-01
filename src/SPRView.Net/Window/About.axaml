@@ -7,20 +7,20 @@
     x:Class="SPRView.Net.AboutWindow"
     x:DataType="vm:LangViewModel"
     Title="SPRView.Net"
-    Width="420"
+    Width="400"
     SizeToContent="Height"
     CanResize="False"
     ShowInTaskbar="False"
     Icon="/Assets/icon.ico"
     Background="{DynamicResource SolidBackgroundFillColorBaseBrush}"
     ExtendClientAreaToDecorationsHint="True"
-    ExtendClientAreaTitleBarHeightHint="36"
+    ExtendClientAreaTitleBarHeightHint="32"
     WindowDecorations="None"
     WindowStartupLocation="CenterOwner"
     mc:Ignorable="d" d:DesignWidth="420">
 
   <Panel Name="RootPanel" Background="{DynamicResource SolidBackgroundFillColorBaseBrush}">
-    <Grid RowDefinitions="36,Auto">
+    <Grid RowDefinitions="32,Auto">
 
       <Grid Grid.Row="0"
             Name="CaptionBar"
@@ -35,10 +35,10 @@
         </Button>
       </Grid>
 
-      <StackPanel Grid.Row="1" Margin="24,20,24,24" Spacing="16">
+      <StackPanel Grid.Row="1" Margin="20,16,20,18" Spacing="12">
 
-        <StackPanel Orientation="Horizontal" Spacing="14">
-          <Image Source="/Assets/app-icon.png" Width="56" Height="56"
+        <StackPanel Orientation="Horizontal" Spacing="12">
+          <Image Source="/Assets/app-icon.png" Width="48" Height="48"
                  RenderOptions.BitmapInterpolationMode="HighQuality"
                  VerticalAlignment="Top" />
           <StackPanel Spacing="2" VerticalAlignment="Center">

@@ -7,18 +7,18 @@
     x:Class="SPRView.Net.CreateNewWindow"
     x:DataType="vm:CreateNewViewModel"
     Title="{CompiledBinding Lang.CreateNew_Title}"
-    Width="760" Height="560"
-    MinWidth="680" MinHeight="480"
+    Width="712" Height="512"
+    MinWidth="640" MinHeight="440"
     Icon="/Assets/icon.ico"
     Background="{DynamicResource SolidBackgroundFillColorBaseBrush}"
     ExtendClientAreaToDecorationsHint="True"
-    ExtendClientAreaTitleBarHeightHint="40"
+    ExtendClientAreaTitleBarHeightHint="32"
     WindowDecorations="None"
     WindowStartupLocation="CenterOwner"
-    mc:Ignorable="d" d:DesignWidth="760" d:DesignHeight="560">
+    mc:Ignorable="d" d:DesignWidth="712" d:DesignHeight="512">
 
   <Panel Name="RootPanel" Background="{DynamicResource SolidBackgroundFillColorBaseBrush}">
-    <Grid RowDefinitions="40,*,Auto">
+    <Grid RowDefinitions="32,*,Auto">
 
       <!-- ============================ Caption ============================ -->
       <Grid Grid.Row="0"
@@ -50,7 +50,7 @@
       </Grid>
 
       <!-- ============================= Body ============================= -->
-      <Grid Grid.Row="1" Margin="16,12,16,0" ColumnDefinitions="300,*" ColumnSpacing="16">
+      <Grid Grid.Row="1" Margin="12,10,12,0" ColumnDefinitions="276,*" ColumnSpacing="12">
 
         <!-- Image list -->
         <Border Grid.Column="0"
@@ -59,7 +59,7 @@
                 BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}"
                 Background="{DynamicResource CardBackgroundFillColorDefaultBrush}">
           <Grid RowDefinitions="Auto,*,Auto,Auto">
-            <Grid Grid.Row="0" ColumnDefinitions="*,Auto" Margin="14,12,10,0">
+            <Grid Grid.Row="0" ColumnDefinitions="*,Auto" Margin="12,10,10,0">
               <TextBlock Classes="bodyStrong" Text="{CompiledBinding Lang.CreateNew_Frames}"
                          VerticalAlignment="Center" />
               <TextBlock Grid.Column="1" Classes="caption"
@@ -125,8 +125,8 @@
                 Background="{DynamicResource CardBackgroundFillColorDefaultBrush}">
           <TabControl Classes="section" Padding="4,0,0,0">
             <TabItem Header="{CompiledBinding Lang.CreateNew_Tab_Property}">
-              <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="16,10,16,16">
-                <StackPanel Spacing="14">
+              <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="14,8,14,12">
+                <StackPanel Spacing="12">
 
                   <StackPanel Spacing="4">
                     <TextBlock Classes="caption" Text="{CompiledBinding Lang.CreateNew_Type}" />
@@ -178,13 +178,13 @@
             </TabItem>
 
             <TabItem Header="{CompiledBinding Lang.CreateNew_Tab_Preview}">
-              <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="16,10,16,16">
-                <StackPanel Spacing="14">
+              <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="14,8,14,12">
+                <StackPanel Spacing="12">
 
                   <!-- Preview surface + playback -->
                   <Grid ColumnDefinitions="Auto,*" ColumnSpacing="16">
                     <Border Grid.Column="0"
-                            Width="180" Height="180"
+                            Width="168" Height="168"
                             CornerRadius="6"
                             BorderThickness="1"
                             BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}"
@@ -256,8 +256,8 @@
 
       <!-- ========================== Action bar =========================== -->
       <Border Grid.Row="2"
-              Margin="0,12,0,0"
-              Padding="16,12"
+              Margin="0,10,0,0"
+              Padding="12,10"
               Background="{DynamicResource SolidBackgroundFillColorSecondaryBrush}"
               BorderBrush="{DynamicResource DividerStrokeColorDefaultBrush}"
               BorderThickness="0,1,0,0">
@@ -268,7 +268,7 @@
                        Minimum="0" Maximum="200"
                        Value="{CompiledBinding Progress}"
                        IsVisible="{CompiledBinding IsExporting}" />
-          <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="8">
+          <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="6">
             <Button Content="{CompiledBinding Lang.Shared_Cancel}" MinWidth="96"
                     Click="OnCancelClick" />
             <Button Content="{CompiledBinding Lang.CreateNew_Export_Save}"

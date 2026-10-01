@@ -9,7 +9,6 @@
   "TaskBar_File_SaveGIF": "另存为动图",
   "TaskBar_File_Export": "导出所有帧",
   "TaskBar_File_SavePalette": "保存色板(.pal)",
-  "TaskBar_File_Exit": "退出",
   "TaskBar_View": "_浏览",
   "TaskBar_View_Information": "信息",
   "TaskBar_View_Pallet": "调色板",
@@ -23,9 +22,7 @@
   "Command_SaveAnim": "动图",
   "Command_Export": "序列帧",
   "Command_SavePalette": "色板",
-  "Command_Language": "语言",
 
-  "Dock_Frame": "帧:",
   "Dock_PlayPause": "播放 / 暂停",
   "Dock_Loop": "循环",
   "Dock_ZoomIn": "放大",

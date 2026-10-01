@@ -158,6 +158,30 @@ public partial class MainWindowViewModel : INotifyPropertyChanged
         return new Bitmap(memoryStream);
     }
 
+    private bool m_bShowCommandLabels = true;
+
+    /// <summary>
+    /// Whether the command bar spells out its labels.
+    ///
+    /// The window is meant to be usable when narrow, so below the width the
+    /// labelled bar needs the buttons collapse to their icons, as they do in
+    /// WinUI. The tooltips stay either way.
+    /// </summary>
+    public bool ShowCommandLabels
+    {
+        get => m_bShowCommandLabels;
+        set
+        {
+            if (m_bShowCommandLabels == value)
+                return;
+            m_bShowCommandLabels = value;
+            OnPropertyChanged(nameof(ShowCommandLabels));
+        }
+    }
+
+    /// <summary>Width under which the command bar drops its labels, in DIPs.</summary>
+    public const double CommandLabelsMinWidth = 760;
+
     private bool m_bApplyTransparency = true;
 
     /// <summary>

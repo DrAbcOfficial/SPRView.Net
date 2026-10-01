@@ -123,7 +123,7 @@
   <Style Selector="Border.dividerV">
     <Setter Property="Width" Value="1" />
     <Setter Property="Background" Value="{DynamicResource DividerStrokeColorDefaultBrush}" />
-    <Setter Property="Margin" Value="4,6" />
+    <Setter Property="Margin" Value="3,4" />
   </Style>
 
   <!-- ======================== Fluent theme tuning ======================== -->
@@ -140,7 +140,7 @@
     <Setter Property="BorderThickness" Value="0" />
   </Style>
   <Style Selector="ListBox.imageList ListBoxItem">
-    <Setter Property="Padding" Value="8,6" />
+    <Setter Property="Padding" Value="8,4" />
     <Setter Property="MinHeight" Value="0" />
     <Setter Property="Margin" Value="0,1" />
     <Setter Property="CornerRadius" Value="4" />

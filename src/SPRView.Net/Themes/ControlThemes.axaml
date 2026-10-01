@@ -10,8 +10,8 @@
   <!-- ====================== Window caption buttons ====================== -->
   <!-- 46x40 hit target with the native 10x10 hairline glyph, as in WinUI 3. -->
   <ControlTheme x:Key="CaptionButton" TargetType="Button">
-    <Setter Property="Width" Value="46" />
-    <Setter Property="Height" Value="40" />
+    <Setter Property="Width" Value="44" />
+    <Setter Property="Height" Value="32" />
     <Setter Property="Padding" Value="0" />
     <Setter Property="MinWidth" Value="0" />
     <Setter Property="MinHeight" Value="0" />
@@ -53,8 +53,8 @@
 
   <!-- ======================== Subtle icon button ======================== -->
   <ControlTheme x:Key="SubtleButton" TargetType="Button">
-    <Setter Property="Width" Value="32" />
-    <Setter Property="Height" Value="32" />
+    <Setter Property="Width" Value="28" />
+    <Setter Property="Height" Value="28" />
     <Setter Property="MinWidth" Value="0" />
     <Setter Property="MinHeight" Value="0" />
     <Setter Property="Padding" Value="0" />
@@ -95,10 +95,10 @@
 
   <!-- ==================== Command bar button (icon+label) ==================== -->
   <ControlTheme x:Key="CommandButton" TargetType="Button">
-    <Setter Property="Height" Value="34" />
+    <Setter Property="Height" Value="30" />
     <Setter Property="MinWidth" Value="0" />
     <Setter Property="MinHeight" Value="0" />
-    <Setter Property="Padding" Value="10,0" />
+    <Setter Property="Padding" Value="8,0" />
     <Setter Property="CornerRadius" Value="5" />
     <Setter Property="BorderThickness" Value="0" />
     <Setter Property="Background" Value="Transparent" />
@@ -145,14 +145,14 @@
 
   <!-- Transparent square button that fills with the accent colour. -->
   <ControlTheme x:Key="TransportButton" TargetType="Button" BasedOn="{StaticResource SubtleButton}">
-    <Setter Property="Width" Value="36" />
-    <Setter Property="Height" Value="32" />
+    <Setter Property="Width" Value="30" />
+    <Setter Property="Height" Value="28" />
     <Setter Property="CornerRadius" Value="5" />
   </ControlTheme>
 
   <ControlTheme x:Key="PlayButton" TargetType="Button">
-    <Setter Property="Width" Value="36" />
-    <Setter Property="Height" Value="32" />
+    <Setter Property="Width" Value="34" />
+    <Setter Property="Height" Value="28" />
     <Setter Property="MinWidth" Value="0" />
     <Setter Property="MinHeight" Value="0" />
     <Setter Property="Padding" Value="0" />

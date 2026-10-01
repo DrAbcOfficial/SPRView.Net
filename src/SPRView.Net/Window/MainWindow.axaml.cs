@@ -23,6 +23,7 @@ public partial class MainWindow : Window
         AddHandler(DragDrop.DropEvent, OnDrop);
 
         ViewportScroll.SizeChanged += (_, e) => Vm?.OnViewportSizeChanged(e.NewSize);
+        SizeChanged += (_, e) => UpdateCommandBar(e.NewSize.Width);
         // The first layout pass can finish before the canvas reports a size,
         // so the fit is recomputed once the window is on screen.
         Opened += (_, _) => Vm?.OnViewportSizeChanged(ViewportScroll.Bounds.Size);
@@ -35,6 +36,13 @@ public partial class MainWindow : Window
     }
 
     private MainWindowViewModel? Vm => DataContext as MainWindowViewModel;
+
+    /// <summary>Collapses the command bar to icons when the window is narrow.</summary>
+    private void UpdateCommandBar(double width)
+    {
+        if (Vm is { } vm)
+            vm.ShowCommandLabels = width >= MainWindowViewModel.CommandLabelsMinWidth;
+    }
 
     /// <summary>Exposed so the layout tests can assert the drag feedback.</summary>
     public bool DropHintVisible => DropHint.IsVisible;

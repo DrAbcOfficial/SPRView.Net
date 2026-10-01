@@ -8,15 +8,15 @@
     x:Class="SPRView.Net.MainWindow"
     x:DataType="vm:MainWindowViewModel"
     Title="SPRView.Net"
-    Width="1080" Height="720"
-    MinWidth="820" MinHeight="560"
+    Width="840" Height="560"
+    MinWidth="660" MinHeight="440"
     Icon="/Assets/icon.ico"
     Background="{DynamicResource SolidBackgroundFillColorBaseBrush}"
     ExtendClientAreaToDecorationsHint="True"
-    ExtendClientAreaTitleBarHeightHint="40"
+    ExtendClientAreaTitleBarHeightHint="32"
     WindowDecorations="None"
     WindowStartupLocation="CenterScreen"
-    mc:Ignorable="d" d:DesignWidth="1080" d:DesignHeight="720"
+    mc:Ignorable="d" d:DesignWidth="840" d:DesignHeight="560"
     DragDrop.AllowDrop="True">
 
   <Window.KeyBindings>
@@ -39,7 +39,7 @@
 
   <!-- Window background: one flat surface, WinUI 3 "solid base" material. -->
   <Panel Name="RootPanel" Background="{DynamicResource SolidBackgroundFillColorBaseBrush}">
-    <Grid RowDefinitions="40,46,*,52">
+    <Grid RowDefinitions="32,38,*,42">
 
       <!-- ============================ Caption ============================ -->
       <Grid Grid.Row="0"
@@ -53,7 +53,7 @@
         </Grid.ColumnDefinitions>
 
         <StackPanel Grid.Column="0" Orientation="Horizontal"
-                    Margin="12,0,0,0" Spacing="8" VerticalAlignment="Center">
+                    Margin="10,0,0,0" Spacing="6" VerticalAlignment="Center">
           <Image Source="/Assets/app-icon.png" Width="16" Height="16"
                  RenderOptions.BitmapInterpolationMode="HighQuality" />
           <TextBlock Text="{CompiledBinding CaptionPrimary}"
@@ -88,25 +88,27 @@
               Background="{DynamicResource SolidBackgroundFillColorBaseBrush}"
               BorderBrush="{DynamicResource DividerStrokeColorDefaultBrush}"
               BorderThickness="0,0,0,1">
-        <Grid Margin="8,0" ColumnDefinitions="*,Auto">
+        <Grid Margin="6,0" ColumnDefinitions="*,Auto">
           <!-- File actions -->
           <ScrollViewer Grid.Column="0"
                         HorizontalScrollBarVisibility="Hidden"
                         VerticalScrollBarVisibility="Disabled">
-            <StackPanel Orientation="Horizontal" Spacing="2" VerticalAlignment="Center">
+            <StackPanel Orientation="Horizontal" Spacing="1" VerticalAlignment="Center">
               <Button Classes="command" Theme="{StaticResource CommandButton}" Click="OnNewClick"
                       ToolTip.Tip="{CompiledBinding Lang.TaskBar_File_Create}">
-                <StackPanel Orientation="Horizontal" Spacing="8">
+                <StackPanel Orientation="Horizontal" Spacing="6">
                   <Path Classes="icon" Data="{StaticResource Icon_NewFile}" />
-                  <TextBlock Text="{CompiledBinding Lang.TaskBar_File_Create}" VerticalAlignment="Center" />
+                  <TextBlock Text="{CompiledBinding Lang.TaskBar_File_Create}" VerticalAlignment="Center"
+                         IsVisible="{CompiledBinding ShowCommandLabels}" />
                 </StackPanel>
               </Button>
 
               <Button Classes="command" Theme="{StaticResource CommandButton}" Click="OnOpenClick"
                       ToolTip.Tip="{CompiledBinding Lang.TaskBar_File_Open}">
-                <StackPanel Orientation="Horizontal" Spacing="8">
+                <StackPanel Orientation="Horizontal" Spacing="6">
                   <Path Classes="icon" Data="{StaticResource Icon_Open}" />
-                  <TextBlock Text="{CompiledBinding Lang.Action_Open}" VerticalAlignment="Center" />
+                  <TextBlock Text="{CompiledBinding Lang.Action_Open}" VerticalAlignment="Center"
+                         IsVisible="{CompiledBinding ShowCommandLabels}" />
                 </StackPanel>
               </Button>
 
@@ -115,36 +117,40 @@
               <Button Classes="command" Theme="{StaticResource CommandButton}" Click="OnSaveFrameClick"
                       IsEnabled="{CompiledBinding HasSprite}"
                       ToolTip.Tip="{CompiledBinding Lang.TaskBar_File_SaveFrame}">
-                <StackPanel Orientation="Horizontal" Spacing="8">
+                <StackPanel Orientation="Horizontal" Spacing="6">
                   <Path Classes="icon" Data="{StaticResource Icon_SaveImage}" />
-                  <TextBlock Text="{CompiledBinding Lang.Command_SaveImage}" VerticalAlignment="Center" />
+                  <TextBlock Text="{CompiledBinding Lang.Command_SaveImage}" VerticalAlignment="Center"
+                         IsVisible="{CompiledBinding ShowCommandLabels}" />
                 </StackPanel>
               </Button>
 
               <Button Classes="command" Theme="{StaticResource CommandButton}" Click="OnSaveGifClick"
                       IsEnabled="{CompiledBinding HasSprite}"
                       ToolTip.Tip="{CompiledBinding Lang.TaskBar_File_SaveGIF}">
-                <StackPanel Orientation="Horizontal" Spacing="8">
+                <StackPanel Orientation="Horizontal" Spacing="6">
                   <Path Classes="icon" Data="{StaticResource Icon_SaveAnimate}" />
-                  <TextBlock Text="{CompiledBinding Lang.Command_SaveAnim}" VerticalAlignment="Center" />
+                  <TextBlock Text="{CompiledBinding Lang.Command_SaveAnim}" VerticalAlignment="Center"
+                         IsVisible="{CompiledBinding ShowCommandLabels}" />
                 </StackPanel>
               </Button>
 
               <Button Classes="command" Theme="{StaticResource CommandButton}" Click="OnExportClick"
                       IsEnabled="{CompiledBinding HasSprite}"
                       ToolTip.Tip="{CompiledBinding Lang.TaskBar_File_Export}">
-                <StackPanel Orientation="Horizontal" Spacing="8">
+                <StackPanel Orientation="Horizontal" Spacing="6">
                   <Path Classes="icon" Data="{StaticResource Icon_Export}" />
-                  <TextBlock Text="{CompiledBinding Lang.Command_Export}" VerticalAlignment="Center" />
+                  <TextBlock Text="{CompiledBinding Lang.Command_Export}" VerticalAlignment="Center"
+                         IsVisible="{CompiledBinding ShowCommandLabels}" />
                 </StackPanel>
               </Button>
 
               <Button Classes="command" Theme="{StaticResource CommandButton}" Click="OnSavePaletteClick"
                       IsEnabled="{CompiledBinding HasSprite}"
                       ToolTip.Tip="{CompiledBinding Lang.TaskBar_File_SavePalette}">
-                <StackPanel Orientation="Horizontal" Spacing="8">
+                <StackPanel Orientation="Horizontal" Spacing="6">
                   <Path Classes="icon" Data="{StaticResource Icon_SavePalette}" />
-                  <TextBlock Text="{CompiledBinding Lang.Command_SavePalette}" VerticalAlignment="Center" />
+                  <TextBlock Text="{CompiledBinding Lang.Command_SavePalette}" VerticalAlignment="Center"
+                         IsVisible="{CompiledBinding ShowCommandLabels}" />
                 </StackPanel>
               </Button>
             </StackPanel>
@@ -183,9 +189,8 @@
 
             <Button Classes="command" Theme="{StaticResource CommandButton}"
                     ToolTip.Tip="{CompiledBinding Lang.TaskBar_View_Language}">
-              <StackPanel Orientation="Horizontal" Spacing="8">
+              <StackPanel Orientation="Horizontal" Spacing="4">
                 <Path Classes="icon" Data="{StaticResource Icon_Globe}" />
-                <TextBlock Text="{CompiledBinding Lang.Command_Language}" VerticalAlignment="Center" />
                 <Path Classes="icon" Width="12" Height="12" Data="{StaticResource Icon_ChevronDown}" />
               </StackPanel>
               <Button.Flyout>
@@ -198,10 +203,7 @@
 
             <Button Classes="command" Theme="{StaticResource CommandButton}" Click="OnAboutClick"
                     ToolTip.Tip="{CompiledBinding Lang.TaskBar_Help_About}">
-              <StackPanel Orientation="Horizontal" Spacing="8">
-                <Path Classes="icon" Data="{StaticResource Icon_About}" />
-                <TextBlock Text="{CompiledBinding Lang.TaskBar_Help_About}" VerticalAlignment="Center" />
-              </StackPanel>
+              <Path Classes="icon" Data="{StaticResource Icon_About}" />
             </Button>
           </StackPanel>
         </Grid>
@@ -213,7 +215,7 @@
         <!-- Viewport: checkerboard so sprite transparency is readable. -->
         <Border Grid.Column="0"
                 Name="Viewport"
-                Margin="8"
+                Margin="6"
                 CornerRadius="8"
                 BorderThickness="1"
                 BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}"
@@ -279,9 +281,10 @@
         <!-- Side panel -->
         <Border Grid.Column="1"
                 IsVisible="{CompiledBinding CanShowSideBar}"
-                Width="304"
-                Margin="0,8,8,8"
+                Width="248"
+                Margin="0,6,6,6"
                 CornerRadius="8"
+                ClipToBounds="True"
                 BorderThickness="1"
                 BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}"
                 Background="{DynamicResource CardBackgroundFillColorDefaultBrush}">
@@ -290,50 +293,50 @@
 
               <!-- Sprite information -->
               <StackPanel IsVisible="{CompiledBinding ShowInfoPanel}">
-                <StackPanel Orientation="Horizontal" Spacing="8" Margin="14,10,14,6">
+                <StackPanel Orientation="Horizontal" Spacing="6" Margin="12,8,12,4">
                   <Path Classes="icon" Width="16" Height="16" Data="{StaticResource Icon_Details}" />
                   <TextBlock Classes="bodyStrong" Text="{CompiledBinding Lang.TaskBar_View_Information}"
                              VerticalAlignment="Center" />
                 </StackPanel>
 
-                <StackPanel Margin="14,0,14,10">
-                  <Grid ColumnDefinitions="*,Auto" Height="26">
+                <StackPanel Margin="12,0,12,8">
+                  <Grid ColumnDefinitions="*,Auto" Height="24">
                     <TextBlock Classes="fieldLabel" Text="{CompiledBinding Lang.SpriteInfo_Frames}" />
                     <TextBlock Grid.Column="1" Classes="fieldValue" Text="{CompiledBinding Frame}" />
                   </Grid>
-                  <Grid ColumnDefinitions="*,Auto" Height="26">
+                  <Grid ColumnDefinitions="*,Auto" Height="24">
                     <TextBlock Classes="fieldLabel" Text="{CompiledBinding Lang.SpriteInfo_Width}" />
                     <TextBlock Grid.Column="1" Classes="fieldValue" Text="{CompiledBinding Width}" />
                   </Grid>
-                  <Grid ColumnDefinitions="*,Auto" Height="26">
+                  <Grid ColumnDefinitions="*,Auto" Height="24">
                     <TextBlock Classes="fieldLabel" Text="{CompiledBinding Lang.SpriteInfo_Height}" />
                     <TextBlock Grid.Column="1" Classes="fieldValue" Text="{CompiledBinding Height}" />
                   </Grid>
-                  <Grid ColumnDefinitions="*,Auto" Height="26">
+                  <Grid ColumnDefinitions="*,Auto" Height="24">
                     <TextBlock Classes="fieldLabel" Text="{CompiledBinding Lang.SpriteInfo_Type}" />
                     <TextBlock Grid.Column="1" Classes="fieldValue" Text="{CompiledBinding Type}" />
                   </Grid>
-                  <Grid ColumnDefinitions="*,Auto" Height="26">
+                  <Grid ColumnDefinitions="*,Auto" Height="24">
                     <TextBlock Classes="fieldLabel" Text="{CompiledBinding Lang.SpriteInfo_Format}" />
                     <TextBlock Grid.Column="1" Classes="fieldValue" Text="{CompiledBinding Format}" />
                   </Grid>
-                  <Grid ColumnDefinitions="*,Auto" Height="26">
+                  <Grid ColumnDefinitions="*,Auto" Height="24">
                     <TextBlock Classes="fieldLabel" Text="{CompiledBinding Lang.SpriteInfo_Sync}" />
                     <TextBlock Grid.Column="1" Classes="fieldValue" Text="{CompiledBinding Sync}" />
                   </Grid>
-                  <Grid ColumnDefinitions="*,Auto" Height="26">
+                  <Grid ColumnDefinitions="*,Auto" Height="24">
                     <TextBlock Classes="fieldLabel" Text="{CompiledBinding Lang.SpriteInfo_BoundRadius}" />
                     <TextBlock Grid.Column="1" Classes="fieldValue" Text="{CompiledBinding BoundRadius}" />
                   </Grid>
-                  <Grid ColumnDefinitions="*,Auto" Height="26">
+                  <Grid ColumnDefinitions="*,Auto" Height="24">
                     <TextBlock Classes="fieldLabel" Text="{CompiledBinding Lang.SpriteInfo_BeamLength}" />
                     <TextBlock Grid.Column="1" Classes="fieldValue" Text="{CompiledBinding BeamLength}" />
                   </Grid>
-                  <Grid ColumnDefinitions="*,Auto" Height="26">
+                  <Grid ColumnDefinitions="*,Auto" Height="24">
                     <TextBlock Classes="fieldLabel" Text="{CompiledBinding Lang.SpriteInfo_OriginX}" />
                     <TextBlock Grid.Column="1" Classes="fieldValue" Text="{CompiledBinding OriginX}" />
                   </Grid>
-                  <Grid ColumnDefinitions="*,Auto" Height="26">
+                  <Grid ColumnDefinitions="*,Auto" Height="24">
                     <TextBlock Classes="fieldLabel" Text="{CompiledBinding Lang.SpriteInfo_OriginY}" />
                     <TextBlock Grid.Column="1" Classes="fieldValue" Text="{CompiledBinding OriginY}" />
                   </Grid>
@@ -345,7 +348,7 @@
 
               <!-- Palette -->
               <StackPanel IsVisible="{CompiledBinding ShowPalettePanel}">
-                <Grid ColumnDefinitions="Auto,*,Auto" Margin="14,10,14,8">
+                <Grid ColumnDefinitions="Auto,*,Auto" Margin="12,8,12,6">
                   <Path Classes="icon" Width="16" Height="16" Data="{StaticResource Icon_Palette}" />
                   <TextBlock Grid.Column="1" Classes="bodyStrong" Margin="8,0,0,0"
                              Text="{CompiledBinding Lang.TaskBar_View_Pallet}"
@@ -355,7 +358,7 @@
                 </Grid>
 
                 <ItemsControl ItemsSource="{CompiledBinding PaletteSwatches}"
-                              Margin="14,0,14,6">
+                              Margin="12,0,12,4">
                   <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                       <UniformGrid Columns="16" />
@@ -382,7 +385,7 @@
               Background="{DynamicResource SolidBackgroundFillColorBaseBrush}"
               BorderBrush="{DynamicResource DividerStrokeColorDefaultBrush}"
               BorderThickness="0,1,0,0">
-        <Grid Margin="10,0" ColumnDefinitions="Auto,Auto,*,Auto" ColumnSpacing="10">
+        <Grid Margin="8,0" ColumnDefinitions="Auto,Auto,*,Auto" ColumnSpacing="8">
 
           <!-- Playback -->
           <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="4" VerticalAlignment="Center">
@@ -420,7 +423,7 @@
                     TickFrequency="1"
                     VerticalAlignment="Center" />
             <TextBlock Grid.Column="1" Classes="caption"
-                       MinWidth="58" TextAlignment="Right"
+                       MinWidth="50" TextAlignment="Right"
                        VerticalAlignment="Center"
                        Text="{CompiledBinding FrameLabel}" />
           </Grid>
@@ -434,7 +437,7 @@
             </Button>
             <Button Classes="subtle" Theme="{StaticResource SubtleButton}"
                     Click="OnZoomResetClick" IsEnabled="{CompiledBinding HasSprite}"
-                    Width="64" ToolTip.Tip="{CompiledBinding Lang.Dock_ZoomReset}">
+                    Width="56" ToolTip.Tip="{CompiledBinding Lang.Dock_ZoomReset}">
               <TextBlock Classes="fieldValue" FontSize="12.5" Text="{CompiledBinding ZoomLabel}" />
             </Button>
             <Button Classes="subtle" Theme="{StaticResource SubtleButton}"

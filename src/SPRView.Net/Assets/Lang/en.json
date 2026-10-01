@@ -9,7 +9,6 @@
   "TaskBar_File_SaveGIF": "Save as Animate Image",
   "TaskBar_File_Export": "Export All Frame",
   "TaskBar_File_SavePalette": "Export Palette(.pal)",
-  "TaskBar_File_Exit": "Quit",
   "TaskBar_View": "_View",
   "TaskBar_View_Information": "Information",
   "TaskBar_View_Pallet": "Pallet",
@@ -23,9 +22,7 @@
   "Command_SaveAnim": "Animation",
   "Command_Export": "Frames",
   "Command_SavePalette": "Palette",
-  "Command_Language": "Language",
 
-  "Dock_Frame": "Frame:",
   "Dock_PlayPause": "Play / Pause",
   "Dock_Loop": "Loop",
   "Dock_ZoomIn": "Zoom in",
